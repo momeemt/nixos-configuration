@@ -13,6 +13,18 @@ in {
       experimental-features = "nix-command flakes";
     };
   };
-
   programs.home-manager.enable = true;
+  
+  programs.neovim = {
+    enable = true;
+    plugins = with pkgs.vimPlugins; [
+      vim-nix
+      {
+        plugin = kanagawa-nvim;
+        config = ''
+          colorscheme kanagawa
+        '';
+      }
+    ];
+  };
 }
