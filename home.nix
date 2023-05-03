@@ -14,7 +14,20 @@ in {
     };
   };
   programs.home-manager.enable = true;
-  
+
+  programs.zsh = {
+    enable = true;
+    enableSyntaxHighlighting = true;
+  };
+
+  programs.starship = {
+    enable = true;
+    enableZshIntegration = true;
+    settings = {
+      add_newline = true;
+    };
+  };
+
   programs.neovim = {
     enable = true;
     plugins = with pkgs.vimPlugins; [
