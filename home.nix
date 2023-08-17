@@ -56,6 +56,14 @@ in {
     '';
     plugins = with pkgs.vimPlugins; [
       vim-nix
+      nim-vim
+      vim-commentary
+      {
+        plugin = vim-indent-guides;
+        config = ''
+          let g:indent_guides_enable_on_vim_startup = 1
+        '';
+      }
       {
         plugin = fern-vim;
         config = ''
