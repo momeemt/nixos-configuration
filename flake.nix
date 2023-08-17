@@ -1,20 +1,25 @@
 {
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-22.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
-      url = "github:nix-community/home-manager/release-22.11";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
   outputs = { nixpkgs, home-manager, ... }:
     let
-      system = "aarch64-darwin";
-      pkgs = nixpkgs.legacyPackages.${system};
+      inherit (builtins) getEnv;
+      inherit (home-manager.lib) homeManagerConfiguration;
     in {
-      homeConfigurations.momeemt = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        modules = [ ./home.nix ];
-      };
+      homeConfigurations = {
+        momeemt = let
+          system = "aarch64-darwin";
+          pkgs = import nixpkgs { inherit system; };
+        in homeManagerConfiguration {
+          inherit pkgs;
+          modules = [ ./home.nix ];
+        };
     };
+  };
 }

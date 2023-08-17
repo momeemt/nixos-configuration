@@ -4,7 +4,7 @@ in {
   home = {
     username = "momeemt";
     homeDirectory = "/Users/momeemt";
-    stateVersion = "22.11";
+    stateVersion = "23.05";
   };
 
   nix = {
@@ -20,24 +20,19 @@ in {
     enableSyntaxHighlighting = true;
   };
 
-  programs.starship = {
-    enable = true;
-    enableZshIntegration = true;
-    settings = {
-      add_newline = true;
-    };
-  };
-
   programs.neovim = {
     enable = true;
+    viAlias = true;
+    vimAlias = true;
+    extraConfig = ''
+      set number relativenumber
+    '';
     plugins = with pkgs.vimPlugins; [
       vim-nix
-      {
-        plugin = kanagawa-nvim;
-        config = ''
-          colorscheme kanagawa
-        '';
-      }
     ];
+  };
+
+  programs.tmux = {
+    enable = true;
   };
 }
