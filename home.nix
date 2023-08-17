@@ -26,6 +26,11 @@ in {
     vimAlias = true;
     extraConfig = ''
       set number relativenumber
+      set autoindent
+      set tabstop=2
+      set shiftwidth=2
+      set expandtab
+      set hls
     '';
     plugins = with pkgs.vimPlugins; [
       vim-nix
