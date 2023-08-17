@@ -17,7 +17,29 @@ in {
 
   programs.zsh = {
     enable = true;
+    enableAutosuggestions = true;
+    enableCompletion = true;
     enableSyntaxHighlighting = true;
+    oh-my-zsh = {
+      enable = true;
+      plugins = [
+        "cp"
+        "direnv"
+        "docker"
+        "git"
+        "github"
+        "golang"
+        "keychain"
+        "node"
+        "npm"
+        "rsync"
+        "ssh-agent"
+        "sudo"
+        "terraform"
+        "tmux"
+      ];
+      theme = "robbyrussell";
+    };
   };
 
   programs.neovim = {
