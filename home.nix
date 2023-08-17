@@ -73,6 +73,13 @@ in {
       luasnip
       nvim-treesitter-parsers.yaml
       {
+        plugin = oceanic-material;
+        config = ''
+          set background=dark
+          colorscheme oceanic_material
+        '';
+      }
+      {
         plugin = vim-indent-guides;
         config = ''
           let g:indent_guides_enable_on_vim_startup = 1
