@@ -75,4 +75,12 @@ in {
     userName = "Mutsuha Asada";
     userEmail = "me@momee.mt";
   };
+
+  programs.exa = {
+    enable = true;
+  };
+
+  programs.bat = {
+    enable = true;
+  };
 }
