@@ -64,23 +64,15 @@ in {
       }
       {
         plugin = oceanic-material;
-        config = ''
-          set background=dark
-          colorscheme oceanic_material
-        '';
+        config = builtins.readFile ./neovim/plugins/oceanic-material.vim;
       }
       {
         plugin = vim-indent-guides;
-        config = ''
-          let g:indent_guides_enable_on_vim_startup = 1
-        '';
+        config = builtins.readFile ./neovim/plugins/vim-indent-guides.vim;
       }
       {
         plugin = fern-vim;
-        config = ''
-          let g:fern#default_hidden=1
-          nnoremap <C-n> :Fern . -reveal=% -drawer -toggle -width=40<CR>
-        '';
+        config = builtins.readFile ./neovim/plugins/fern.vim;
       }
     ];
   };
