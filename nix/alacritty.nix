@@ -31,6 +31,10 @@
           "${pkgs.tmux}/bin/tmux attach || ${pkgs.tmux}/bin/tmux new-session"
         ];
       };
+
+      env = {
+        TERM = "alacritty";
+      };
     };
   };
 }
