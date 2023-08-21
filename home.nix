@@ -5,6 +5,13 @@ in {
     username = "momeemt";
     homeDirectory = "/Users/momeemt";
     stateVersion = "23.05";
+    packages = with pkgs; [
+      (nerdfonts.override {
+        fonts = [
+          "JetBrainsMono"
+        ];
+      })
+    ];
   };
 
   nix = {
@@ -20,25 +27,43 @@ in {
     enableAutosuggestions = true;
     enableCompletion = true;
     enableSyntaxHighlighting = true;
-    oh-my-zsh = {
-      enable = true;
-      plugins = [
-        "cp"
-        "direnv"
-        "docker"
-        "git"
-        "github"
-        "golang"
-        "keychain"
-        "node"
-        "npm"
-        "rsync"
-        "ssh-agent"
-        "sudo"
-        "terraform"
-        "tmux"
-      ];
-      theme = "robbyrussell";
+  };
+
+  programs.starship = {
+    enable = true;
+    settings = {
+      add_newline = true;
+    };
+  };
+
+  programs.alacritty = {
+    enable = true;
+    settings = {
+      font = {
+        normal = {
+          family = "JetBrainsMono Nerd Font";
+          style = "Regular";
+        };
+        size = 12.0;
+      };
+      scrolling = {
+        history = 10000;
+      };
+      window = {
+        opacity = 0.7;
+        padding = {
+          x = 8;
+          y = 4;
+        };
+      };
+      shell = {
+        program = "${pkgs.zsh}/bin/zsh";
+        args = [
+          "-l"
+          "-c"
+          "${pkgs.tmux}/bin/tmux attach || ${pkgs.tmux}/bin/tmux new-session"
+        ];
+      };
     };
   };
 
