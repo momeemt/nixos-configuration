@@ -33,5 +33,6 @@ in {
   programs.home-manager.enable = true;
   programs.exa.enable = true;
   programs.bat.enable = true;
+  programs.bottom.enable = true;
 }
 
