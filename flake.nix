@@ -24,7 +24,8 @@
         inherit (builtins) getEnv;
         inherit (home-manager.lib) homeManagerConfiguration;
         pkgs = import nixpkgs { inherit system; };
-      in {
+      in
+      {
         homeConfigurations = {
           momeemt = homeManagerConfiguration {
             inherit pkgs;
@@ -35,6 +36,7 @@
         devShell = pkgs.mkShell {
           buildInputs = with pkgs; [
             shellcheck
+            nixpkgs-fmt
           ];
         };
       }

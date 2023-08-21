@@ -3,6 +3,7 @@ let inherit (builtins) getEnv;
 in {
   imports = [
     ./nix/alacritty.nix
+    ./nix/direnv.nix
     ./nix/git.nix
     ./nix/neovim.nix
     ./nix/starship.nix
