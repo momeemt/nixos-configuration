@@ -16,9 +16,13 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-darwin = {
+      url = "github:LnL7/nix-darwin/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, flake-utils, ... }:
+  outputs = { self, nixpkgs, home-manager, nix-darwin, flake-utils, ... }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         inherit (builtins) getEnv;
@@ -30,6 +34,12 @@
           momeemt = homeManagerConfiguration {
             inherit pkgs;
             modules = [ ./home.nix ];
+          };
+        };
+
+        darwinConfigurations = {
+          momeemt = nix-darwin.lib.darwinSystem {
+            modules = [ ./darwin/configuration.nix ];
           };
         };
 
