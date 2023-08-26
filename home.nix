@@ -16,6 +16,11 @@ in {
     homeDirectory = "/Users/momeemt";
     stateVersion = "23.05";
     packages = with pkgs; [
+      neofetch
+      exa
+      bat
+      bottom
+      home-manager
       (nerdfonts.override {
         fonts = [
           "JetBrainsMono"
@@ -30,10 +35,5 @@ in {
       experimental-features = "nix-command flakes";
     };
   };
-
-  programs.home-manager.enable = true;
-  programs.exa.enable = true;
-  programs.bat.enable = true;
-  programs.bottom.enable = true;
 }
 
