@@ -22,33 +22,32 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, nix-darwin, flake-utils, ... }:
-    flake-utils.lib.eachDefaultSystem (system:
-      let
-        inherit (builtins) getEnv;
-        inherit (home-manager.lib) homeManagerConfiguration;
-        pkgs = import nixpkgs { inherit system; };
-      in
-      {
-        homeConfigurations = {
-          momeemt = homeManagerConfiguration {
-            inherit pkgs;
-            modules = [ ./home.nix ];
-          };
-        };
+  outputs = { self, nixpkgs, home-manager, nix-darwin, ... }:
+    let
+      system = "aarch64-darwin";
+      pkgs = import nixpkgs { inherit system; };
+      inherit (home-manager.lib) homeManagerConfiguration;
+    in
+    {
+      homeConfigurations.momeemt = homeManagerConfiguration {
+        inherit pkgs;
+        modules = [
+          ./home.nix
+        ];
+      };
 
-        darwinConfigurations = {
-          momeemt = nix-darwin.lib.darwinSystem {
-            modules = [ ./darwin/configuration.nix ];
-          };
-        };
+      packages.aarch64-darwin.darwinConfigurations.uguisu = nix-darwin.lib.darwinSystem {
+        modules = [
+          ./darwin/configuration.nix
+        ];
+        inherit system;
+      };
 
-        devShell = pkgs.mkShell {
-          buildInputs = with pkgs; [
-            shellcheck
-            nixpkgs-fmt
-          ];
-        };
-      }
-    );
+      devShell.aarch64-darwin = pkgs.mkShell {
+        buildInputs = with pkgs; [
+          shellcheck
+          nixpkgs-fmt
+        ];
+      };
+    };
 }
