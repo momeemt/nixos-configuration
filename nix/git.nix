@@ -9,6 +9,7 @@
       a = "add";
       aa = "add --all";
       cm = "commit -m";
+      pom = "push origin main";
     };
     ignores = [
       ".DS_Store"
