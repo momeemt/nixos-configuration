@@ -1,6 +1,9 @@
+{ pkgs, ... }:
 {
   services.yabai = {
     enable = true;
+    package = pkgs.yabai;
+    enableScriptingAddition = false;
     config = {
       mouse_follows_focus = "off";
       focus_follows_mouse = "off";

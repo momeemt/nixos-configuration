@@ -2,14 +2,21 @@
 {
   imports = [
     ./yabai.nix
+    ./skhd.nix
   ];
+
+  environment = {
+    systemPackages = with pkgs; [
+      skhd
+    ];
+  };
+
+  nix = {
+    package = pkgs.nix;
+  };
 
   services = {
     nix-daemon = {
-      enable = true;
-    };
-
-    skhd = {
       enable = true;
     };
   };
