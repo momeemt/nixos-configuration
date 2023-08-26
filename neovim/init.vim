@@ -7,7 +7,22 @@ set autoindent
 set tabstop=2
 set shiftwidth=2
 set expandtab
+set incsearch
+set showmode
 set hls
+
+let mapleader = ","
+
+inoremap <silent> jj <ESC>
+
+function! OpenGoogleSearch()
+  let word = expand('<cword>')
+  let url = 'https://www.google.com/search?q=' . word
+  execute "!open '" . url . "'"
+endfunction
+
+command! -nargs=0 Google :call OpenGoogleSearch()
+nnoremap <leader>g :Google<CR>
 
 augroup vimrc-auto-mkdir
   autocmd!
