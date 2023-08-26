@@ -1,11 +1,11 @@
 { pkgs, ... }:
 {
+  imports = [
+    ./yabai.nix
+  ];
+
   services = {
     nix-daemon = {
-      enable = true;
-    };
-
-    yabai = {
       enable = true;
     };
 
