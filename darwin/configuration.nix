@@ -68,7 +68,7 @@
         static-only = false;
         tilesize = 48;
         wvous-bl-corner = 11;
-        wvous-br-corner = 7;
+        wvous-br-corner = 3;
         wvous-tl-corner = 10;
         wvous-tr-corner = 12;
       };
