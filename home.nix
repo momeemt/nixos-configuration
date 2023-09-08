@@ -16,6 +16,7 @@ in {
     homeDirectory = "/Users/momeemt";
     stateVersion = "23.05";
     packages = with pkgs; [
+      ripgrep
       neofetch
       exa
       bat

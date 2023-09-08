@@ -14,7 +14,12 @@
       nvim-treesitter-parsers.yaml
       copilot-vim
       telescope-nvim
+      telescope-live-grep-args-nvim
       lualine-nvim
+      # {
+      #   plugin = rainbow_parentheses-vim;
+      #   config = builtins.readFile ../neovim/plugins/rainbow_parentheses.vim;
+      # }
       {
         plugin = lualine-nvim;
         type = "lua";
