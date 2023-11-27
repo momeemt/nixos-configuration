@@ -2,7 +2,6 @@
 {
   imports = [
     ./dock.nix
-    ./finder.nix
     ./networking.nix
     ./yabai.nix
     ./skhd.nix
