@@ -2,6 +2,7 @@
 {
   programs.neovim = {
     enable = true;
+    withPython3 = true;
     viAlias = true;
     vimAlias = true;
     extraConfig = builtins.readFile ../neovim/init.vim;
@@ -16,10 +17,11 @@
       telescope-nvim
       telescope-live-grep-args-nvim
       lualine-nvim
-      # {
-      #   plugin = rainbow_parentheses-vim;
-      #   config = builtins.readFile ../neovim/plugins/rainbow_parentheses.vim;
-      # }
+      phpactor
+      {
+        plugin = deoplete-nvim;
+        config = builtins.readFile ../neovim/plugins/deoplete.vim;
+      }
       {
         plugin = lualine-nvim;
         type = "lua";
