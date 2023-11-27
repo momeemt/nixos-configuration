@@ -1,16 +1,30 @@
 { pkgs, ... }:
 {
   programs.zsh = {
-    autocd = true;
     enable = true;
     enableAutosuggestions = true;
     enableCompletion = true;
     enableSyntaxHighlighting = true;
-    defaultKeymap = "vicmd";
-
+    defaultKeymap = "emacs";
+    history = {
+      expireDuplicatesFirst = true;
+      extended = true;
+      ignoreDups = true;
+      path = "$HOME/.zsh_history";
+      save = 10000;
+      share = true;
+      size = 10000;
+    };
+    shellAliases = {
+      nd = "nix develop -c $SHELL";
+      ls = "eza";
+    };
     initExtra = builtins.readFile ../zsh/zshrc;
-    envExtra = builtins.readFile ../zsh/zshenv;
-    logoutExtra = builtins.readFile ../zsh/zlogout;
-    profileExtra = builtins.readFile ../zsh/zprofile;
+    loginExtra = ''
+      FPATH=${../zsh/functions}:$FPATH
+      export FPATH
+
+      . ${../zsh/completion.zsh}
+    '';
   };
 }
