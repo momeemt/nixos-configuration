@@ -18,7 +18,7 @@ in {
     packages = with pkgs; [
       ripgrep
       neofetch
-      exa
+      eza
       bat
       bottom
       home-manager
