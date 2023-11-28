@@ -8,7 +8,15 @@
           family = "JetBrainsMono Nerd Font";
           style = "Regular";
         };
-        size = 12.0;
+        offset = {
+          x = 0;
+          y = 12;
+        };
+        glyph_offset = {
+          x = 0;
+          y = 6;
+        };
+        size = 14;
       };
 
       scrolling = {
