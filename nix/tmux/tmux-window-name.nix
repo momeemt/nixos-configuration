@@ -10,6 +10,7 @@ in
 tmuxPlugins.mkTmuxPlugin rec {
   pluginName = "tmux-window-name";
   version = "fe4d65a14f80fb4b681b7e2dcf361ada88733203";
+  rtpFilePath = (builtins.replaceStrings [ "-" ] [ "_" ] pluginName) + ".tmux";
   src = fetchFromGitHub {
     owner = "ofirgall";
     repo = "tmux-window-name";
