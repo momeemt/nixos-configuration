@@ -5,6 +5,7 @@
     enableAutosuggestions = true;
     enableCompletion = true;
     enableSyntaxHighlighting = true;
+    completionInit = "autoload -U compinit && compinit -i";
     defaultKeymap = "emacs";
     history = {
       expireDuplicatesFirst = true;
@@ -17,6 +18,7 @@
     };
     shellAliases = {
       nd = "nix develop -c $SHELL";
+      ns = "nix-shell --command \"zsh\"";
       ls = "eza";
     };
     initExtra = builtins.readFile ../zsh/zshrc;
