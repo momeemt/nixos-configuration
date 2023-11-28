@@ -1,9 +1,15 @@
 SHELL := $(shell which zsh) -e
 
 .PHONY: build
-build: nixpkgs-fmt # shellcheck
-	home-manager switch -f home.nix
+build: build-darwin build-home
+
+.PHONY: build-darwin
+build-darwin: nixpkgs-fmt # shellcheck
 	nix run nix-darwin -- switch --flake .
+
+.PHONY: build-home
+build-home: nixpkgs-fmt # shellcheck
+	home-manager switch -f home.nix
 
 .PHONY: nixpkgs-fmt
 nixpkgs-fmt:
