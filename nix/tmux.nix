@@ -6,9 +6,6 @@ let
   tmux-fzf = import ./tmux/tmux-fzf.nix {
     inherit (pkgs) tmuxPlugins fetchFromGitHub bash gnused fzf pstree lib;
   };
-  tmux-pomodoro-plus = import ./tmux/tmux-pomodoro-plus.nix {
-    inherit (pkgs) tmuxPlugins fetchFromGitHub lib;
-  };
   tmux-sensible = import ./tmux/tmux-sensible.nix {
     inherit (pkgs) tmuxPlugins fetchFromGitHub;
   };
@@ -18,7 +15,6 @@ let
   tmux-plugins = [
     tmux-battery
     tmux-fzf
-    tmux-pomodoro-plus
     tmux-sensible
     tmux-window-name
   ];
