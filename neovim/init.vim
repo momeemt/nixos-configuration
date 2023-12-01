@@ -15,6 +15,15 @@ let mapleader = ","
 
 inoremap <silent> jj <ESC>
 
+noremap <Up> <Nop>
+noremap! <Up> <Nop>
+noremap <Down> <Nop>
+noremap! <Down> <Nop>
+noremap <Left> <Nop>
+noremap! <Left> <Nop>
+noremap <Right> <Nop>
+noremap! <Right> <Nop>
+
 function! OpenGoogleSearch()
   let word = expand('<cword>')
   let url = 'https://www.google.com/search?q=' . word
@@ -34,4 +43,3 @@ augroup vimrc-auto-mkdir
     endif
   endfunction
 augroup END
-
