@@ -10,7 +10,6 @@
       vim-nix
       nim-vim
       vim-commentary
-      nvim-cmp
       luasnip
       nvim-treesitter-parsers.yaml
       copilot-vim
@@ -38,6 +37,18 @@
       {
         plugin = fern-vim;
         config = builtins.readFile ../neovim/plugins/fern.vim;
+      }
+      vim-vsnip
+      {
+        plugin = nvim-cmp;
+        type = "lua";
+        config = builtins.readFile ../neovim/plugins/nvim-cmp.lua;
+      }
+      cmp-nvim-lsp
+      {
+        plugin = nvim-lspconfig;
+        type = "lua";
+        config = builtins.readFile ../neovim/plugins/nvim-lspconfig.lua;
       }
     ];
   };
