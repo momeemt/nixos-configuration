@@ -17,10 +17,7 @@
       telescope-live-grep-args-nvim
       lualine-nvim
       phpactor
-      {
-        plugin = deoplete-nvim;
-        config = builtins.readFile ../neovim/plugins/deoplete.vim;
-      }
+      deoplete-nvim
       {
         plugin = lualine-nvim;
         type = "lua";
@@ -50,6 +47,7 @@
         type = "lua";
         config = builtins.readFile ../neovim/plugins/nvim-lspconfig.lua;
       }
+      lexima-vim
     ];
   };
 }
