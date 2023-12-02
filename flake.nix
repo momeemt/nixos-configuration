@@ -41,6 +41,9 @@
         buildInputs = with pkgs; [
           shellcheck
           nixpkgs-fmt
+          nil
+          lua-language-server
+          nodePackages.vim-language-server
         ];
       };
     };
