@@ -10,7 +10,6 @@
       vim-nix
       nim-vim
       vim-commentary
-      nvim-cmp
       luasnip
       nvim-treesitter-parsers.yaml
       copilot-vim
@@ -18,10 +17,7 @@
       telescope-live-grep-args-nvim
       lualine-nvim
       phpactor
-      {
-        plugin = deoplete-nvim;
-        config = builtins.readFile ../neovim/plugins/deoplete.vim;
-      }
+      deoplete-nvim
       {
         plugin = lualine-nvim;
         type = "lua";
@@ -39,6 +35,19 @@
         plugin = fern-vim;
         config = builtins.readFile ../neovim/plugins/fern.vim;
       }
+      vim-vsnip
+      {
+        plugin = nvim-cmp;
+        type = "lua";
+        config = builtins.readFile ../neovim/plugins/nvim-cmp.lua;
+      }
+      cmp-nvim-lsp
+      {
+        plugin = nvim-lspconfig;
+        type = "lua";
+        config = builtins.readFile ../neovim/plugins/nvim-lspconfig.lua;
+      }
+      lexima-vim
     ];
   };
 }
