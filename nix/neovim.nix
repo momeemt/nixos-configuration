@@ -14,7 +14,13 @@
       nvim-treesitter-parsers.yaml
       copilot-vim
       telescope-nvim
+      {
+        plugin = telescope-nvim;
+        type = "lua";
+        config = builtins.readFile ../neovim/plugins/telescope-nvim.lua;
+      }
       telescope-live-grep-args-nvim
+      telescope-frecency-nvim
       lualine-nvim
       phpactor
       deoplete-nvim
