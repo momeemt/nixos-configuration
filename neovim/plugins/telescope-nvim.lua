@@ -1,4 +1,25 @@
+local status, telescope = pcall(require, 'telescope')
+if (not status) then
+  return
+end
+
 local builtin = require('telescope.builtin')
+
+telescope.setup({
+  defaults = {
+    sorting_strategy = "ascending",
+    winblend = 5,
+    layout_strategy = "vertical",
+    layout_config = {
+      height = 0.9,
+    },
+    file_ignore_patterns = {
+      "^.git/",
+      "DS_Store",
+    }
+  }
+})
+
 local options = {
   noremap = true,
   silent = true

@@ -13,7 +13,6 @@
       luasnip
       nvim-treesitter-parsers.yaml
       copilot-vim
-      telescope-nvim
       {
         plugin = telescope-nvim;
         type = "lua";
