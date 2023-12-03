@@ -4,11 +4,11 @@ SHELL := $(shell which zsh) -e
 build: build-darwin build-home
 
 .PHONY: build-darwin
-build-darwin: nixpkgs-fmt # shellcheck
+build-darwin: nixpkgs-fmt shellcheck
 	nix run nix-darwin -- switch --flake .
 
 .PHONY: build-home
-build-home: nixpkgs-fmt # shellcheck
+build-home: nixpkgs-fmt shellcheck
 	home-manager switch -f home.nix
 
 .PHONY: nixpkgs-fmt
@@ -19,7 +19,7 @@ nixpkgs-fmt:
 
 .PHONY: shellcheck
 shellcheck:
-	find . -path './zsh/*' -print0 | while IFS= read -r -d '' file; do \
+	find . -path './zsh/*' -type f -print0 | while IFS= read -r -d '' file; do \
 		shellcheck -x -s bash "$$file"; \
 	done
 
