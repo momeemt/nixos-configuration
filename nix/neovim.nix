@@ -53,6 +53,17 @@
         config = builtins.readFile ../neovim/plugins/nvim-lspconfig.lua;
       }
       lexima-vim
+      {
+        plugin = barbar-nvim;
+        type = "lua";
+        config = builtins.readFile ../neovim/plugins/barbar-nvim.lua;
+      }
+      nvim-web-devicons
+      {
+        plugin = nvim-surround;
+        type = "lua";
+        config = builtins.readFile ../neovim/plugins/nvim-surround.lua;
+      }
     ];
   };
 }
