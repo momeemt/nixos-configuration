@@ -11,6 +11,10 @@ build-darwin: nixpkgs-fmt shellcheck
 build-home: nixpkgs-fmt shellcheck
 	home-manager switch -f home.nix
 
+.PHONY: rebuild-emu
+rebuild-emu:
+	sudo nixos-rebuild switch -I nixos-config=./hosts/emu/configuration.nix
+
 .PHONY: nixpkgs-fmt
 nixpkgs-fmt:
 	find . -name '*.nix' -print0 | while IFS= read -r -d '' file; do \
