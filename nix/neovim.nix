@@ -37,8 +37,9 @@
         config = builtins.readFile ../neovim/plugins/vim-indent-guides.vim;
       }
       {
-        plugin = fern-vim;
-        config = builtins.readFile ../neovim/plugins/fern.vim;
+        plugin = nvim-tree-lua;
+        type = "lua";
+        config = builtins.readFile ../neovim/plugins/nvim-tree-lua.lua;
       }
       vim-vsnip
       {
