@@ -1,4 +1,16 @@
 { pkgs, ... }:
+let
+  satysfi-vim-src = pkgs.fetchFromGitHub {
+    owner = "qnighy";
+    repo = "satysfi.vim";
+    rev = "c11dc636ce2987bf122cbd6d488f40d98909a2df";
+    sha256 = "sha256-Hy1RHfukwVSkT1rDrnLm5ufCqcBKFReu+FYfDM57GFM=";
+  };
+  satysfi-vim = pkgs.vimUtils.buildVimPlugin {
+    name = "satysfi-vim";
+    src = satysfi-vim-src;
+  };
+in
 {
   programs.neovim = {
     enable = true;
@@ -6,6 +18,18 @@
     viAlias = true;
     vimAlias = true;
     extraConfig = builtins.readFile ../neovim/init.vim;
+    coc = {
+      enable = true;
+      settings = {
+        languageserver = {
+          satysfi-ls = {
+            command = "satysfi-language-server";
+            args = [ ];
+            filetypes = [ "satysfi" ];
+          };
+        };
+      };
+    };
     plugins = with pkgs.vimPlugins; [
       vim-nix
       nim-vim
@@ -65,6 +89,7 @@
         type = "lua";
         config = builtins.readFile ../neovim/plugins/nvim-surround.lua;
       }
+      satysfi-vim
     ];
   };
 }
