@@ -410,16 +410,6 @@
           mods = "Alt|Shift";
           chars = "\\x1b^";
         }
-        {
-          key = "Backslash";
-          mods = "Alt";
-          chars = "\\x1b\\\\";
-        }
-        {
-          key = "Backslash";
-          mods = "Alt|Shift";
-          chars = "\\x1b|";
-        }
       ];
     };
   };
