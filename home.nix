@@ -5,6 +5,7 @@ in {
     ./nix/alacritty.nix
     ./nix/direnv.nix
     ./nix/git.nix
+    ./nix/lazygit.nix
     ./nix/neovim.nix
     ./nix/starship.nix
     ./nix/tmux.nix
