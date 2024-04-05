@@ -90,6 +90,7 @@ in
         config = builtins.readFile ../neovim/plugins/nvim-surround.lua;
       }
       satysfi-vim
+      vim-wakatime
     ];
   };
 }
