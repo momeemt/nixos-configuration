@@ -1,10 +1,5 @@
 { config, lib, pkgs, ... }:
 {
-  imports =
-    [
-      ./hardware-configuration.nix
-    ];
-
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
@@ -16,21 +11,13 @@
     "8.8.4.4"
   ];
 
+  programs.zsh.enable = true;
+
   users.users.momeemt = {
     isNormalUser = true; 
     extraGroups = [ "wheel" ];
-    packages = with pkgs; [
-      neofetch
-    ];
+    shell = pkgs.zsh;
   };
-
-  environment.systemPackages = with pkgs; [
-    neovim
-    wget
-    git
-    gh
-    zsh
-  ];
 
   services.openssh.enable = true;
   services.resolved = {
