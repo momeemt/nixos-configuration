@@ -2,6 +2,7 @@
   imports = [
     ../../modules/git
     ../../modules/neovim
+    ../../modules/zsh
   ];
 
   home = {
@@ -16,8 +17,4 @@
     gh
     neofetch
   ];
-
-  programs.zsh = {
-    enable = true;
-  };
 }
