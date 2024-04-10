@@ -1,4 +1,8 @@
 { pkgs, ... }: {
+  imports = [
+    ../../modules/neovim
+  ];
+
   home = {
     username = "momeemt";
     homeDirectory = "/home/momeemt";
@@ -8,8 +12,8 @@
   programs.home-manager.enable = true;
 
   home.packages = with pkgs; [
+    gh
     neofetch
-    neovim
   ];
 
   programs.zsh = {
