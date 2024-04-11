@@ -18,5 +18,12 @@
     ] ++ import ../../system/packages { inherit pkgs; };
   };
 
+  programs.git = {
+    signing = {
+      key = "ACB54F0CBC6AA7C6";
+      signByDefault = true;
+    };
+  };
+
   programs.home-manager.enable = true;
 }
