@@ -1,4 +1,3 @@
-
 local function on_attach_nvim_tree_lua(bufnr)
   local api = require("nvim-tree.api")
 
@@ -45,7 +44,12 @@ end
 
 require("nvim-tree").setup({
   filters = {
-    dotfiles = true,
+    dotfiles = false,
+    git_ignored = false,
+    custom = {
+      "^\\.git",
+      "^node_modules",
+    },
   },
   on_attach = on_attach_nvim_tree_lua,
 })
