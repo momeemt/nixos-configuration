@@ -2,7 +2,10 @@ export EDITOR='vim'
 export VISUAL='vim'
 export LANG='ja_JP.UTF-8'
 
+export PATH=$PATH:"$HOME/.nix-profile/bin"
 export PATH=$PATH:"/run/current-system/sw/bin"
+export PATH=$PATH:"/etc/profiles/per-user/momeemt/bin"
+export PATH=$PATH:"/Users/momeemt/Library/Application Support/JetBrains/Toolbox/scripts"
 
 bindkey -r "^[[A"
 bindkey -r "^[[B"

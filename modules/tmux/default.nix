@@ -1,15 +1,15 @@
 { pkgs, lib, ... }:
 let
-  tmux-battery = import ./tmux/tmux-battery.nix {
+  tmux-battery = import ./plugins/tmux-battery.nix {
     inherit (pkgs) tmuxPlugins fetchFromGitHub lib;
   };
-  tmux-fzf = import ./tmux/tmux-fzf.nix {
+  tmux-fzf = import ./plugins/tmux-fzf.nix {
     inherit (pkgs) tmuxPlugins fetchFromGitHub bash gnused fzf pstree lib;
   };
-  tmux-sensible = import ./tmux/tmux-sensible.nix {
+  tmux-sensible = import ./plugins/tmux-sensible.nix {
     inherit (pkgs) tmuxPlugins fetchFromGitHub;
   };
-  tmux-window-name = import ./tmux/tmux-window-name.nix {
+  tmux-window-name = import ./plugins/tmux-window-name.nix {
     inherit (pkgs) tmuxPlugins fetchFromGitHub python311 python311Packages tmux ps lib;
   };
   tmux-plugins = [
@@ -35,7 +35,7 @@ in
     shell = "${pkgs.zsh}/bin/zsh";
     extraConfig = ''
       set-environment -g PATH "${pkgs.tmux}/bin/:$PATH"
-    '' + builtins.readFile ../tmux/tmux.conf
+    '' + builtins.readFile ./tmux.conf
     + runShellAll tmux-plugins;
   };
 }

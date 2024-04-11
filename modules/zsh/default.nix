@@ -21,12 +21,13 @@
       ns = "nix-shell --command \"zsh\"";
       ls = "eza";
     };
-    initExtra = builtins.readFile ../zsh/zshrc;
+    initExtra = builtins.readFile ./zshrc;
+    profileExtra = builtins.readFile ./zprofile;
     loginExtra = ''
-      FPATH=${../zsh/functions}:$FPATH
+      FPATH=${./functions}:$FPATH
       export FPATH
 
-      . ${../zsh/completion.zsh}
+      . ${./completion.zsh}
     '';
   };
 }
