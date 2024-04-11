@@ -23,6 +23,11 @@
     };
   };
 
+  users.users.momeemt = {
+    name = "momeemt";
+    home = "/Users/momeemt";
+  };
+
   system = {
     defaults = {
       NSGlobalDomain = {
