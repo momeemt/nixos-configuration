@@ -20,10 +20,10 @@
       enable = true;
       background = "light";
     };
-    signing = {
-      key = "ACB54F0CBC6AA7C6";
-      signByDefault = true;
-    };
+    # signing = {
+    #   key = "ACB54F0CBC6AA7C6";
+    #   signByDefault = true;
+    # };
   };
 }
 

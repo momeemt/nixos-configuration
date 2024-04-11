@@ -17,7 +17,7 @@ in
     withPython3 = true;
     viAlias = true;
     vimAlias = true;
-    extraConfig = builtins.readFile ../neovim/init.vim;
+    extraConfig = builtins.readFile ./init.vim;
     coc = {
       enable = true;
       settings = {
@@ -40,7 +40,7 @@ in
       {
         plugin = telescope-nvim;
         type = "lua";
-        config = builtins.readFile ../neovim/plugins/telescope-nvim.lua;
+        config = builtins.readFile ./plugins/telescope-nvim.lua;
       }
       telescope-live-grep-args-nvim
       telescope-frecency-nvim
@@ -50,44 +50,44 @@ in
       {
         plugin = lualine-nvim;
         type = "lua";
-        config = builtins.readFile ../neovim/plugins/lualine.lua;
+        config = builtins.readFile ./plugins/lualine.lua;
       }
       {
         plugin = oceanic-material;
-        config = builtins.readFile ../neovim/plugins/oceanic-material.vim;
+        config = builtins.readFile ./plugins/oceanic-material.vim;
       }
       {
         plugin = vim-indent-guides;
-        config = builtins.readFile ../neovim/plugins/vim-indent-guides.vim;
+        config = builtins.readFile ./plugins/vim-indent-guides.vim;
       }
       {
         plugin = nvim-tree-lua;
         type = "lua";
-        config = builtins.readFile ../neovim/plugins/nvim-tree-lua.lua;
+        config = builtins.readFile ./plugins/nvim-tree-lua.lua;
       }
       vim-vsnip
       {
         plugin = nvim-cmp;
         type = "lua";
-        config = builtins.readFile ../neovim/plugins/nvim-cmp.lua;
+        config = builtins.readFile ./plugins/nvim-cmp.lua;
       }
       cmp-nvim-lsp
       {
         plugin = nvim-lspconfig;
         type = "lua";
-        config = builtins.readFile ../neovim/plugins/nvim-lspconfig.lua;
+        config = builtins.readFile ./plugins/nvim-lspconfig.lua;
       }
       lexima-vim
       {
         plugin = barbar-nvim;
         type = "lua";
-        config = builtins.readFile ../neovim/plugins/barbar-nvim.lua;
+        config = builtins.readFile ./plugins/barbar-nvim.lua;
       }
       nvim-web-devicons
       {
         plugin = nvim-surround;
         type = "lua";
-        config = builtins.readFile ../neovim/plugins/nvim-surround.lua;
+        config = builtins.readFile ./plugins/nvim-surround.lua;
       }
       satysfi-vim
       vim-wakatime

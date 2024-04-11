@@ -4,7 +4,7 @@
     enable = true;
     enableAutosuggestions = true;
     enableCompletion = true;
-    enableSyntaxHighlighting = true;
+    syntaxHighlighting.enable = true;
     completionInit = "autoload -U compinit && compinit -i";
     defaultKeymap = "emacs";
     history = {
