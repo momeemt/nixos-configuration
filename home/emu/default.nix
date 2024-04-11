@@ -3,6 +3,7 @@
     ../../modules/git
     ../../modules/neovim
     ../../modules/zsh
+    ../../system/packages
   ];
 
   home = {
@@ -12,9 +13,4 @@
   };
 
   programs.home-manager.enable = true;
-
-  home.packages = with pkgs; [
-    gh
-    neofetch
-  ];
 }
