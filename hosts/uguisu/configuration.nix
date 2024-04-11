@@ -23,9 +23,11 @@
     };
   };
 
+  programs.zsh.enable = true;
   users.users.momeemt = {
     name = "momeemt";
     home = "/Users/momeemt";
+    shell = pkgs.zsh;
   };
 
   system = {
