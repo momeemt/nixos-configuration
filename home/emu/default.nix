@@ -2,6 +2,7 @@
   imports = [
     ../../modules/git
     ../../modules/neovim
+    ../../modules/starship
     ../../modules/zsh
     ../../system/packages
   ];
