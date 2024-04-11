@@ -1,5 +1,5 @@
-{ pkgs, ...  }: {
-  home.packages = with pkgs; [
+{ pkgs, ...  }:
+with pkgs; [
     neofetch
     gh
     ripgrep
@@ -11,6 +11,5 @@
         "JetBrainsMono"
       ];
     })
-  ];
-}
+  ]
 

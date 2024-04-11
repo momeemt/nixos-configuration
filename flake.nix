@@ -11,19 +11,22 @@
     darwin.url = "github:LnL7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs-darwin";
     flake-utils.url = "github:numtide/flake-utils";
+    sops-nix.url = "github:Mic92/sops-nix";
   };
 
-  outputs = { nixpkgs, home-manager, darwin, ... }: {
+  outputs = { nixpkgs, home-manager, darwin, sops-nix, ... }: {
     nixosConfigurations = {
       emu = nixpkgs.lib.nixosSystem {
-	system = "x86_64-linux";
-	modules = [
-	  ./hosts/emu
-	  home-manager.nixosModules.home-manager {
-	    home-manager.useGlobalPkgs = true;
-	    home-manager.useUserPackages = true;
-	    home-manager.users.momeemt = import ./home/emu;
-	  }
+        system = "x86_64-linux";
+        modules = [
+          ./hosts/emu
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.momeemt = import ./home/emu;
+          }
+          sops-nix.nixosModules.sops
         ];
       };
     };
@@ -31,14 +34,15 @@
     darwinConfigurations = {
       uguisu = darwin.lib.darwinSystem {
         system = "aarch64-darwin";
-	modules = [
-	  ./hosts/uguisu
-	  home-manager.darwinModules.home-manager {
-	    home-manager.useGlobalPkgs = true;
-	    home-manager.useUserPackages = true;
-	    home-manager.users.momeemt = import ./home/uguisu;
-	  }
-	];
+        modules = [
+          ./hosts/uguisu
+          home-manager.darwinModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.momeemt = import ./home/uguisu;
+          }
+        ];
       };
     };
   };
