@@ -30,6 +30,7 @@
           buildInputs = with pkgs; [
             nil
             alejandra
+            lua-language-server
           ];
         };
       }
