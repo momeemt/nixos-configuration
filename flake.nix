@@ -1,6 +1,6 @@
 {
   nixConfig = {
-    experimental-features = [ "nix-command" "flakes" ];
+    experimental-features = ["nix-command" "flakes"];
   };
 
   inputs = {
@@ -14,36 +14,56 @@
     sops-nix.url = "github:Mic92/sops-nix";
   };
 
-  outputs = { nixpkgs, home-manager, darwin, sops-nix, ... }: {
-    nixosConfigurations = {
-      emu = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          ./hosts/emu
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.momeemt = import ./home/emu;
-          }
-          sops-nix.nixosModules.sops
-        ];
+  outputs = {
+    nixpkgs,
+    home-manager,
+    darwin,
+    sops-nix,
+    flake-utils,
+    ...
+  }:
+    flake-utils.lib.eachDefaultSystem (
+      system: let
+        pkgs = import nixpkgs {inherit system;};
+      in {
+        devShell = pkgs.mkShell {
+          buildInputs = with pkgs; [
+            nil
+            alejandra
+          ];
+        };
+      }
+    )
+    // {
+      nixosConfigurations = {
+        emu = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            ./hosts/emu
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.momeemt = import ./home/emu;
+            }
+            sops-nix.nixosModules.sops
+          ];
+        };
       };
-    };
 
-    darwinConfigurations = {
-      uguisu = darwin.lib.darwinSystem {
-        system = "aarch64-darwin";
-        modules = [
-          ./hosts/uguisu
-          home-manager.darwinModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.momeemt = import ./home/uguisu;
-          }
-        ];
+      darwinConfigurations = {
+        uguisu = darwin.lib.darwinSystem {
+          system = "aarch64-darwin";
+          modules = [
+            ./hosts/uguisu
+            home-manager.darwinModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.momeemt = import ./home/uguisu;
+            }
+          ];
+        };
       };
     };
-  };
 }
