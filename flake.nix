@@ -22,7 +22,8 @@
     flake-utils,
     ...
   }:
-    flake-utils.lib.eachDefaultSystem (
+    flake-utils.lib.eachDefaultSystem
+    (
       system: let
         pkgs = import nixpkgs {inherit system;};
       in {
@@ -31,6 +32,7 @@
             nil
             alejandra
             lua-language-server
+            nodePackages.vim-language-server
           ];
         };
       }

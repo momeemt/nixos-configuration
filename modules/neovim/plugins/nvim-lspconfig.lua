@@ -72,6 +72,13 @@ nvim_lsp.rust_analyzer.setup {
 nvim_lsp.nil_ls.setup {
   on_attach = on_attach,
   capabilities = capabilities,
+  settings = {
+    ['nil'] = {
+      formatting = {
+        command = { "alejandra" }
+      }
+    }
+  }
 }
 
 nvim_lsp.clangd.setup {
