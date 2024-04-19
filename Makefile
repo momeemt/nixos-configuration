@@ -1,25 +1,7 @@
 SHELL := $(shell which zsh) -e
 
-.PHONY: build
-build: build-darwin build-home
-
-.PHONY: build-darwin
-build-darwin: nixpkgs-fmt shellcheck
-	nix run nix-darwin -- switch --flake .
-
-.PHONY: build-home
-build-home: nixpkgs-fmt shellcheck
-	home-manager switch -f home.nix
-
-.PHONY: nixpkgs-fmt
-nixpkgs-fmt:
-	find . -name '*.nix' -print0 | while IFS= read -r -d '' file; do \
-		nixpkgs-fmt "$$file"; \
-	done
-
-.PHONY: shellcheck
-shellcheck:
-	find . -path './zsh/*' -type f -print0 | while IFS= read -r -d '' file; do \
-		shellcheck -x -s bash "$$file"; \
-	done
+.PHONY: apply-uguisu
+apply-uguisu:
+	nix build ".#darwinConfigurations.uguisu.system" --extra-experimental-features "nix-command flakes"
+	./result/sw/bin/darwin-rebuild switch --flake ".#uguisu"
 
