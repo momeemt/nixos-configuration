@@ -35,7 +35,18 @@ in
       nim-vim
       vim-commentary
       luasnip
+      {
+        plugin = nvim-treesitter;
+        type = "lua";
+        config = builtins.readFile ./plugins/nvim-treesitter.lua;
+      }
       nvim-treesitter-parsers.yaml
+      nvim-treesitter-parsers.json
+      nvim-treesitter-parsers.javascript
+      nvim-treesitter-parsers.typescript
+      nvim-treesitter-parsers.tsx
+      nvim-treesitter-parsers.html
+      nvim-treesitter-parsers.css
       copilot-vim
       {
         plugin = telescope-nvim;
@@ -91,6 +102,8 @@ in
       }
       satysfi-vim
       vim-wakatime
+      nvim-ts-autotag
+      nvim-autopairs
     ];
   };
 }
