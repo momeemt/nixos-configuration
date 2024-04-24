@@ -56,6 +56,9 @@
           "emu.momee.mt" = {
             service = "ssh://localhost:22";
           };
+          "s3.momee.mt" = {
+            service = "http://localhost:9000";
+          };
         };
         default = "http_status:404";
       };
@@ -63,6 +66,9 @@
   };
 
   virtualisation.docker.enable = true;
+  
+  virtualisation.libvirtd.enable = true;
+  programs.virt-manager.enable = true;
   
   system.stateVersion = "23.11";
 }
