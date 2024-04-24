@@ -72,6 +72,13 @@ nvim_lsp.rust_analyzer.setup {
 nvim_lsp.nil_ls.setup {
   on_attach = on_attach,
   capabilities = capabilities,
+  settings = {
+    ['nil'] = {
+      formatting = {
+        command = { "alejandra" }
+      }
+    }
+  }
 }
 
 nvim_lsp.clangd.setup {
@@ -79,3 +86,17 @@ nvim_lsp.clangd.setup {
   capabilities = capabilities,
 }
 
+nvim_lsp.terraformls.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+}
+
+nvim_lsp.tsserver.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+}
+
+nvim_lsp.biome.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+}
