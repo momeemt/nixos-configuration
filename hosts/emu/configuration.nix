@@ -4,7 +4,15 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "emu";
+  networking.networkmanager.enable = false;
   networking.wireless.enable = true;
+
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts = [ 3389 ];
+    allowedUDPPorts = [ 3389 ];
+  };
+  
   networking.nameservers = [
     "1.1.1.1"
     "8.8.8.8"
@@ -14,8 +22,12 @@
   programs.zsh.enable = true;
 
   sops.secrets.momeemt-password.neededForUsers = true;
+
   sops.secrets.emu-cloudflared-cred = {};
   sops.secrets.emu-cloudflared-cred.mode = "0444"; # cloudflared reads this secret
+
+  sops.secrets.emu-desktop-cloudflared-cred = {};
+  sops.secrets.emu-desktop-cloudflared-cred.mode = "0444";
 
   users.users.momeemt = {
     isNormalUser = true; 
@@ -59,8 +71,63 @@
         };
         default = "http_status:404";
       };
+      "b2b83e61-577c-45e7-b1c0-0961503e8d8d" = {
+        credentialsFile = "${config.sops.secrets.emu-desktop-cloudflared-cred.path}";
+        ingress = {
+          "emu-desktop.momee.mt" = {
+            service = "rdp://localhost:3389";
+          };
+        };
+        default = "http_status:404";
+      };
     };
   };
+
+  services.xserver = {
+    enable = true;
+    displayManager.gdm = {
+      enable = true;
+    };
+    desktopManager.gnome.enable = true;
+  };
+
+  # https://github.com/NixOS/nixpkgs/issues/100390
+  security.polkit.extraConfig = ''
+    polkit.addRule(function(action, subject) {
+        if (action.id == "org.freedesktop.login1.suspend" ||
+            action.id == "org.freedesktop.login1.suspend-multiple-sessions" ||
+            action.id == "org.freedesktop.login1.hibernate" ||
+            action.id == "org.freedesktop.login1.hibernate-multiple-sessions")
+        {
+            return polkit.Result.NO;
+        }
+    });
+  '';
+
+  services.xrdp = {
+    enable = true;
+    defaultWindowManager = "${pkgs.gnome3.gnome-session}/bin/gnome-session";
+    openFirewall = true;
+  };
+
+  environment.gnome.excludePackages = (with pkgs; [
+    gnome-photos
+    gnome-tour
+  ]) ++ (with pkgs.gnome; [
+    cheese
+    gnome-music
+    gnome-terminal
+    gedit
+    epiphany
+    geary
+    evince
+    gnome-characters
+    totem
+    tali
+    iagno
+    hitori
+    atomix
+  ]);
 
   virtualisation.docker.enable = true;
   
