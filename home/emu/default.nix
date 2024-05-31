@@ -15,6 +15,7 @@
       age
       sops
       cloudflared
+      quartus-prime-lite
     ] ++ import ../../system/packages { inherit pkgs; };
   };
 
