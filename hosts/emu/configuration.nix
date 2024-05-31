@@ -19,6 +19,11 @@
     "8.8.4.4"
   ];
 
+  nixpkgs.config.allowUnfreePredicate = pkg:
+    builtins.elem (lib.getName pkg) [
+      "quartus-prime-lite-unwrapped"
+    ];
+
   programs.zsh.enable = true;
 
   sops.secrets.momeemt-password.neededForUsers = true;
