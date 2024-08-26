@@ -134,6 +134,8 @@
     atomix
   ]);
 
+  services.udev.packages = [ pkgs.usb-blaster-udev-rules ];
+
   virtualisation.docker.enable = true;
   
   system.stateVersion = "23.11";
