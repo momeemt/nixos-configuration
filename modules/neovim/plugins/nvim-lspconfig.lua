@@ -100,3 +100,8 @@ nvim_lsp.biome.setup {
   on_attach = on_attach,
   capabilities = capabilities,
 }
+
+nvim_lsp.zls.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+}
