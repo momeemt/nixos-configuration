@@ -110,3 +110,8 @@ nvim_lsp.dhall_lsp_server.setup{
   on_attach = on_attach,
   capabilities = capabilities,
 }
+
+nvim_lsp.zls.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+}
