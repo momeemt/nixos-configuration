@@ -104,6 +104,8 @@ in
       vim-wakatime
       nvim-ts-autotag
       nvim-autopairs
+      purescript-vim
+      dhall-vim
     ];
   };
 }
