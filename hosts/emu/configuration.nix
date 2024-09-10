@@ -1,23 +1,45 @@
-{ config, lib, pkgs, ... }:
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
+  network-interface = {
+    ipv4.addresses = [
+      {
+        address = "192.168.32.255";
+        prefixLength = 24;
+      }
+    ];
+  };
+in {
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "emu";
-  networking.networkmanager.enable = false;
-  networking.wireless.enable = true;
+  networking = {
+    hostName = "emu";
+    networkmanager.enable = false;
+    wireless.enable = true;
+    defaultGateway = "192.168.32.1";
 
-  networking.firewall = {
-    enable = true;
-    allowedTCPPorts = [ 3389 ];
-    allowedUDPPorts = [ 3389 ];
+    firewall = {
+      enable = true;
+      allowedTCPPorts = [3389];
+      allowedUDPPorts = [3389];
+    };
+
+    nameservers = [
+      "1.1.1.1"
+      "8.8.8.8"
+      "8.8.4.4"
+    ];
+
+    useDHCP = false;
+    interfaces = {
+      enp4s0 = network-interface;
+      enp3s0 = network-interface;
+    };
   };
-  
-  networking.nameservers = [
-    "1.1.1.1"
-    "8.8.8.8"
-    "8.8.4.4"
-  ];
 
   nixpkgs.config.allowUnfreePredicate = pkg:
     builtins.elem (lib.getName pkg) [
@@ -35,8 +57,8 @@
   sops.secrets.emu-desktop-cloudflared-cred.mode = "0444";
 
   users.users.momeemt = {
-    isNormalUser = true; 
-    extraGroups = [ "wheel" "docker" ];
+    isNormalUser = true;
+    extraGroups = ["wheel" "docker"];
     shell = pkgs.zsh;
     hashedPasswordFile = config.sops.secrets.momeemt-password.path;
     openssh.authorizedKeys.keys = [
@@ -45,7 +67,7 @@
   };
 
   sops.defaultSopsFile = ../../secrets/secrets.yml;
-  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+  sops.age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
   sops.age.keyFile = "/var/lib/sops-nix/key.txt";
   sops.age.generateKey = true;
 
@@ -60,7 +82,7 @@
     enable = true;
     dnssec = "true";
     domains = ["~."];
-    fallbackDns = ["1.1.1.1" "8.8.8.8" "8.8.4.4" ];
+    fallbackDns = ["1.1.1.1" "8.8.8.8" "8.8.4.4"];
     dnsovertls = "true";
   };
 
@@ -118,32 +140,33 @@
     openFirewall = true;
   };
 
-  environment.gnome.excludePackages = (with pkgs; [
-    gnome-photos
-    gnome-tour
-  ]) ++ (with pkgs.gnome; [
-    cheese
-    gnome-music
-    gnome-terminal
-    gedit
-    epiphany
-    geary
-    evince
-    gnome-characters
-    totem
-    tali
-    iagno
-    hitori
-    atomix
-  ]);
+  environment.gnome.excludePackages =
+    (with pkgs; [
+      gnome-photos
+      gnome-tour
+    ])
+    ++ (with pkgs.gnome; [
+      cheese
+      gnome-music
+      gnome-terminal
+      gedit
+      epiphany
+      geary
+      evince
+      gnome-characters
+      totem
+      tali
+      iagno
+      hitori
+      atomix
+    ]);
 
-  services.udev.packages = [ pkgs.usb-blaster-udev-rules ];
+  services.udev.packages = [pkgs.usb-blaster-udev-rules];
 
   virtualisation.docker.enable = true;
-  
+
   virtualisation.libvirtd.enable = true;
   programs.virt-manager.enable = true;
-  
+
   system.stateVersion = "23.11";
 }
-
