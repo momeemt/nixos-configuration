@@ -9,3 +9,7 @@ apply-uguisu:
 apply-emu:
 	sudo nixos-rebuild switch --flake ".#emu"
 
+.PHONY: apply-oshidori
+apply-oshidori:
+	sudo nixos-rebuild switch --flake ".#oshidori"
+
