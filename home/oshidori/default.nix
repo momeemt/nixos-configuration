@@ -15,6 +15,7 @@
     packages = with pkgs; [
       google-chrome
       spotify
+      teams-for-linux
     ] ++ import ../../system/packages { inherit pkgs; };
   };
 
