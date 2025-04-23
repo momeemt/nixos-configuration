@@ -31,7 +31,7 @@
         };
       };
 
-      shell = {
+      terminal.shell = {
         program = "${pkgs.zsh}/bin/zsh";
         args = [
           "-l"
@@ -44,371 +44,371 @@
         TERM = "alacritty";
       };
 
-      key_bindings = [
+      keyboard.bindings = [
         {
           key = "A";
           mods = "Alt";
-          chars = "\\x1ba";
+          chars = "\u001ba";
         }
         {
           key = "B";
           mods = "Alt";
-          chars = "\\x1bb";
+          chars = "\u001bb";
         }
         {
           key = "C";
           mods = "Alt";
-          chars = "\\x1bc";
+          chars = "\u001bc";
         }
         {
           key = "D";
           mods = "Alt";
-          chars = "\\x1bd";
+          chars = "\u001bd";
         }
         {
           key = "E";
           mods = "Alt";
-          chars = "\\x1be";
+          chars = "\u001be";
         }
         {
           key = "F";
           mods = "Alt";
-          chars = "\\x1bf";
+          chars = "\u001bf";
         }
         {
           key = "G";
           mods = "Alt";
-          chars = "\\x1bg";
+          chars = "\u001bg";
         }
         {
           key = "H";
           mods = "Alt";
-          chars = "\\x1bh";
+          chars = "\u001bh";
         }
         {
           key = "I";
           mods = "Alt";
-          chars = "\\x1bi";
+          chars = "\u001bi";
         }
         {
           key = "J";
           mods = "Alt";
-          chars = "\\x1bj";
+          chars = "\u001bj";
         }
         {
           key = "K";
           mods = "Alt";
-          chars = "\\x1bk";
+          chars = "\u001bk";
         }
         {
           key = "L";
           mods = "Alt";
-          chars = "\\x1bl";
+          chars = "\u001bl";
         }
         {
           key = "M";
           mods = "Alt";
-          chars = "\\x1bm";
+          chars = "\u001bm";
         }
         {
           key = "N";
           mods = "Alt";
-          chars = "\\x1bn";
+          chars = "\u001bn";
         }
         {
           key = "O";
           mods = "Alt";
-          chars = "\\x1bo";
+          chars = "\u001bo";
         }
         {
           key = "P";
           mods = "Alt";
-          chars = "\\x1bp";
+          chars = "\u001bp";
         }
         {
           key = "Q";
           mods = "Alt";
-          chars = "\\x1bq";
+          chars = "\u001bq";
         }
         {
           key = "R";
           mods = "Alt";
-          chars = "\\x1br";
+          chars = "\u001br";
         }
         {
           key = "S";
           mods = "Alt";
-          chars = "\\x1bs";
+          chars = "\u001bs";
         }
         {
           key = "T";
           mods = "Alt";
-          chars = "\\x1bt";
+          chars = "\u001bt";
         }
         {
           key = "U";
           mods = "Alt";
-          chars = "\\x1bu";
+          chars = "\u001bu";
         }
         {
           key = "V";
           mods = "Alt";
-          chars = "\\x1bv";
+          chars = "\u001bv";
         }
         {
           key = "W";
           mods = "Alt";
-          chars = "\\x1bw";
+          chars = "\u001bw";
         }
         {
           key = "X";
           mods = "Alt";
-          chars = "\\x1bx";
+          chars = "\u001bx";
         }
         {
           key = "Y";
           mods = "Alt";
-          chars = "\\x1by";
+          chars = "\u001by";
         }
         {
           key = "Z";
           mods = "Alt";
-          chars = "\\x1bz";
+          chars = "\u001bz";
         }
         {
           key = "A";
           mods = "Alt|Shift";
-          chars = "\\x1bA";
+          chars = "\u001bA";
         }
         {
           key = "B";
           mods = "Alt|Shift";
-          chars = "\\x1bB";
+          chars = "\u001bB";
         }
         {
           key = "C";
           mods = "Alt|Shift";
-          chars = "\\x1bC";
+          chars = "\u001bC";
         }
         {
           key = "D";
           mods = "Alt|Shift";
-          chars = "\\x1bD";
+          chars = "\u001bD";
         }
         {
           key = "E";
           mods = "Alt|Shift";
-          chars = "\\x1bE";
+          chars = "\u001bE";
         }
         {
           key = "F";
           mods = "Alt|Shift";
-          chars = "\\x1bF";
+          chars = "\u001bF";
         }
         {
           key = "G";
           mods = "Alt|Shift";
-          chars = "\\x1bG";
+          chars = "\u001bG";
         }
         {
           key = "H";
           mods = "Alt|Shift";
-          chars = "\\x1bH";
+          chars = "\u001bH";
         }
         {
           key = "I";
           mods = "Alt|Shift";
-          chars = "\\x1bI";
+          chars = "\u001bI";
         }
         {
           key = "J";
           mods = "Alt|Shift";
-          chars = "\\x1bJ";
+          chars = "\u001bJ";
         }
         {
           key = "K";
           mods = "Alt|Shift";
-          chars = "\\x1bK";
+          chars = "\u001bK";
         }
         {
           key = "L";
           mods = "Alt|Shift";
-          chars = "\\x1bL";
+          chars = "\u001bL";
         }
         {
           key = "M";
           mods = "Alt|Shift";
-          chars = "\\x1bM";
+          chars = "\u001bM";
         }
         {
           key = "N";
           mods = "Alt|Shift";
-          chars = "\\x1bN";
+          chars = "\u001bN";
         }
         {
           key = "O";
           mods = "Alt|Shift";
-          chars = "\\x1bO";
+          chars = "\u001bO";
         }
         {
           key = "P";
           mods = "Alt|Shift";
-          chars = "\\x1bP";
+          chars = "\u001bP";
         }
         {
           key = "Q";
           mods = "Alt|Shift";
-          chars = "\\x1bQ";
+          chars = "\u001bQ";
         }
         {
           key = "R";
           mods = "Alt|Shift";
-          chars = "\\x1bR";
+          chars = "\u001bR";
         }
         {
           key = "S";
           mods = "Alt|Shift";
-          chars = "\\x1bS";
+          chars = "\u001bS";
         }
         {
           key = "T";
           mods = "Alt|Shift";
-          chars = "\\x1bT";
+          chars = "\u001bT";
         }
         {
           key = "U";
           mods = "Alt|Shift";
-          chars = "\\x1bU";
+          chars = "\u001bU";
         }
         {
           key = "V";
           mods = "Alt|Shift";
-          chars = "\\x1bV";
+          chars = "\u001bV";
         }
         {
           key = "W";
           mods = "Alt|Shift";
-          chars = "\\x1bW";
+          chars = "\u001bW";
         }
         {
           key = "X";
           mods = "Alt|Shift";
-          chars = "\\x1bX";
+          chars = "\u001bX";
         }
         {
           key = "Y";
           mods = "Alt|Shift";
-          chars = "\\x1bY";
+          chars = "\u001bY";
         }
         {
           key = "Z";
           mods = "Alt|Shift";
-          chars = "\\x1bZ";
+          chars = "\u001bZ";
         }
         {
           key = "Key1";
           mods = "Alt";
-          chars = "\\x1b1";
+          chars = "\u001b1";
         }
         {
           key = "Key2";
           mods = "Alt";
-          chars = "\\x1b2";
+          chars = "\u001b2";
         }
         {
           key = "Key3";
           mods = "Alt";
-          chars = "\\x1b3";
+          chars = "\u001b3";
         }
         {
           key = "Key4";
           mods = "Alt";
-          chars = "\\x1b4";
+          chars = "\u001b4";
         }
         {
           key = "Key5";
           mods = "Alt";
-          chars = "\\x1b5";
+          chars = "\u001b5";
         }
         {
           key = "Key6";
           mods = "Alt";
-          chars = "\\x1b6";
+          chars = "\u001b6";
         }
         {
           key = "Key7";
           mods = "Alt";
-          chars = "\\x1b7";
+          chars = "\u001b7";
         }
         {
           key = "Key8";
           mods = "Alt";
-          chars = "\\x1b8";
+          chars = "\u001b8";
         }
         {
           key = "Key9";
           mods = "Alt";
-          chars = "\\x1b9";
+          chars = "\u001b9";
         }
         {
           key = "Space";
           mods = "Control";
-          chars = "\\x00";
+          chars = "\u0000";
         }
-        {
-          key = "Grave";
-          mods = "Control";
-          chars = "\\x1b`";
-        }
-        {
-          key = "Grave";
-          mods = "Alt|Shift";
-          chars = "\\x1b~";
-        }
+        # {
+        #   key = "Grave";
+        #   mods = "Control";
+        #   chars = "\u001b`";
+        # }
+        # {
+        #   key = "Grave";
+        #   mods = "Alt|Shift";
+        #   chars = "\u001b~";
+        # }
         {
           key = "Period";
           mods = "Alt";
-          chars = "\\x1b.";
+          chars = "\u001b.";
         }
         {
           key = "Comma";
           mods = "Alt";
-          chars = "\\x1b,";
+          chars = "\u001b,";
         }
         {
           key = "Key8";
           mods = "Alt|Shift";
-          chars = "\\x1b*";
+          chars = "\u001b*";
         }
         {
           key = "Key3";
           mods = "Alt|Shift";
-          chars = "\\x1b#";
+          chars = "\u001b#";
         }
         {
           key = "Period";
           mods = "Alt|Shift";
-          chars = "\\x1b>";
+          chars = "\u001b>";
         }
         {
           key = "Comma";
           mods = "Alt|Shift";
-          chars = "\\x1b<";
+          chars = "\u001b<";
         }
         {
           key = "Minus";
           mods = "Alt|Shift";
-          chars = "\\x1b_";
+          chars = "\u001b_";
         }
         {
           key = "Key5";
           mods = "Alt|Shift";
-          chars = "\\x1b%";
+          chars = "\u001b%";
         }
         {
           key = "Key6";
           mods = "Alt|Shift";
-          chars = "\\x1b^";
+          chars = "\u001b^";
         }
       ];
     };
