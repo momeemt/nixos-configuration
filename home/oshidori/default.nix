@@ -13,6 +13,8 @@
     homeDirectory = "/home/momeemt";
     stateVersion = "24.11";
     packages = with pkgs; [
+      google-chrome
+      spotify
     ] ++ import ../../system/packages { inherit pkgs; };
   };
 

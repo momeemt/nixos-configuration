@@ -24,6 +24,8 @@
   nixpkgs.config.allowUnfreePredicate = pkg:
     builtins.elem (lib.getName pkg) [
       "copilot.vim"
+      "google-chrome"
+      "spotify"
     ];
 
   programs.zsh.enable = true;
