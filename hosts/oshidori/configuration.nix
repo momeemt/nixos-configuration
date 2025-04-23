@@ -1,7 +1,11 @@
 { config, lib, pkgs, ... }:
 {
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.systemd-boot.enable = false;
+  boot.loader.grub = {
+    enable = true;
+    version = 2;
+    device = "/dev/nvme0n1";
+  };
 
   networking.hostName = "oshidori";
   networking.networkmanager.enable = false;
@@ -16,6 +20,11 @@
     "8.8.8.8"
     "8.8.4.4"
   ];
+
+  nixpkgs.config.allowUnfreePredicate = pkg:
+    builtins.elem (lib.getName pkg) [
+      "copilot.vim"
+    ];
 
   programs.zsh.enable = true;
 
@@ -55,14 +64,14 @@
 
   services.xrdp = {
     enable = true;
-    defaultWindowManager = "${pkgs.gnome3.gnome-session}/bin/gnome-session";
+    defaultWindowManager = "${pkgs.gnome-session}/bin/gnome-session";
     openFirewall = true;
   };
 
   environment.gnome.excludePackages = (with pkgs; [
     gnome-photos
     gnome-tour
-  ]) ++ (with pkgs.gnome; [
+  ]) ++ (with pkgs; [
     cheese
     gnome-music
     gnome-terminal
