@@ -7,6 +7,8 @@
     device = "/dev/nvme0n1";
   };
 
+  time.timeZone = "Asia/Tokyo";
+
   networking.hostName = "oshidori";
   networking.networkmanager.enable = false;
   networking.wireless.enable = true;
