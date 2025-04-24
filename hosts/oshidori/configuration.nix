@@ -143,6 +143,19 @@
     };
   };
 
+  services.pipewire = {
+    enable = true;
+    pulse.enable = true;
+    wireplumber.enable = true;
+  };
+
+  xdg.portal = {
+    enable = true;
+    extraPortals = [
+      pkgs.xdg-desktop-portal-gtk
+    ];
+  };
+
   system.stateVersion = "24.11";
 }
 
