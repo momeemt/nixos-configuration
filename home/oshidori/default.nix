@@ -18,6 +18,7 @@
       spotify
       teams-for-linux
       discord
+      wl-clipboard
     ] ++ import ../../system/packages { inherit pkgs; };
   };
 
