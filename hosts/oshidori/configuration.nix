@@ -71,6 +71,13 @@
     openFirewall = true;
   };
 
+  environment.variables = {
+    GTK_IM_MODULE = "fcitx";
+    QT_IM_MODULE = "fcitx";
+    XMODIFIERS = "@im=fcitx";
+    GLFW_IM_MODULE = "ibus";
+  };
+
   environment.gnome.excludePackages = (with pkgs; [
     gnome-photos
     gnome-tour
@@ -89,6 +96,49 @@
     hitori
     atomix
   ]);
+
+  i18n.inputMethod = {
+    enable = true;
+    type = "fcitx5";
+    fcitx5 = {
+      addons = with pkgs; [
+        fcitx5-mozc
+        fcitx5-gtk
+      ];
+    };
+  };
+
+  fonts = {
+    packages = with pkgs; [
+      noto-fonts
+      noto-fonts-cjk-sans
+      noto-fonts-extra
+      noto-fonts-emoji
+      fira-code
+      fira-code-symbols
+      mplus-outline-fonts.githubRelease
+      dina-font
+      proggyfonts
+      dejavu_fonts
+    ];
+
+    fontconfig = {
+      enable = true;
+      defaultFonts = {
+        sansSerif = [
+          "Noto Sans CJK JP"
+          "DejaVu Serif"
+        ];
+        serif = [
+          "Noto Serif JP"
+          "DejaVu Serif"
+        ];
+      };
+      subpixel = {
+        lcdfilter = "light";
+      };
+    };
+  };
 
   system.stateVersion = "24.11";
 }
