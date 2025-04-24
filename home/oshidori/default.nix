@@ -5,6 +5,7 @@
     ../../modules/git
     ../../modules/neovim
     ../../modules/starship
+    ../../modules/tmux
     ../../modules/zsh
   ];
 
