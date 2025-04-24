@@ -28,6 +28,7 @@
       "copilot.vim"
       "google-chrome"
       "spotify"
+      "discord"
     ];
 
   programs.zsh.enable = true;

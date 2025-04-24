@@ -16,6 +16,7 @@
       google-chrome
       spotify
       teams-for-linux
+      discord
     ] ++ import ../../system/packages { inherit pkgs; };
   };
 
