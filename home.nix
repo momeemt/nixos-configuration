@@ -14,7 +14,7 @@ in {
   home = {
     username = "momeemt";
     homeDirectory = "/Users/momeemt";
-    stateVersion = "23.05";
+    stateVersion = "24.11";
     packages = with pkgs; [
       ripgrep
       neofetch
