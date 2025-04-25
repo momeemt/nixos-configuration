@@ -2,6 +2,7 @@
 with pkgs; [
     neofetch
     gh
+    ghq
     ripgrep
     eza
     bat
