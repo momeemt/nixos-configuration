@@ -29,6 +29,7 @@
       "google-chrome"
       "spotify"
       "discord"
+      "todoist-electron"
     ];
 
   programs.zsh.enable = true;
@@ -37,6 +38,9 @@
     isNormalUser = true; 
     extraGroups = [ "wheel" "docker" ];
     shell = pkgs.zsh;
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMtj5IciS1X++y09jLKu4GKxdeN+Kj5yZKB5TWp5TDwE momeemt@uguisu"
+    ];
   };
 
   services.resolved = {
@@ -154,6 +158,20 @@
     extraPortals = [
       pkgs.xdg-desktop-portal-gtk
     ];
+  };
+
+  services.tailscale = {
+    enable = true;
+    openFirewall = true;
+  };
+
+  services.openssh = {
+    enable = true;
+    settings.PasswordAuthentication = false;
+  };
+
+  networking.firewall = {
+    trustedInterfaces = [ "tailscale0" ];
   };
 
   system.stateVersion = "24.11";

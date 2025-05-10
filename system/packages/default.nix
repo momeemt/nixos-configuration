@@ -12,5 +12,6 @@ with pkgs; [
         "JetBrainsMono"
       ];
     })
+    nixpkgs-review
   ]
 

@@ -19,6 +19,9 @@
       teams-for-linux
       discord
       wl-clipboard
+      todoist-electron
+      todoist
+      gnome-screenshot
     ] ++ import ../../system/packages { inherit pkgs; };
   };
 
