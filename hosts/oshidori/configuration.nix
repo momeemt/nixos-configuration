@@ -29,6 +29,7 @@
       "google-chrome"
       "spotify"
       "discord"
+      "todoist-electron"
     ];
 
   programs.zsh.enable = true;
