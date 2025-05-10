@@ -91,14 +91,29 @@ nvim_lsp.terraformls.setup {
   capabilities = capabilities,
 }
 
-nvim_lsp.tsserver.setup {
+nvim_lsp.ts_ls.setup {
   on_attach = on_attach,
   capabilities = capabilities,
+  root_dir = nvim_lsp.util.root_pattern("package.json"),
+  single_file_support = false,
 }
 
-nvim_lsp.biome.setup {
+nvim_lsp.denols.setup {
   on_attach = on_attach,
   capabilities = capabilities,
+  root_dir = nvim_lsp.util.root_pattern("deno.json", "deno.jsonc"),
+  settings = {
+    deno = {
+      enable = true,
+      suggest = {
+        imports = {
+          hosts = {
+            ["https://deno.land"] = true
+          }
+        }
+      }
+    }
+  }
 }
 
 nvim_lsp.purescriptls.setup{
