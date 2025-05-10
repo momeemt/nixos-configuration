@@ -1,8 +1,4 @@
 {
-  nixConfig = {
-    experimental-features = ["nix-command" "flakes"];
-  };
-
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
     nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-24.11-darwin";
@@ -54,19 +50,19 @@
             sops-nix.nixosModules.sops
           ];
         };
-	# system security lab.
-	oshidori = nixpkgs.lib.nixosSystem {
-	  system = "x86_64-linux";
-	  modules = [
-	    ./hosts/oshidori
-	    home-manager.nixosModules.home-manager
-	    {
-	      home-manager.useGlobalPkgs = true;
-	      home-manager.useUserPackages = true;
-	      home-manager.users.momeemt = import ./home/oshidori;
-	    }
-	  ];
-	};
+        # system security lab.
+        oshidori = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            ./hosts/oshidori
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.momeemt = import ./home/oshidori;
+            }
+          ];
+        };
       };
 
       darwinConfigurations = {

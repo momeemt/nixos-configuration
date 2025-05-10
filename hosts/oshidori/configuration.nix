@@ -1,5 +1,14 @@
-{ config, lib, pkgs, ... }:
+{ lib, pkgs, ... }:
 {
+  nix = {
+    settings = {
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
+    };
+  };
+
   boot.loader.systemd-boot.enable = false;
   boot.loader.grub = {
     enable = true;
