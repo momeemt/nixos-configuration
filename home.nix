@@ -1,6 +1,7 @@
-{ config, pkgs, ... }:
-let inherit (builtins) getEnv;
-in {
+{
+  pkgs,
+  ...
+}: {
   imports = [
     ./nix/alacritty.nix
     ./nix/direnv.nix
@@ -37,4 +38,3 @@ in {
     };
   };
 }
-

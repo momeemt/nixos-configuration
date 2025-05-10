@@ -1,5 +1,8 @@
-{ pkgs, lib, ... }:
-let
+{
+  pkgs,
+  lib,
+  ...
+}: let
   tmux-battery = import ./plugins/tmux-battery.nix {
     inherit (pkgs) tmuxPlugins fetchFromGitHub lib;
   };
@@ -18,13 +21,13 @@ let
     tmux-sensible
     tmux-window-name
   ];
-  runShellAll = plugins: lib.concatStringsSep "\n" (map
-    (plugin:
-      "run-shell ${plugin}/share/tmux-plugins/${plugin.pluginName}/${plugin.rtpFilePath}"
-    )
-    plugins);
-in
-{
+  runShellAll = plugins:
+    lib.concatStringsSep "\n" (map
+      (
+        plugin: "run-shell ${plugin}/share/tmux-plugins/${plugin.pluginName}/${plugin.rtpFilePath}"
+      )
+      plugins);
+in {
   programs.tmux = {
     enable = true;
     baseIndex = 1;
@@ -33,9 +36,11 @@ in
     secureSocket = false;
     sensibleOnTop = false;
     shell = "${pkgs.zsh}/bin/zsh";
-    extraConfig = ''
-      set-environment -g PATH "${pkgs.tmux}/bin/:$PATH"
-    '' + builtins.readFile ./tmux.conf
-    + runShellAll tmux-plugins;
+    extraConfig =
+      ''
+        set-environment -g PATH "${pkgs.tmux}/bin/:$PATH"
+      ''
+      + builtins.readFile ./tmux.conf
+      + runShellAll tmux-plugins;
   };
 }

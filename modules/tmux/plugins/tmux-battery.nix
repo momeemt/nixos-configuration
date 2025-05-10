@@ -1,8 +1,12 @@
-{ tmuxPlugins, fetchFromGitHub, lib }:
+{
+  tmuxPlugins,
+  fetchFromGitHub,
+  lib,
+}:
 tmuxPlugins.mkTmuxPlugin rec {
   pluginName = "battery";
   version = src.rev;
-  rtpFilePath = (builtins.replaceStrings [ "-" ] [ "_" ] pluginName) + ".tmux";
+  rtpFilePath = (builtins.replaceStrings ["-"] ["_"] pluginName) + ".tmux";
   src = fetchFromGitHub {
     owner = "tmux-plugins";
     repo = "tmux-battery";

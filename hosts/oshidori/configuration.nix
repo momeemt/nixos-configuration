@@ -1,5 +1,8 @@
-{ lib, pkgs, ... }:
 {
+  lib,
+  pkgs,
+  ...
+}: {
   nix = {
     settings = {
       experimental-features = [
@@ -25,7 +28,7 @@
   networking.firewall = {
     enable = true;
   };
-  
+
   networking.nameservers = [
     "1.1.1.1"
     "8.8.8.8"
@@ -44,8 +47,8 @@
   programs.zsh.enable = true;
 
   users.users.momeemt = {
-    isNormalUser = true; 
-    extraGroups = [ "wheel" "docker" ];
+    isNormalUser = true;
+    extraGroups = ["wheel" "docker"];
     shell = pkgs.zsh;
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMtj5IciS1X++y09jLKu4GKxdeN+Kj5yZKB5TWp5TDwE momeemt@uguisu"
@@ -56,7 +59,7 @@
     enable = true;
     dnssec = "true";
     domains = ["~."];
-    fallbackDns = ["1.1.1.1" "8.8.8.8" "8.8.4.4" ];
+    fallbackDns = ["1.1.1.1" "8.8.8.8" "8.8.4.4"];
     dnsovertls = "true";
   };
 
@@ -94,24 +97,26 @@
     GLFW_IM_MODULE = "ibus";
   };
 
-  environment.gnome.excludePackages = (with pkgs; [
-    gnome-photos
-    gnome-tour
-  ]) ++ (with pkgs; [
-    cheese
-    gnome-music
-    gnome-terminal
-    gedit
-    epiphany
-    geary
-    evince
-    gnome-characters
-    totem
-    tali
-    iagno
-    hitori
-    atomix
-  ]);
+  environment.gnome.excludePackages =
+    (with pkgs; [
+      gnome-photos
+      gnome-tour
+    ])
+    ++ (with pkgs; [
+      cheese
+      gnome-music
+      gnome-terminal
+      gedit
+      epiphany
+      geary
+      evince
+      gnome-characters
+      totem
+      tali
+      iagno
+      hitori
+      atomix
+    ]);
 
   i18n.inputMethod = {
     enable = true;
@@ -180,9 +185,8 @@
   };
 
   networking.firewall = {
-    trustedInterfaces = [ "tailscale0" ];
+    trustedInterfaces = ["tailscale0"];
   };
 
   system.stateVersion = "24.11";
 }
-

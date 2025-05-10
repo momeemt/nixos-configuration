@@ -12,4 +12,3 @@
     _FXShowPosixPathInTitle = false;
   };
 }
-

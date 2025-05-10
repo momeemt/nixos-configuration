@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{pkgs, ...}: {
   imports = [
     ../../modules/alacritty
     ../../modules/direnv
@@ -13,9 +13,11 @@
     username = "momeemt";
     homeDirectory = "/Users/momeemt";
     stateVersion = "23.11";
-    packages = with pkgs; [
-      ghq
-    ] ++ import ../../system/packages { inherit pkgs; };
+    packages = with pkgs;
+      [
+        ghq
+      ]
+      ++ import ../../system/packages {inherit pkgs;};
   };
 
   programs.git = {
