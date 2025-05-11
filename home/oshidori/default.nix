@@ -1,7 +1,4 @@
-{
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   imports = [
     ../../modules/alacritty
     ../../modules/direnv
@@ -28,6 +25,8 @@
         todoist-electron
         todoist
         gnome-screenshot
+        mpv
+        vscode
       ]
       ++ import ../../system/packages {inherit pkgs;};
   };

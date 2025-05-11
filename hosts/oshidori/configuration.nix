@@ -42,6 +42,7 @@
       "spotify"
       "discord"
       "todoist-electron"
+      "vscode"
     ];
 
   programs.zsh.enable = true;
