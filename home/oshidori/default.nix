@@ -1,4 +1,7 @@
-{pkgs, inputs, ...}: {
+{
+  pkgs,
+  ...
+}: {
   imports = [
     ../../modules/alacritty
     ../../modules/direnv
