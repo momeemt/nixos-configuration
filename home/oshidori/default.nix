@@ -21,6 +21,7 @@
         spotify
         teams-for-linux
         discord
+        vesktop
         wl-clipboard
         todoist-electron
         todoist
