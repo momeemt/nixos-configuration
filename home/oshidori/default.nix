@@ -28,6 +28,7 @@
         gnome-screenshot
         mpv
         vscode
+        usbutils
       ]
       ++ import ../../system/packages {inherit pkgs;};
   };
