@@ -29,6 +29,7 @@
         mpv
         vscode
         usbutils
+        (import ../../packages/ncp {inherit pkgs;})
       ]
       ++ import ../../system/packages {inherit pkgs;};
   };
