@@ -1,11 +1,11 @@
-{pkgs, ...}: {
+{pkgs, inputs, ...}: {
   imports = [
     ../../modules/alacritty
     ../../modules/direnv
     ../../modules/git
-    # inputs.nixvim.homeManagerModules.nixvim
-    # ../../modules/nixvim
-    ../../modules/neovim
+    inputs.nixvim.homeManagerModules.nixvim
+    ../../modules/nixvim
+    # ../../modules/neovim
     ../../modules/starship
     ../../modules/tmux
     ../../modules/zsh
