@@ -2,6 +2,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
     nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-24.11-darwin";
+    nixpkgs-master.url = "github:NixOS/nixpkgs/master";
     flake-parts.url = "github:hercules-ci/flake-parts";
     systems.url = "github:nix-systems/default";
     home-manager = {
@@ -28,9 +29,24 @@
       url = "github:nix-community/nixvim/nixos-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    vscode-server.url = "github:nix-community/nixos-vscode-server";
+    tmux-nix = {
+      url = "github:momeemt/tmux-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = {flake-parts, ...} @ inputs:
+  outputs = {flake-parts, ...} @ inputs: let
+    vscodeOverlay = final: prev: let
+      masterPkgs = import inputs.nixpkgs-master {
+        inherit (prev) system;
+        config = prev.config;
+      };
+    in {
+      vscode = masterPkgs.vscode;
+      vscode-with-extensions = masterPkgs.vscode-with-extensions;
+    };
+  in
     flake-parts.lib.mkFlake {inherit inputs;} {
       imports = with inputs; [
         treefmt-nix.flakeModule
@@ -105,12 +121,17 @@
             sops-nix.nixosModules.sops
           ];
         };
+
         # system security lab.
         oshidori = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = with inputs; [
             ./hosts/oshidori
+            ({pkgs, ...}: {
+              nixpkgs.overlays = [vscodeOverlay];
+            })
             home-manager.nixosModules.home-manager
+            vscode-server.nixosModules.default
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;

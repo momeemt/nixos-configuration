@@ -43,9 +43,7 @@
     extraGroups = ["wheel" "docker"];
     shell = pkgs.zsh;
     hashedPasswordFile = config.sops.secrets.momeemt-password.path;
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMRWePf8csR+2HrGf1ZDKnsf0JZek59a5v4oinU9tTFG momeemt@uguisu"
-    ];
+    openssh.authorizedKeys.keys = (import ../../system/ssh.nix).public_keys;
   };
 
   sops.defaultSopsFile = ../../secrets/secrets.yml;

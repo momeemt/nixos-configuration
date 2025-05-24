@@ -112,6 +112,8 @@
       rust_analyzer = {
         enable = true;
         package = pkgs.rust-analyzer;
+        installRustc = true;
+        installCargo = true;
       };
       terraformls = {
         enable = true;

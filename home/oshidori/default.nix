@@ -7,7 +7,10 @@
     ../../modules/nixvim
     # ../../modules/neovim
     ../../modules/starship
-    ../../modules/tmux
+    inputs.tmux-nix.homeModules.tmux-nix
+    ../../modules/tmux-nix
+    # ../../modules/tmux
+    ../../modules/vscode
     ../../modules/zsh
   ];
 
@@ -27,7 +30,6 @@
         todoist
         gnome-screenshot
         mpv
-        vscode
         usbutils
         (import ../../packages/ncp {inherit pkgs;})
       ]

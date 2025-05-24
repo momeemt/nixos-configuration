@@ -43,17 +43,21 @@
       "discord"
       "todoist-electron"
       "vscode"
+      "vscode-extension-ms-vscode-remote-remote-containers"
+      "vscode-extension-ms-vscode-remote-remote-ssh"
+      "vscode-extension-ms-vscode-remote-remote-ssh-edit"
     ];
-
-  programs.zsh.enable = true;
 
   users.users.momeemt = {
     isNormalUser = true;
     extraGroups = ["wheel" "docker"];
     shell = pkgs.zsh;
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMtj5IciS1X++y09jLKu4GKxdeN+Kj5yZKB5TWp5TDwE momeemt@uguisu"
-    ];
+    openssh.authorizedKeys.keys = (import ../../system/ssh.nix).public_keys;
+  };
+
+  programs = {
+    nix-ld.enable = true;
+    zsh.enable = true;
   };
 
   services.resolved = {
@@ -183,6 +187,11 @@
   services.openssh = {
     enable = true;
     settings.PasswordAuthentication = false;
+  };
+
+  services.vscode-server = {
+    enable = true;
+    enableFHS = true;
   };
 
   networking.firewall = {

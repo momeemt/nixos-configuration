@@ -45,16 +45,6 @@
 
       keyboard.bindings = [
         {
-          key = "V";
-          mods = "Control";
-          action = "Paste";
-        }
-        {
-          key = "C";
-          mods = "Control";
-          action = "Copy";
-        }
-        {
           key = "A";
           mods = "Alt";
           chars = "\u001ba";
