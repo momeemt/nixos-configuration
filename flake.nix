@@ -34,17 +34,29 @@
       url = "github:momeemt/tmux-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    brew-nix = {
+      url = "github:BatteredBunny/brew-nix";
+      inputs = {
+        brew-api.follows = "brew-api";
+        nixpkgs.follows = "nixpkgs";
+        nix-darwin.follows = "nix-darwin";
+      };
+    };
+    brew-api = {
+      url = "github:BatteredBunny/brew-api";
+      flake = false;
+    };
   };
 
   outputs = {flake-parts, ...} @ inputs: let
-    vscodeOverlay = final: prev: let
+    vscodeOverlay = _final: prev: let
       masterPkgs = import inputs.nixpkgs-master {
         inherit (prev) system;
-        config = prev.config;
+        inherit (prev) config;
       };
     in {
-      vscode = masterPkgs.vscode;
-      vscode-with-extensions = masterPkgs.vscode-with-extensions;
+      inherit (masterPkgs) vscode;
+      inherit (masterPkgs) vscode-with-extensions;
     };
   in
     flake-parts.lib.mkFlake {inherit inputs;} {
@@ -127,7 +139,7 @@
           system = "x86_64-linux";
           modules = with inputs; [
             ./hosts/oshidori
-            ({pkgs, ...}: {
+            (_: {
               nixpkgs.overlays = [vscodeOverlay];
             })
             home-manager.nixosModules.home-manager
@@ -147,6 +159,9 @@
           system = "aarch64-darwin";
           modules = with inputs; [
             ./hosts/uguisu
+            (_: {
+              nixpkgs.overlays = [inputs.brew-nix.overlays.default];
+            })
             home-manager.darwinModules.home-manager
             {
               home-manager.useGlobalPkgs = true;

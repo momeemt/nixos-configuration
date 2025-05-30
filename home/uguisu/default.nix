@@ -9,15 +9,18 @@
     ../../modules/zsh
   ];
 
-  home = {
+  home = let
+    systemPackages = import ../../system/packages {inherit pkgs;};
+  in {
     username = "momeemt";
     homeDirectory = "/Users/momeemt";
     stateVersion = "25.05";
     packages = with pkgs;
       [
         ghq
+        brewCasks.anki
       ]
-      ++ import ../../system/packages {inherit pkgs;};
+      ++ systemPackages;
   };
 
   programs.git = {

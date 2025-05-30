@@ -6,13 +6,12 @@ set -eu
 # Will exit non-zero if not logged in.
 gh auth status
 
-if [ $# == 1 ]
-then
-    # Pass GitHub login name as commandline argument.
-    LOGIN=$1
+if [ $# == 1 ]; then
+  # Pass GitHub login name as commandline argument.
+  LOGIN=$1
 else
-    # Default to currently logged in user.
-    LOGIN=$(gh api user --jq .login)
+  # Default to currently logged in user.
+  LOGIN=$(gh api user --jq .login)
 fi
 
 BASE="gh pr list --repo NixOS/nixpkgs --json id --jq length --limit 500"
@@ -20,7 +19,7 @@ BASE="gh pr list --repo NixOS/nixpkgs --json id --jq length --limit 500"
 MERGED=$($BASE --author "$LOGIN" --state merged)
 REVIEWED=$($BASE --search "reviewed-by:$LOGIN -author:$LOGIN" --state all)
 
-cat << EOM
+cat <<EOM
 ――――――――――
  - [$MERGED PRs merged](https://github.com/NixOS/nixpkgs/pulls?q=is%3Apr+is%3Amerged+author%3A$LOGIN)
  - [$REVIEWED PRs reviewed](https://github.com/NixOS/nixpkgs/pulls?q=is%3Apr+reviewed-by%3A$LOGIN+-author%3A$LOGIN)
