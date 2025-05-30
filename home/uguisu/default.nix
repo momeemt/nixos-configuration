@@ -12,7 +12,7 @@
   home = {
     username = "momeemt";
     homeDirectory = "/Users/momeemt";
-    stateVersion = "23.11";
+    stateVersion = "25.05";
     packages = with pkgs;
       [
         ghq

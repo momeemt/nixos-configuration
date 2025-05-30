@@ -4,7 +4,7 @@
     settings = {
       font = {
         normal = {
-          family = "JetBrainsMono Nerd Font";
+          family = "JetBrainsMono Nerd Font Mono";
           style = "Regular";
         };
         offset = {
@@ -35,7 +35,7 @@
         args = [
           "-l"
           "-c"
-          "${pkgs.tmux}/bin/tmux attach || ${pkgs.tmux}/bin/tmux new-session"
+          ''${pkgs.tmux}/bin/tmux attach || ${pkgs.tmux}/bin/tmux new -s main''
         ];
       };
 

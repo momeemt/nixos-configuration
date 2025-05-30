@@ -1,4 +1,4 @@
-_: {
+{
   programs.zsh = {
     enable = true;
     autosuggestion.enable = true;
@@ -16,11 +16,9 @@ _: {
       size = 10000;
     };
     shellAliases = {
-      nd = "nix develop -c $SHELL";
-      ns = "nix-shell --command \"zsh\"";
       ls = "eza";
     };
-    initExtra = builtins.readFile ./zshrc;
+    initContent = builtins.readFile ./zshrc;
     profileExtra = builtins.readFile ./zprofile;
     loginExtra = ''
       FPATH=${./functions}:$FPATH

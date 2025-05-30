@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  lib,
+  ...
+}: {
   imports = [
     ./dock.nix
     ./networking.nix
@@ -14,13 +18,19 @@
 
   nix = {
     package = pkgs.nix;
-  };
-
-  services = {
-    nix-daemon = {
-      enable = true;
+    settings = {
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
+      trusted-users = ["momeemt"];
     };
   };
+
+  nixpkgs.config.allowUnfreePredicate = pkg:
+    builtins.elem (lib.getName pkg) [
+      "copilot.vim"
+    ];
 
   programs.zsh.enable = true;
   users.users.momeemt = {
@@ -30,6 +40,8 @@
   };
 
   system = {
+    stateVersion = 6;
+    primaryUser = "momeemt";
     defaults = {
       NSGlobalDomain = {
         AppleShowAllExtensions = true;

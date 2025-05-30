@@ -5,7 +5,7 @@ apply:
 	@HOSTNAME=$$(uname -n); \
 	if [[ "$$HOSTNAME" == "uguisu" ]]; then \
 		nix build ".#darwinConfigurations.uguisu.system" --extra-experimental-features "nix-command flakes"; \
-		./result/sw/bin/darwin-rebuild switch --flake ".#uguisu"; \
+		sudo ./result/sw/bin/darwin-rebuild switch --flake ".#uguisu"; \
 	elif [[ "$$HOSTNAME" == "emu" ]]; then \
 		sudo nixos-rebuild switch --flake ".#emu"; \
 	elif [[ "$$HOSTNAME" == "oshidori" ]]; then \

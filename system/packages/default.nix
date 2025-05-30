@@ -7,10 +7,7 @@ with pkgs; [
   eza
   bat
   bottom
-  (nerdfonts.override {
-    fonts = [
-      "JetBrainsMono"
-    ];
-  })
+  nerd-fonts.jetbrains-mono
   nixpkgs-review
+  gnupg
 ]
