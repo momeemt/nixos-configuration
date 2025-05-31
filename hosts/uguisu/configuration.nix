@@ -16,16 +16,8 @@
     ];
   };
 
-  nix = {
-    package = pkgs.nix;
-    settings = {
-      experimental-features = [
-        "nix-command"
-        "flakes"
-      ];
-      trusted-users = ["momeemt"];
-    };
-  };
+  # Using DetermineSystems/nix-installer to install Nix
+  nix.enable = false;
 
   nixpkgs.config.allowUnfreePredicate = pkg:
     builtins.elem (lib.getName pkg) [
