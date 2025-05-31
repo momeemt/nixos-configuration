@@ -17,6 +17,7 @@
 
   home = let
     systemPackages = import ../../system/packages {inherit pkgs;};
+    ncp = import ../../packages/ncp/default.nix {inherit pkgs;};
   in {
     username = "momeemt";
     homeDirectory = "/Users/momeemt";
@@ -24,6 +25,7 @@
     packages = with pkgs;
       [
         ghq
+        ncp
         brewCasks.anki
       ]
       ++ systemPackages;
