@@ -24,7 +24,11 @@
       "copilot.vim"
     ];
 
-  programs.zsh.enable = true;
+  programs.zsh = {
+    enable = true;
+    enableCompletion = false;
+  };
+
   users.users.momeemt = {
     name = "momeemt";
     home = "/Users/momeemt";
