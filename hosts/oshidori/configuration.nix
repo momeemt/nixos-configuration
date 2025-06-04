@@ -57,7 +57,10 @@
 
   programs = {
     nix-ld.enable = true;
-    zsh.enable = true;
+    zsh = {
+      enable = true;
+      enableCompletion = false;
+    };
   };
 
   services.resolved = {
@@ -146,6 +149,7 @@
       dina-font
       proggyfonts
       dejavu_fonts
+      nerd-fonts.jetbrains-mono
     ];
 
     fontconfig = {

@@ -11,7 +11,7 @@
       arrterian.nix-env-selector
       kamadorueda.alejandra
       vscodevim.vim
-      nvarner.typst-lsp
+      # nvarner.typst-lsp
       wakatime.vscode-wakatime
     ];
   };
