@@ -1,17 +1,27 @@
-SHELL := $(shell which zsh) -e
+SHELL := $(shell which zsh)
+.SHELLFLAGS := -eu -o pipefail -c
+HOSTNAME := $(shell uname -n)
+FLAKE_ROOT := .
+NIX_FLAGS := --extra-experimental-features 'nix-command flakes'
 
-.PHONY: apply
-apply:
-	@HOSTNAME=$$(uname -n); \
-	if [[ "$$HOSTNAME" == "uguisu" ]]; then \
-		nix build ".#darwinConfigurations.uguisu.system" --extra-experimental-features "nix-command flakes"; \
-		sudo ./result/sw/bin/darwin-rebuild switch --flake ".#uguisu"; \
-	elif [[ "$$HOSTNAME" == "emu" ]]; then \
-		sudo nixos-rebuild switch --flake ".#emu"; \
-	elif [[ "$$HOSTNAME" == "oshidori" ]]; then \
-		sudo nixos-rebuild switch --flake ".#oshidori"; \
-	else \
-		echo "Unsupported host: $$HOSTNAME" >&2; \
-		exit 1; \
-	fi
+HOSTS := uguisu emu oshidori
+
+uguisu_FLAKE_TARGET := darwinConfigurations.uguisu.system
+uguisu_SWITCH_COMMAND := sudo ./result/sw/bin/darwin-rebuild switch --flake '$(FLAKE_ROOT)\#uguisu'
+emu_SWITCH_COMMAND := sudo nixos-rebuild switch --flake '$(FLAKE_ROOT)\#emu'
+oshidori_SWITCH_COMMAND := sudo nixos-rebuild switch --flake '$(FLAKE_ROOT)\#oshidori'
+
+.DEFAULT_GOAL := apply
+apply: $(HOSTNAME)
+
+$(uguisu_FLAKE_TARGET):
+	@nix build '$(FLAKE_ROOT)#$(uguisu_FLAKE_TARGET)' $(NIX_FLAGS)
+
+uguisu: $(uguisu_FLAKE_TARGET)
+	@$(uguisu_SWITCH_COMMAND)
+
+emu oshidori:
+	@$($(*)_SWITCH_COMMAND)
+
+.PHONY: $(HOSTS) apply
 
