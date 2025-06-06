@@ -13,6 +13,7 @@
   environment = {
     systemPackages = with pkgs; [
       skhd
+      tart
     ];
   };
 
@@ -22,6 +23,7 @@
   nixpkgs.config.allowUnfreePredicate = pkg:
     builtins.elem (lib.getName pkg) [
       "copilot.vim"
+      "tart"
     ];
 
   programs.zsh = {
