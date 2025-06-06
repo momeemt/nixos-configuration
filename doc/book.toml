@@ -1,0 +1,5 @@
+[book]
+authors = ["Mutsuha Asada"]
+language = "ja"
+src = "src"
+title = "nixos-configurations"
