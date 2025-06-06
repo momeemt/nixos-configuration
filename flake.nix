@@ -77,9 +77,7 @@
             config.treefmt.build.devShell
           ];
           buildInputs = with pkgs; [
-            nil
-            lua-language-server
-            nodePackages.vim-language-server
+            mdbook
           ];
         };
 
