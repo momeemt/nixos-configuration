@@ -1,11 +1,20 @@
-{ pkgs, ... }: {
+{
+  pkgs,
+  inputs,
+  ...
+}: {
   imports = [
     ../../modules/alacritty
     ../../modules/direnv
     ../../modules/git
-    ../../modules/neovim
+    inputs.nixvim.homeManagerModules.nixvim
+    ../../modules/nixvim
+    # ../../modules/neovim
     ../../modules/starship
-    ../../modules/tmux
+    inputs.tmux-nix.homeModules.tmux-nix
+    ../../modules/tmux-nix
+    # ../../modules/tmux
+    ../../modules/vscode
     ../../modules/zsh
   ];
 
@@ -13,16 +22,22 @@
     username = "momeemt";
     homeDirectory = "/home/momeemt";
     stateVersion = "24.11";
-    packages = with pkgs; [
-      google-chrome
-      spotify
-      teams-for-linux
-      discord
-      wl-clipboard
-      todoist-electron
-      todoist
-      gnome-screenshot
-    ] ++ import ../../system/packages { inherit pkgs; };
+    packages = with pkgs;
+      [
+        google-chrome
+        spotify
+        teams-for-linux
+        discord
+        vesktop
+        wl-clipboard
+        todoist-electron
+        todoist
+        gnome-screenshot
+        mpv
+        usbutils
+        (import ../../packages/ncp {inherit pkgs;})
+      ]
+      ++ import ../../system/packages {inherit pkgs;};
   };
 
   programs.home-manager.enable = true;

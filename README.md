@@ -1,4 +1,5 @@
 # dotfiles
+
 the personal dotfiles
 
 ## Construction
@@ -27,7 +28,9 @@ $ nix-shell '<home-manager>' -A install
 ```
 
 ## License
+
 - MIT OR Apache 2.0
 
 ## Author
+
 - [Mutsuha Asada](https://github.com/momeemt)

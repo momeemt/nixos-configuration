@@ -7,7 +7,7 @@
     autohide-time-modifier = 1.0;
     dashboard-in-overlay = false;
     expose-animation-duration = 1.0;
-    expose-group-by-app = false;
+    expose-group-apps = false;
     largesize = 16;
     launchanim = true;
     magnification = false;

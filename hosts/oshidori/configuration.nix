@@ -1,5 +1,17 @@
-{ config, lib, pkgs, ... }:
 {
+  lib,
+  pkgs,
+  ...
+}: {
+  nix = {
+    settings = {
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
+    };
+  };
+
   boot.loader.systemd-boot.enable = false;
   boot.loader.grub = {
     enable = true;
@@ -16,7 +28,7 @@
   networking.firewall = {
     enable = true;
   };
-  
+
   networking.nameservers = [
     "1.1.1.1"
     "8.8.8.8"
@@ -30,24 +42,32 @@
       "spotify"
       "discord"
       "todoist-electron"
+      "vscode"
+      "vscode-extension-ms-vscode-remote-remote-containers"
+      "vscode-extension-ms-vscode-remote-remote-ssh"
+      "vscode-extension-ms-vscode-remote-remote-ssh-edit"
     ];
-
-  programs.zsh.enable = true;
 
   users.users.momeemt = {
-    isNormalUser = true; 
-    extraGroups = [ "wheel" "docker" ];
+    isNormalUser = true;
+    extraGroups = ["wheel" "docker"];
     shell = pkgs.zsh;
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMtj5IciS1X++y09jLKu4GKxdeN+Kj5yZKB5TWp5TDwE momeemt@uguisu"
-    ];
+    openssh.authorizedKeys.keys = (import ../../system/ssh.nix).public_keys;
+  };
+
+  programs = {
+    nix-ld.enable = true;
+    zsh = {
+      enable = true;
+      enableCompletion = false;
+    };
   };
 
   services.resolved = {
     enable = true;
     dnssec = "true";
     domains = ["~."];
-    fallbackDns = ["1.1.1.1" "8.8.8.8" "8.8.4.4" ];
+    fallbackDns = ["1.1.1.1" "8.8.8.8" "8.8.4.4"];
     dnsovertls = "true";
   };
 
@@ -85,24 +105,26 @@
     GLFW_IM_MODULE = "ibus";
   };
 
-  environment.gnome.excludePackages = (with pkgs; [
-    gnome-photos
-    gnome-tour
-  ]) ++ (with pkgs; [
-    cheese
-    gnome-music
-    gnome-terminal
-    gedit
-    epiphany
-    geary
-    evince
-    gnome-characters
-    totem
-    tali
-    iagno
-    hitori
-    atomix
-  ]);
+  environment.gnome.excludePackages =
+    (with pkgs; [
+      gnome-photos
+      gnome-tour
+    ])
+    ++ (with pkgs; [
+      cheese
+      gnome-music
+      gnome-terminal
+      gedit
+      epiphany
+      geary
+      evince
+      gnome-characters
+      totem
+      tali
+      iagno
+      hitori
+      atomix
+    ]);
 
   i18n.inputMethod = {
     enable = true;
@@ -127,6 +149,7 @@
       dina-font
       proggyfonts
       dejavu_fonts
+      nerd-fonts.jetbrains-mono
     ];
 
     fontconfig = {
@@ -170,10 +193,14 @@
     settings.PasswordAuthentication = false;
   };
 
+  services.vscode-server = {
+    enable = true;
+    enableFHS = true;
+  };
+
   networking.firewall = {
-    trustedInterfaces = [ "tailscale0" ];
+    trustedInterfaces = ["tailscale0"];
   };
 
   system.stateVersion = "24.11";
 }
-

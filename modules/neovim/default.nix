@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-let
+{pkgs, ...}: let
   satysfi-vim-src = pkgs.fetchFromGitHub {
     owner = "qnighy";
     repo = "satysfi.vim";
@@ -10,8 +9,7 @@ let
     name = "satysfi-vim";
     src = satysfi-vim-src;
   };
-in
-{
+in {
   programs.neovim = {
     enable = true;
     withPython3 = true;
@@ -24,8 +22,8 @@ in
         languageserver = {
           satysfi-ls = {
             command = "satysfi-language-server";
-            args = [ ];
-            filetypes = [ "satysfi" ];
+            args = [];
+            filetypes = ["satysfi"];
           };
         };
       };
@@ -109,4 +107,3 @@ in
     ];
   };
 }
-

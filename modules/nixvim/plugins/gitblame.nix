@@ -1,0 +1,5 @@
+{
+  plugins.gitblame = {
+    enable = true;
+  };
+}

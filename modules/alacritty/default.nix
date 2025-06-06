@@ -1,11 +1,10 @@
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
   programs.alacritty = {
     enable = true;
     settings = {
       font = {
         normal = {
-          family = "JetBrainsMono Nerd Font";
+          family = "JetBrainsMono Nerd Font Mono";
           style = "Regular";
         };
         offset = {
@@ -36,7 +35,7 @@
         args = [
           "-l"
           "-c"
-          "${pkgs.tmux}/bin/tmux attach || ${pkgs.tmux}/bin/tmux new-session"
+          ''${pkgs.tmux}/bin/tmux attach || ${pkgs.tmux}/bin/tmux new -s main''
         ];
       };
 
@@ -45,16 +44,6 @@
       };
 
       keyboard.bindings = [
-        {
-          key = "V";
-          mods = "Control";
-          action = "Paste";
-        }
-        {
-          key = "C";
-          mods = "Control";
-          action = "Copy";
-        }
         {
           key = "A";
           mods = "Alt";
@@ -424,4 +413,3 @@
     };
   };
 }
-

@@ -1,4 +1,6 @@
-function main () {
+#!/usr/bin/env zsh
+
+function main() {
   typeset -A colors
   colors=(
     [default]=$'%{\e[0m%}'
@@ -13,7 +15,7 @@ function main () {
 
   #== options ===#
   setopt auto_param_slash # 補完対象がディレクトリの場合は半角空白の代わりにスラッシュを挿入する
-  setopt mark_dirs # globbingの結果得られたディレクトリ名にはスラッシュを末尾に追加する
+  setopt mark_dirs        # globbingの結果得られたディレクトリ名にはスラッシュを末尾に追加する
   setopt list_types
   setopt auto_menu
   setopt auto_param_keys
@@ -39,4 +41,3 @@ function main () {
 }
 
 main
-

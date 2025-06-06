@@ -1,4 +1,10 @@
-{ tmuxPlugins, fetchFromGitHub, entr, ps, lib }:
+{
+  tmuxPlugins,
+  fetchFromGitHub,
+  entr,
+  ps,
+  lib,
+}:
 tmuxPlugins.mkTmuxPlugin rec {
   pluginName = "tmux-autoreload";
   version = "e98aa3b74cfd5f2df2be2b5d4aa4ddcc843b2eba";
@@ -9,7 +15,7 @@ tmuxPlugins.mkTmuxPlugin rec {
     rev = "e98aa3b74cfd5f2df2be2b5d4aa4ddcc843b2eba";
     sha256 = "sha256-9Rk+VJuDqgsjc+gwlhvX6uxUqpxVD1XJdQcsc5s4pU4=";
   };
-  nativeBuildInputs = [ entr ];
+  nativeBuildInputs = [entr];
   postInstall = ''
     sed -i -e 's|entr |${entr}/bin/entr |g' $target/tmux-autoreload.tmux
     sed -i -e 's|ps |${ps}/bin/ps |g' $target/tmux-autoreload.tmux

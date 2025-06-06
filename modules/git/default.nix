@@ -15,6 +15,7 @@
       ".DS_Store"
       ".direnv"
       ".envrc"
+      ".momeemt"
     ];
     difftastic = {
       enable = true;
@@ -22,4 +23,3 @@
     };
   };
 }
-

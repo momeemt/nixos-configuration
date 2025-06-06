@@ -1,5 +1,8 @@
-{ pkgs, ... }:
 {
+  pkgs,
+  lib,
+  ...
+}: {
   imports = [
     ./dock.nix
     ./networking.nix
@@ -10,20 +13,24 @@
   environment = {
     systemPackages = with pkgs; [
       skhd
+      tart
     ];
   };
 
-  nix = {
-    package = pkgs.nix;
+  # Using DetermineSystems/nix-installer to install Nix
+  nix.enable = false;
+
+  nixpkgs.config.allowUnfreePredicate = pkg:
+    builtins.elem (lib.getName pkg) [
+      "copilot.vim"
+      "tart"
+    ];
+
+  programs.zsh = {
+    enable = true;
+    enableCompletion = false;
   };
 
-  services = {
-    nix-daemon = {
-      enable = true;
-    };
-  };
-
-  programs.zsh.enable = true;
   users.users.momeemt = {
     name = "momeemt";
     home = "/Users/momeemt";
@@ -31,6 +38,8 @@
   };
 
   system = {
+    stateVersion = 6;
+    primaryUser = "momeemt";
     defaults = {
       NSGlobalDomain = {
         AppleShowAllExtensions = true;

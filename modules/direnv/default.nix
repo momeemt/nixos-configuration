@@ -4,4 +4,3 @@
     nix-direnv.enable = true;
   };
 }
-
