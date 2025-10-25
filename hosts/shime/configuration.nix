@@ -48,7 +48,7 @@
 
   users.users.momeemt = {
     isNormalUser = true;
-    extraGroups = ["wheel" "docker"];
+    extraGroups = ["wheel" "docker" "libvirtd"];
     shell = pkgs.zsh;
     openssh.authorizedKeys.keys = (import ../../system/ssh.nix).public_keys;
   };
@@ -79,6 +79,15 @@
   networking.firewall = {
     trustedInterfaces = ["tailscale0"];
   };
+
+  virtualisation.libvirtd = {
+    enable = true;
+    qemu = {
+      package = pkgs.qemu_kvm;
+      runAsRoot = true;
+    };
+  };
+  programs.virt-manager.enable = true;
 
   system.stateVersion = "25.05";
 }
