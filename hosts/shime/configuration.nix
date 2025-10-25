@@ -22,16 +22,22 @@
 
   time.timeZone = "Asia/Tokyo";
 
-  networking.hostName = "shime";
-  networking.firewall = {
-    enable = true;
+  networking = {
+    hostName = "shime";
+    useNetworkd = true;
+    firewall = {
+      enable = true;
+      trustedInterfaces = ["tailscale0"];
+    };
+    nameservers = [
+      "1.1.1.1"
+      "8.8.8.8"
+      "8.8.4.4"
+    ];
+    interfaces.enp4s0.useDHCP = false;
+    bridges.br0.interfaces = [ "enp4s0" ];
+    interfaces.br0.useDHCP = true;
   };
-
-  networking.nameservers = [
-    "1.1.1.1"
-    "8.8.8.8"
-    "8.8.4.4"
-  ];
 
   nixpkgs.config.allowUnfreePredicate = pkg:
     builtins.elem (lib.getName pkg) [
@@ -74,10 +80,6 @@
   services.vscode-server = {
     enable = true;
     enableFHS = true;
-  };
-
-  networking.firewall = {
-    trustedInterfaces = ["tailscale0"];
   };
 
   virtualisation.libvirtd = {
