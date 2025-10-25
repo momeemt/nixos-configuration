@@ -13,7 +13,7 @@
 - emu (x86_64-linux)
     - CPU: Intel Core i9 14900
     - GPU: GeForce RTX 3060
-    - OS: NixOS 24.11
+    - OS: NixOS 25.05
     - サーバとして2024年4月から利用しています
 - oshidori (x86_64-linux)
     - CPU: AMD Ryzen 7 2700X

@@ -24,8 +24,18 @@
   ];
 
   nixpkgs.config.allowUnfreePredicate = pkg:
-    builtins.elem (lib.getName pkg) [
+  builtins.elem (lib.getName pkg) [
       "quartus-prime-lite-unwrapped"
+      "quartus-prime-lite"
+      "copilot.vim"
+      "google-chrome"
+      "spotify"
+      "discord"
+      "todoist-electron"
+      "vscode"
+      "vscode-extension-ms-vscode-remote-remote-containers"
+      "vscode-extension-ms-vscode-remote-remote-ssh"
+      "vscode-extension-ms-vscode-remote-remote-ssh-edit"
     ];
 
   programs.zsh.enable = true;
@@ -116,7 +126,7 @@
 
   services.xrdp = {
     enable = true;
-    defaultWindowManager = "${pkgs.gnome3.gnome-session}/bin/gnome-session";
+    defaultWindowManager = "${pkgs.gnome-session}/bin/gnome-session";
     openFirewall = true;
   };
 
@@ -125,7 +135,7 @@
       gnome-photos
       gnome-tour
     ])
-    ++ (with pkgs.gnome; [
+    ++ (with pkgs; [
       cheese
       gnome-music
       gnome-terminal

@@ -21,7 +21,7 @@
   home = {
     username = "momeemt";
     homeDirectory = "/home/momeemt";
-    stateVersion = "24.11";
+    stateVersion = "25.05";
     packages = with pkgs;
       [
         google-chrome
