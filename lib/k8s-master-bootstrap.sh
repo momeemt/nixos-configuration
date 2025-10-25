@@ -47,8 +47,6 @@ apt-get install -y containerd apt-transport-https ca-certificates curl gpg
 mkdir -p /etc/containerd
 containerd config default >/etc/containerd/config.toml
 sed -i 's/SystemdCgroup = false/SystemdCgroup = true/' /etc/containerd/config.toml
-systemctl restart containerd
-systemctl restart kubelet
 systemctl enable --now containerd
 
 # setup Kubernetes tools
@@ -59,6 +57,7 @@ echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.
   >/etc/apt/sources.list.d/kubernetes.list
 apt-get update -y
 apt-get install -y kubelet kubeadm kubectl
+systemctl enable --now kubelet
 apt-mark hold kubelet kubeadm kubectl
 
 if [[ -f /etc/kubernetes/admin.conf ]]; then
