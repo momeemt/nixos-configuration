@@ -132,6 +132,25 @@
           ];
         };
 
+	shime = inputs.nixpkgs.lib.nixosSystem {
+	  system = "x86_64-linux";
+	  modules = with inputs; [
+	    ./hosts/shime
+	    (_: {
+	      nixpkgs.overlays = [vscodeOverlay];
+	    })
+	    home-manager.nixosModules.home-manager
+	    vscode-server.nixosModules.default
+	    {
+	      home-manager.useGlobalPkgs = true;
+	      home-manager.useUserPackages = true;
+	      home-manager.extraSpecialArgs = {inherit inputs;};
+	      home-manager.users.momeemt = import ./home/shime;
+	      home-manager.backupFileExtension = "hm-bak";
+	    }
+	  ];
+	};
+
         # system security lab.
         oshidori = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";

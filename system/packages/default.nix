@@ -10,4 +10,5 @@ with pkgs; [
   nerd-fonts.jetbrains-mono
   nixpkgs-review
   gnupg
+  gnumake
 ]
