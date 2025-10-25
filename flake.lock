@@ -1,5 +1,24 @@
 {
   "nodes": {
+    "NixVirt": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1748140003,
+        "narHash": "sha256-DNBZmuk1YRM2PmwbHzVdXumRjCUzQkMarg4iI/37rOQ=",
+        "rev": "5dfe108fd859b122f9a96981cb6bc12297653d6c",
+        "revCount": 407,
+        "type": "tarball",
+        "url": "https://api.flakehub.com/f/pinned/AshleyYakeley/NixVirt/0.6.0/0197059a-e45f-7446-86b5-411ccc894ab0/source.tar.gz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://flakehub.com/f/AshleyYakeley/NixVirt/v0.6.0.tar.gz"
+      }
+    },
     "brew-api": {
       "flake": false,
       "locked": {
@@ -415,6 +434,7 @@
     },
     "root": {
       "inputs": {
+        "NixVirt": "NixVirt",
         "brew-api": "brew-api",
         "brew-nix": "brew-nix",
         "flake-parts": "flake-parts",

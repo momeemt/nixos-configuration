@@ -46,6 +46,10 @@
       url = "github:BatteredBunny/brew-api";
       flake = false;
     };
+    NixVirt = {
+      url = "https://flakehub.com/f/AshleyYakeley/NixVirt/v0.6.0.tar.gz";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {flake-parts, ...} @ inputs: let
@@ -120,15 +124,19 @@
       flake.nixosConfigurations = {
         emu = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
+          specialArgs = {inherit inputs;};
           modules = with inputs; [
             ./hosts/emu
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = {inherit inputs;};
               home-manager.users.momeemt = import ./home/emu;
+              home-manager.backupFileExtension = "hm-bak";
             }
             sops-nix.nixosModules.sops
+            NixVirt.nixosModules.default
           ];
         };
 
