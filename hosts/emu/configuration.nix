@@ -6,22 +6,36 @@
 }: {
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  
+  networking = {
+    hostName = "emu";
+    useNetworkd = true;
 
-  networking.hostName = "emu";
-  networking.networkmanager.enable = false;
-  networking.wireless.enable = true;
+    interfaces.enp3s0.useDHCP = false;
+    bridges.br0.interfaces = [ "enp3s0" ];
 
-  networking.firewall = {
-    enable = true;
-    allowedTCPPorts = [3389];
-    allowedUDPPorts = [3389];
+    interfaces.br0.ipv4.addresses = [{
+      address = "192.168.32.145";
+      prefixLength = 23;
+    }];
+
+    defaultGateway = {
+      address = "192.168.32.1";
+      interface = "br0";
+    };
+
+    firewall = {
+      enable = true;
+      allowedTCPPorts = [3389];
+      allowedUDPPorts = [3389];
+    };
+
+    nameservers = [
+      "1.1.1.1"
+      "8.8.8.8"
+      "8.8.4.4"
+    ];
   };
-
-  networking.nameservers = [
-    "1.1.1.1"
-    "8.8.8.8"
-    "8.8.4.4"
-  ];
 
   nixpkgs.config.allowUnfreePredicate = pkg:
     builtins.elem (lib.getName pkg) [
@@ -63,6 +77,7 @@
 
   services.openssh = {
     enable = true;
+    openFirewall = true;
     settings = {
       PasswordAuthentication = false;
     };
