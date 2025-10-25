@@ -24,7 +24,7 @@
   ];
 
   nixpkgs.config.allowUnfreePredicate = pkg:
-  builtins.elem (lib.getName pkg) [
+    builtins.elem (lib.getName pkg) [
       "quartus-prime-lite-unwrapped"
       "quartus-prime-lite"
       "copilot.vim"
