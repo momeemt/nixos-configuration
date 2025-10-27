@@ -85,6 +85,18 @@
           ];
         };
 
+        packages = {
+          encrypt-secrets = pkgs.writeShellApplication {
+            name = "encrypt-secrets";
+            runtimeInputs = with pkgs; [
+              sops
+              findutils
+              coreutils
+            ];
+            text = builtins.readFile ./scripts/encrypt-secrets.sh;
+          };
+        };
+
         treefmt = {
           projectRootFile = "flake.nix";
           programs = {
@@ -175,6 +187,7 @@
                   home-manager.users.momeemt = import ./home/shime;
                   home-manager.backupFileExtension = "hm-bak";
                 }
+                sops-nix.nixosModules.sops
               ];
             });
 
@@ -204,6 +217,7 @@
                   home-manager.extraSpecialArgs = {inherit inputs;};
                   home-manager.users.momeemt = import ./home/oshidori;
                 }
+                sops-nix.nixosModules.sops
               ];
             });
       };
@@ -233,6 +247,7 @@
                   home-manager.extraSpecialArgs = {inherit inputs;};
                   home-manager.users.momeemt = import ./home/uguisu;
                 }
+                sops-nix.darwinModules.sops
               ];
             });
       };

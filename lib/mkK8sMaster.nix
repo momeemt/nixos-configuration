@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   lib,
   nixvirtLib,
@@ -9,66 +10,68 @@
   vcpu ? 4,
   memoryGiB ? 8,
   rootDiskSizeGiB ? 30,
-  bridge ? "br0",
+  bridge,
   apiAdvertiseAddress,
   podCIDR,
 }: let
   diskPath = "/var/lib/libvirt/images/${name}.qcow2";
-  userData = pkgs.writeText "user-data-${name}" (
-    "#cloud-config\n"
-    + lib.generators.toYAML {} {
-      users = [
-        {
-          name = "ubuntu";
-          ssh_authorized_keys = sshKeys;
-          sudo = "ALL=(ALL) NOPASSWD:ALL";
-          shell = "/bin/bash";
-        }
-      ];
+  seedDir = "/var/lib/libvirt/seed/${name}";
+  isoPath = "${seedDir}/seed.iso";
 
-      packages = ["qemu-guest-agent"];
+  yaml = pkgs.formats.yaml {};
+  userData = yaml.generate "user-data-${name}" {
+    users = [
+      {
+        name = "ubuntu";
+        ssh_authorized_keys = sshKeys;
+        sudo = "ALL=(ALL) NOPASSWD:ALL";
+        shell = "/bin/bash";
+      }
+    ];
 
-      network = {
-        version = 2;
-        renderer = "networkd";
-        ethernets.all = {
-          match.name = "en*";
-          dhcp4 = true;
-          dhcp6 = true;
-        };
+    packages = ["qemu-guest-agent"];
+
+    network = {
+      version = 2;
+      renderer = "networkd";
+      ethernets.all = {
+        match.name = "en*";
+        dhcp4 = true;
+        dhcp6 = true;
       };
+    };
 
-      write_files = [
-        {
-          path = "/usr/local/sbin/k8s-master-bootstrap.sh";
-          permissions = "0755";
-          content = builtins.readFile ./k8s-master-bootstrap.sh;
-        }
-      ];
-
-      runcmd = [
-        "/usr/local/sbin/k8s-master-bootstrap.sh --api-server-ip ${apiAdvertiseAddress} --pod-cidr ${podCIDR}"
-      ];
-    }
-  );
+    runcmd = let
+      bash = cmd: ["bash" "-lc" cmd];
+    in [
+      (bash "mkdir -p /seed")
+      (bash "mount -o ro /dev/disk/by-label/payload /seed")
+      (bash "mkdir -p /etc/kubernetes/pki")
+      (bash "install -m600 /seed/ca.key /etc/kubernetes/pki/ca.key")
+      (bash "install -m644 /seed/ca.crt /etc/kubernetes/pki/ca.crt")
+      (bash ''
+        TOKEN=$(cat /seed/token) &&
+        /seed/k8s-master-bootstrap.sh \
+          --api-server-ip ${apiAdvertiseAddress} \
+          --pod-cidr ${podCIDR} \
+          --bootstrap-token "$TOKEN"
+      '')
+    ];
+  };
 
   metaData = pkgs.writeText "meta-data-${name}" ''
     instance-id: ${name}
     local-hostname: ${name}
   '';
 
-  cloudInitIso =
-    pkgs.runCommand "cloudinit-${name}.iso" {
-      buildInputs = [pkgs.cloud-utils];
-    } ''
-      cloud-localds $out ${userData} ${metaData}
-    '';
-
   base = nixvirtLib.domain.templates.linux {
     inherit name uuid;
     memory = {
       count = memoryGiB;
       unit = "GiB";
+    };
+    vcpu = {
+      count = vcpu;
     };
     storage_vol = diskPath;
     bridge_name = bridge;
@@ -92,10 +95,26 @@
                   type = "raw";
                 };
                 source = {
-                  file = "${cloudInitIso}";
+                  file = isoPath;
                 };
                 target = {
                   dev = "sda";
+                  bus = "sata";
+                };
+                readonly = {};
+              }
+              {
+                type = "file";
+                device = "cdrom";
+                driver = {
+                  name = "qemu";
+                  type = "raw";
+                };
+                source = {
+                  file = "${seedDir}/payload.iso";
+                };
+                target = {
+                  dev = "sdb";
                   bus = "sata";
                 };
                 readonly = {};
@@ -104,9 +123,7 @@
           interface = [
             {
               type = "bridge";
-              source = {
-                bridge = "br0";
-              };
+              source = {inherit bridge;};
               model = {
                 type = "virtio";
               };
@@ -142,6 +159,37 @@
     };
   domainXml = nixvirtLib.domain.writeXML withIso;
 in {
+  systemd.tmpfiles.rules = [
+    "d ${seedDir} 0750 root root -"
+  ];
+
+  systemd.services."vm-cloudinit-${name}" = {
+    after = ["sops-nix.service"];
+    wantedBy = ["multi-user.target"];
+    serviceConfig.Type = "oneshot";
+    script = ''
+      set -euo pipefail
+      dir="${seedDir}"
+      mkdir -p "$dir"
+
+      install -m644 ${../assets/k8s/ca.crt} "$dir/ca.crt"
+      install -m600 ${config.sops.secrets."k8s/ca.key".path} "$dir/ca.key"
+      install -m600 ${config.sops.secrets.k8s-bootstrap-token.path} "$dir/token"
+
+      install -m755 ${./k8s-master-bootstrap.sh} "$dir/k8s-master-bootstrap.sh"
+
+      printf '%s\n' '#cloud-config' > "$dir/user-data"
+      cat ${userData} >> "$dir/user-data"
+      cp ${metaData} "$dir/meta-data"
+
+      ${pkgs.cloud-utils}/bin/cloud-localds "${isoPath}" "$dir/user-data" "$dir/meta-data"
+
+      ${pkgs.cdrkit}/bin/genisoimage -quiet -J -r -V payload \
+        -o "${seedDir}/payload.iso" \
+        "$dir/ca.crt" "$dir/ca.key" "$dir/token" "$dir/k8s-master-bootstrap.sh"
+    '';
+  };
+
   systemd.services."vm-disk-${name}" = {
     after = ["libvirtd.service"];
     wantedBy = ["multi-user.target"];
@@ -156,8 +204,16 @@ in {
     '';
   };
 
-  systemd.services.nixvirt.wants = ["vm-disk-${name}.service"];
-  systemd.services.nixvirt.after = ["vm-disk-${name}.service"];
+  systemd.services.nixvirt.wants = [
+    "vm-disk-${name}.service"
+    "vm-cloudinit-${name}.service"
+  ];
+
+  systemd.services.nixvirt.after = [
+    "vm-disk-${name}.service"
+    "vm-cloudinit-${name}.service"
+  ];
+
   virtualisation.libvirt.connections."qemu:///system".domains = lib.mkAfter [
     {
       definition = domainXml;

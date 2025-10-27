@@ -5,17 +5,19 @@ API_IP=""
 POD_CIDR="10.244.0.0/16"
 USER_HOME="/home/ubuntu"
 USER_NAME="ubuntu"
+BOOTSTRAP_TOKEN=""
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --api-server-ip) API_IP="$2"; shift 2;;
     --pod-cidr) POD_CIDR="$2"; shift 2;;
+    --bootstrap-token) BOOTSTRAP_TOKEN="$2"; shift 2;;
     *) echo "Unknown arg: $1" >&2; exit 2;;
   esac
 done
 
-if [[ -z "$API_IP" ]]; then
-  echo "[bootstrap] --apiserver-ip is required!" >&2
+if [[ -z "$API_IP" || -z "$BOOTSTRAP_TOKEN" ]]; then
+  echo "[bootstrap] missing required args --apiserver-ip or --bootstrap-token" >&2
   exit 2
 fi
 
@@ -64,8 +66,12 @@ if [[ -f /etc/kubernetes/admin.conf ]]; then
   echo "[bootstrap] already initialized, skipping kubeadm init"
 else
   echo "[bootstrap] running kubeadm init..."
-  kubeadm init --apiserver-advertise-address="${API_IP}" \
-               --pod-network-cidr="${POD_CIDR}"
+  kubeadm init \
+    --apiserver-advertise-address="${API_IP}" \
+    --pod-network-cidr="${POD_CIDR}" \
+    --token "${BOOTSTRAP_TOKEN}" \
+    --token-ttl 0 \
+    --apiserver-cert-extra-sans="${API_IP},127.0.0.1,::1,$(hostname),$(hostname -f)"
 fi
 
 mkdir -p "${USER_HOME}/.kube"
@@ -75,9 +81,5 @@ chown -R ${USER_NAME}:${USER_NAME} "${USER_HOME}/.kube"
 # CNI
 su - ${USER_NAME} -c "kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/master/Documentation/kube-flannel.yml" || true
 
-# write join script for workers
-kubeadm token create --print-join-command >/var/lib/kubeadm-join.sh
-chmod +x /var/lib/kubeadm-join.sh
-
-echo "[bootstrap] done. join script: /var/lib/kubeadm-join.sh"
+echo "[bootstrap] done."
 
