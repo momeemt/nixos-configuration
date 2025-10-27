@@ -140,7 +140,7 @@
           withSystem system ({pkgs, ...}: let
             myLib = import ./lib {
               inherit pkgs;
-              lib = pkgs.lib;
+              inherit (pkgs) lib;
             };
           in
             inputs.nixpkgs.lib.nixosSystem {
@@ -167,7 +167,7 @@
           withSystem system ({pkgs, ...}: let
             myLib = import ./lib {
               inherit pkgs;
-              lib = pkgs.lib;
+              inherit (pkgs) lib;
             };
           in
             inputs.nixpkgs.lib.nixosSystem {
@@ -198,7 +198,7 @@
           withSystem system ({pkgs, ...}: let
             myLib = import ./lib {
               inherit pkgs;
-              lib = pkgs.lib;
+              inherit (pkgs) lib;
             };
           in
             inputs.nixpkgs.lib.nixosSystem {
@@ -229,7 +229,7 @@
           withSystem system ({pkgs, ...}: let
             myLib = import ./lib {
               inherit pkgs;
-              lib = pkgs.lib;
+              inherit (pkgs) lib;
             };
           in
             inputs.nix-darwin.lib.darwinSystem {

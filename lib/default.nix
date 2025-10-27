@@ -1,4 +1,7 @@
-{pkgs, lib}: let
+{
+  pkgs,
+  lib,
+}: let
   mkK8sMaster = args:
     import ./mkK8sMaster.nix (
       args // {inherit lib;}

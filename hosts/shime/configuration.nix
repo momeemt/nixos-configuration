@@ -35,7 +35,7 @@
       "8.8.4.4"
     ];
     interfaces.enp4s0.useDHCP = false;
-    bridges.br0.interfaces = [ "enp4s0" ];
+    bridges.br0.interfaces = ["enp4s0"];
     interfaces.br0.useDHCP = true;
   };
 

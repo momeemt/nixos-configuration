@@ -9,14 +9,26 @@ BOOTSTRAP_TOKEN=""
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    --api-server-ip) API_IP="$2"; shift 2;;
-    --pod-cidr) POD_CIDR="$2"; shift 2;;
-    --bootstrap-token) BOOTSTRAP_TOKEN="$2"; shift 2;;
-    *) echo "Unknown arg: $1" >&2; exit 2;;
+  --api-server-ip)
+    API_IP="$2"
+    shift 2
+    ;;
+  --pod-cidr)
+    POD_CIDR="$2"
+    shift 2
+    ;;
+  --bootstrap-token)
+    BOOTSTRAP_TOKEN="$2"
+    shift 2
+    ;;
+  *)
+    echo "Unknown arg: $1" >&2
+    exit 2
+    ;;
   esac
 done
 
-if [[ -z "$API_IP" || -z "$BOOTSTRAP_TOKEN" ]]; then
+if [[ -z $API_IP || -z $BOOTSTRAP_TOKEN ]]; then
   echo "[bootstrap] missing required args --apiserver-ip or --bootstrap-token" >&2
   exit 2
 fi
@@ -53,8 +65,8 @@ systemctl enable --now containerd
 
 # setup Kubernetes tools
 mkdir -p /etc/apt/keyrings
-curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.34/deb/Release.key \
-  | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.34/deb/Release.key |
+  gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
 echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.34/deb/ /" \
   >/etc/apt/sources.list.d/kubernetes.list
 apt-get update -y
@@ -82,4 +94,3 @@ chown -R ${USER_NAME}:${USER_NAME} "${USER_HOME}/.kube"
 su - ${USER_NAME} -c "kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/master/Documentation/kube-flannel.yml" || true
 
 echo "[bootstrap] done."
-

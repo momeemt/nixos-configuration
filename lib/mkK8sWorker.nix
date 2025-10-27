@@ -17,17 +17,19 @@
   diskPath = "/var/lib/libvirt/images/${name}.qcow2";
   seedDir = "/var/lib/libvirt/seed/${name}";
   isoPath = "${seedDir}/seed.iso";
-  
-  yaml = pkgs.formats.yaml { };
-  userData = yaml.generate "user-data-${name}" {
-    users = [{
-      name = "ubuntu";
-      ssh_authorized_keys = sshKeys;
-      sudo = "ALL=(ALL) NOPASSWD:ALL";
-      shell = "/bin/bash";
-    }];
 
-    packages = [ "qemu-guest-agent" ];
+  yaml = pkgs.formats.yaml {};
+  userData = yaml.generate "user-data-${name}" {
+    users = [
+      {
+        name = "ubuntu";
+        ssh_authorized_keys = sshKeys;
+        sudo = "ALL=(ALL) NOPASSWD:ALL";
+        shell = "/bin/bash";
+      }
+    ];
+
+    packages = ["qemu-guest-agent"];
 
     network = {
       version = 2;
@@ -39,7 +41,9 @@
       };
     };
 
-    runcmd = let bash = cmd: [ "bash" "-lc" cmd ]; in [
+    runcmd = let
+      bash = cmd: ["bash" "-lc" cmd];
+    in [
       (bash "mkdir -p /seed")
       (bash "mount -o ro /dev/disk/by-label/payload /seed")
       (bash ''
@@ -71,75 +75,87 @@
     virtio_drive = true;
   };
 
-  withIso = base // {
-    devices = (base.devices or {}) // {
-      disk = (base.devices.disk or []) ++ [
-        {
-          type = "file";
-          device = "cdrom";
-          driver = {
-            name = "qemu";
-            type = "raw";
-          };
-          source = {
-            file = isoPath;
-          };
-          target = {
-            dev = "sda";
-            bus = "sata";
-          };
-          readonly = {};
-        }
-        {
-          type = "file";
-          device = "cdrom";
-          driver = {
-            name = "qemu";
-            type = "raw";
-          };
-          source = {
-            file = "${seedDir}/payload.iso";
-          };
-          target = {
-            dev = "sdb";
-            bus = "sata";
-          };
-          readonly = {};
-        }
-      ];
-      interface = [
-        {
-          type = "bridge";
-          source = {
-            inherit bridge;
-          };
-          model = {
-            type = "virtio";
-          };
-        }
-      ];
-      serial = [{
-        type = "pty";
-        target = {
-          port = 0;
+  withIso =
+    base
+    // {
+      devices =
+        (base.devices or {})
+        // {
+          disk =
+            (base.devices.disk or [])
+            ++ [
+              {
+                type = "file";
+                device = "cdrom";
+                driver = {
+                  name = "qemu";
+                  type = "raw";
+                };
+                source = {
+                  file = isoPath;
+                };
+                target = {
+                  dev = "sda";
+                  bus = "sata";
+                };
+                readonly = {};
+              }
+              {
+                type = "file";
+                device = "cdrom";
+                driver = {
+                  name = "qemu";
+                  type = "raw";
+                };
+                source = {
+                  file = "${seedDir}/payload.iso";
+                };
+                target = {
+                  dev = "sdb";
+                  bus = "sata";
+                };
+                readonly = {};
+              }
+            ];
+          interface = [
+            {
+              type = "bridge";
+              source = {
+                inherit bridge;
+              };
+              model = {
+                type = "virtio";
+              };
+            }
+          ];
+          serial = [
+            {
+              type = "pty";
+              target = {
+                port = 0;
+              };
+            }
+          ];
+          console = [
+            {
+              type = "pty";
+              target = {
+                type = "serial";
+                port = 0;
+              };
+            }
+          ];
+          channel = [
+            {
+              type = "unix";
+              target = {
+                type = "virtio";
+                name = "org.qemu.guest_agent.0";
+              };
+            }
+          ];
         };
-      }];
-      console = [{
-        type = "pty";
-        target = {
-          type = "serial";
-          port = 0;
-        };
-      }];
-      channel = [{
-        type = "unix";
-        target = {
-          type = "virtio";
-          name = "org.qemu.guest_agent.0";
-        };
-      }];
     };
-  };
   domainXml = nixvirtLib.domain.writeXML withIso;
 in {
   systemd.tmpfiles.rules = [
@@ -147,8 +163,8 @@ in {
   ];
 
   systemd.services."vm-cloudinit-${name}" = {
-    after = [ "sops-nix.service" ];
-    wantedBy = [ "multi-user.target" ];
+    after = ["sops-nix.service"];
+    wantedBy = ["multi-user.target"];
     serviceConfig.Type = "oneshot";
     script = ''
       set -euo pipefail
@@ -164,7 +180,7 @@ in {
       cp ${metaData} "$dir/meta-data"
 
       ${pkgs.cloud-utils}/bin/cloud-localds "${isoPath}" "$dir/user-data" "$dir/meta-data"
-      
+
       ${pkgs.cdrkit}/bin/genisoimage -quiet -J -r -V payload \
         -o "${seedDir}/payload.iso" \
         "$dir/token" "$dir/k8s-worker-bootstrap.sh"
@@ -172,8 +188,8 @@ in {
   };
 
   systemd.services."vm-disk-${name}" = {
-    after = [ "libvirtd.service" ];
-    wantedBy = [ "multi-user.target" ];
+    after = ["libvirtd.service"];
+    wantedBy = ["multi-user.target"];
     serviceConfig.Type = "oneshot";
     script = ''
       set -euo pipefail
