@@ -16,17 +16,17 @@ in {
   imports = [
     ../../modules/sops
     ../../modules/fonts
-    # (myLib.mkK8sWorker {
-    #   inherit pkgs lib config nixvirtLib sshKeys apiAdvertiseAddress caHash gateway;
-    #   name = "kube-worker-shime-1";
-    #   uuid = "c0ffee00-0002-0000-0000-00000000001";
-    #   vcpu = 4;
-    #   memoryGiB = 8;
-    #   rootDiskSizeGiB = 30;
-    #   bridge = "br0";
-    #   ubuntuImage = myLib.images.ubuntu-lts;
-    #   ipAddress = "192.168.203/23";
-    # })
+    (myLib.mkK8sWorker {
+      inherit pkgs lib config nixvirtLib sshKeys apiAdvertiseAddress caHash gateway;
+      name = "kube-worker-shime-1";
+      uuid = "c0ffee00-0002-0000-0000-000000000001";
+      vcpu = 4;
+      memoryGiB = 8;
+      rootDiskSizeGiB = 30;
+      bridge = "br0";
+      ubuntuImage = myLib.images.ubuntu-lts;
+      ipAddress = "192.168.32.203/23";
+    })
   ];
 
   nix = {
@@ -123,6 +123,11 @@ in {
   };
 
   programs.virt-manager.enable = true;
+
+  hardware.graphics = {
+    enable = true;
+    extraPackages = [ pkgs.mesa ];
+  };
 
   system.stateVersion = "25.05";
 }
