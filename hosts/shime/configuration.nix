@@ -38,13 +38,8 @@ in {
     };
   };
 
-  boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_6;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.extraModulePackages = with config.boot.kernelPackages; [
-    r8168
-  ];
-  boot.blacklistedKernelModules = [ "r8169" ];
 
   i18n.defaultLocale = "ja_JP.UTF-8";
   console = {
