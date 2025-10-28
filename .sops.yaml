@@ -5,3 +5,5 @@ creation_rules:
       - age1ey0measssqda4dp8cdt2ma8mx7muqzdlvt6v847h39rkfhvf9f6szugj5d
       # momeemt@emu
       - age1z4cupq3psq9fzfhmjlkjkd2320nn8y56gyu8z7u34633hpkgcfusnxd0t4
+      # root@shime (used by sops-nix)
+      - age17347f33rwj65zcchfpzecgwrgelgtqmg73gglddjw5kedgxw8e7qwt74e2

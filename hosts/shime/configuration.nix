@@ -15,17 +15,17 @@
 in {
   imports = [
     ../../modules/sops
-    (myLib.mkK8sWorker {
-      inherit pkgs lib config nixvirtLib sshKeys apiAdvertiseAddress caHash gateway;
-      name = "kube-worker-shime-1";
-      uuid = "c0ffee00-0002-0000-0000-00000000001";
-      vcpu = 4;
-      memoryGiB = 8;
-      rootDiskSizeGiB = 30;
-      bridge = "br0";
-      ubuntuImage = myLib.images.ubuntu-lts;
-      ipAddress = "192.168.203/23";
-    })
+    # (myLib.mkK8sWorker {
+    #   inherit pkgs lib config nixvirtLib sshKeys apiAdvertiseAddress caHash gateway;
+    #   name = "kube-worker-shime-1";
+    #   uuid = "c0ffee00-0002-0000-0000-00000000001";
+    #   vcpu = 4;
+    #   memoryGiB = 8;
+    #   rootDiskSizeGiB = 30;
+    #   bridge = "br0";
+    #   ubuntuImage = myLib.images.ubuntu-lts;
+    #   ipAddress = "192.168.203/23";
+    # })
   ];
 
   nix = {
@@ -37,8 +37,13 @@ in {
     };
   };
 
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_6;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.extraModulePackages = with config.boot.kernelPackages; [
+    r8168
+  ];
+  boot.blacklistedKernelModules = [ "r8169" ];
 
   i18n.defaultLocale = "ja_JP.UTF-8";
   console = {

@@ -82,6 +82,7 @@
           ];
           buildInputs = with pkgs; [
             mdbook
+            sops
           ];
         };
 
@@ -94,6 +95,16 @@
               coreutils
             ];
             text = builtins.readFile ./scripts/encrypt-secrets.sh;
+          };
+
+          updatekeys-secrets = pkgs.writeShellApplication {
+            name = "updatekeys-secrets";
+            runtimeInputs = with pkgs; [
+              sops
+              findutils
+              coreutils
+            ];
+            text = builtins.readFile ./scripts/updatekeys-secrets.sh;
           };
 
           destroy-vms = pkgs.writeShellApplication {
