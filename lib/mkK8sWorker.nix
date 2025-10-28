@@ -12,6 +12,8 @@
   rootDiskSizeGiB ? 30,
   bridge,
   apiAdvertiseAddress,
+  ipAddress,
+  gateway,
   caHash,
 }: let
   diskPath = "/var/lib/libvirt/images/${name}.qcow2";
@@ -19,6 +21,28 @@
   isoPath = "${seedDir}/seed.iso";
 
   yaml = pkgs.formats.yaml {};
+
+  networkConfig = yaml.generate "network-config-${name}" {
+    version = 2;
+    renderer = "networkd";
+    ethernets.all = {
+      match.name = "en*";
+      dhcp4 = false;
+      dhcp6 = false;
+      addresses = [ ipAddress ];
+      routes = [{
+        to = "0.0.0.0/0";
+        via = gateway;
+      }];
+      nameservers = {
+        addresses = [
+          "1.1.1.1"
+          "8.8.8.8"
+        ];
+      };
+    };
+  };
+
   userData = yaml.generate "user-data-${name}" {
     users = [
       {
@@ -30,16 +54,6 @@
     ];
 
     packages = ["qemu-guest-agent"];
-
-    network = {
-      version = 2;
-      renderer = "networkd";
-      ethernets.all = {
-        match.name = "en*";
-        dhcp4 = true;
-        dhcp6 = true;
-      };
-    };
 
     runcmd = let
       bash = cmd: ["bash" "-lc" cmd];
@@ -179,7 +193,9 @@ in {
       cat ${userData} >> "$dir/user-data"
       cp ${metaData} "$dir/meta-data"
 
-      ${pkgs.cloud-utils}/bin/cloud-localds "${isoPath}" "$dir/user-data" "$dir/meta-data"
+      ${pkgs.cloud-utils}/bin/cloud-localds \
+        --network-config ${networkConfig} \
+        "${isoPath}" "$dir/user-data" "$dir/meta-data"
 
       ${pkgs.cdrkit}/bin/genisoimage -quiet -J -r -V payload \
         -o "${seedDir}/payload.iso" \

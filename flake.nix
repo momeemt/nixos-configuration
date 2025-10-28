@@ -104,10 +104,14 @@
             text = ''
               set -euo pipefail
 
-              sudo virsh -c qemu:///system destroy kube-master
-              sudo virsh -c qemu:///system destroy kube-worker-emu-1
+              sudo virsh -c qemu:///system destroy kube-master || true
+              sudo virsh -c qemu:///system destroy kube-worker-emu-1 || true
+              sudo virsh -c qemu:///system destroy kube-worker-emu-2 || true
+              sudo virsh -c qemu:///system destroy kube-worker-shime-1 || true
               sudo rm -f /var/lib/libvirt/images/kube-master.qcow2
               sudo rm -f /var/lib/libvirt/images/kube-worker-emu-1.qcow2
+              sudo rm -f /var/lib/libvirt/images/kube-worker-emu-2.qcow2
+              sudo rm -f /var/lib/libvirt/images/kube-worker-shime-1.qcow2
             '';
           };
         };
@@ -203,6 +207,7 @@
                   home-manager.backupFileExtension = "hm-bak";
                 }
                 sops-nix.nixosModules.sops
+                NixVirt.nixosModules.default
               ];
             });
 
