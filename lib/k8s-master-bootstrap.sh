@@ -35,14 +35,14 @@ fi
 
 echo "[bootstrap] apiserver-ip=${API_IP} pod-cidr=${POD_CIDR}"
 
-systemctl enable --now systemd-timesyncd || true
+systemctl enable --now systemd-timesyncd
 
 # disable swap
-swapoff -a || true
-sed -i '/\sswap\s/s/^/#/' /etc/fstab || true
+swapoff -a
+sed -i '/\sswap\s/s/^/#/' /etc/fstab
 
-modprobe overlay || true
-modprobe br_netfilter || true
+modprobe overlay
+modprobe br_netfilter
 cat >/etc/modules-load.d/k8s.conf <<'EOF'
 overlay
 br_netfilter
@@ -53,7 +53,7 @@ net.bridge.bridge-nf-call-iptables = 1
 net.bridge.bridge-nf-call-ip6tables = 1
 net.ipv4.ip_forward = 1
 EOF
-sysctl --system || true
+sysctl --system
 
 # setup containerd
 apt-get update -y
@@ -61,7 +61,24 @@ apt-get install -y containerd apt-transport-https ca-certificates curl gpg
 mkdir -p /etc/containerd
 containerd config default >/etc/containerd/config.toml
 sed -i 's/SystemdCgroup = false/SystemdCgroup = true/' /etc/containerd/config.toml
+sed -i 's|^\\s*sandbox_image = ".*"|  sandbox_image = "registry.k8s.io/pause:3.10.1|' /etc/containerd/config.toml
+
+mkdir -p /etc/systemd/system/containerd.service.d
+cat >/etc/systemd/system/containerd.service.d/10-config.conf <<'EOF'
+[Service]
+ExecStart=
+ExecStart=/usr/bin/containerd --config /etc/containerd/config.toml
+EOF
+systemctl daemon-reload
 systemctl enable --now containerd
+
+# crictl endpoint
+cat >/etc/crictl.yaml << 'EOF'
+runtime-endpoint: unix:///run/containerd/containerd.sock
+image-endpoint: unix:///run/containerd/containerd.sock
+timeout: 10
+debug: false
+EOF
 
 # setup Kubernetes tools
 mkdir -p /etc/apt/keyrings
@@ -74,6 +91,8 @@ apt-get install -y kubelet kubeadm kubectl
 systemctl enable --now kubelet
 apt-mark hold kubelet kubeadm kubectl
 
+kubeadm config images pull
+
 if [[ -f /etc/kubernetes/admin.conf ]]; then
   echo "[bootstrap] already initialized, skipping kubeadm init"
 else
@@ -81,6 +100,7 @@ else
   kubeadm init \
     --apiserver-advertise-address="${API_IP}" \
     --pod-network-cidr="${POD_CIDR}" \
+    --service-cidr="10.96.0.0/12" \
     --token "${BOOTSTRAP_TOKEN}" \
     --token-ttl 0 \
     --apiserver-cert-extra-sans="${API_IP},127.0.0.1,::1,$(hostname),$(hostname -f)"
@@ -91,6 +111,7 @@ cp -f /etc/kubernetes/admin.conf "${USER_HOME}/.kube/config"
 chown -R ${USER_NAME}:${USER_NAME} "${USER_HOME}/.kube"
 
 # CNI
-su - ${USER_NAME} -c "kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/master/Documentation/kube-flannel.yml" || true
+su - ${USER_NAME} -c "kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/master/Documentation/kube-flannel.yml"
 
 echo "[bootstrap] done."
+

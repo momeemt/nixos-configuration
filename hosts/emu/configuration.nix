@@ -13,11 +13,11 @@
   caHash = "32b10d3c2eee5440d1d0a884aedc15345daf44047f5e1e94cc0a80c23351b5bf";
 in {
   imports = [
-    ./secrets.nix
+    ../../modules/sops
     (myLib.mkK8sMaster {
       inherit pkgs lib config nixvirtLib sshKeys apiAdvertiseAddress;
       name = "kube-master";
-      uuid = "c0ffee00-0000-0000-0000-000000000001";
+      uuid = "c0ffee00-0001-0000-0000-000000000001";
       vcpu = 4;
       memoryGiB = 8;
       rootDiskSizeGiB = 30;
@@ -28,7 +28,17 @@ in {
     (myLib.mkK8sWorker {
       inherit pkgs lib config nixvirtLib sshKeys apiAdvertiseAddress caHash;
       name = "kube-worker-emu-1";
-      uuid = "c0ffee00-0000-0000-0000-000000000002";
+      uuid = "c0ffee00-0001-0000-0000-000000000002";
+      vcpu = 4;
+      memoryGiB = 8;
+      rootDiskSizeGiB = 30;
+      bridge = "br0";
+      ubuntuImage = myLib.images.ubuntu-lts;
+    })
+    (myLib.mkK8sWorker {
+      inherit pkgs lib config nixvirtLib sshKeys apiAdvertiseAddress caHash;
+      name = "kube-worker-emu-2";
+      uuid = "c0ffee00-0001-0000-0000-000000000003";
       vcpu = 4;
       memoryGiB = 8;
       rootDiskSizeGiB = 30;

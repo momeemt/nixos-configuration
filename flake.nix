@@ -95,6 +95,21 @@
             ];
             text = builtins.readFile ./scripts/encrypt-secrets.sh;
           };
+
+          destroy-vms = pkgs.writeShellApplication {
+            name = "destroy-vms";
+            runtimeInputs = with pkgs; [
+              libvirt
+            ];
+            text = ''
+              set -euo pipefail
+
+              sudo virsh -c qemu:///system destroy kube-master
+              sudo virsh -c qemu:///system destroy kube-worker-emu-1
+              sudo rm -f /var/lib/libvirt/images/kube-master.qcow2
+              sudo rm -f /var/lib/libvirt/images/kube-worker-emu-1.qcow2
+            '';
+          };
         };
 
         treefmt = {
