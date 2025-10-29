@@ -127,8 +127,10 @@ mkdir -p "${USER_HOME}/.kube"
 cp -f /etc/kubernetes/admin.conf "${USER_HOME}/.kube/config"
 chown -R ${USER_NAME}:${USER_NAME} "${USER_HOME}/.kube"
 
+export KUBECONFIG=/etc/kubernetes/admin.conf
+
 # CNI
-su - ${USER_NAME} -c "kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/master/Documentation/kube-flannel.yml"
+kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/master/Documentation/kube-flannel.yml
 
 # Argo CD
 kubectl create ns argocd
