@@ -186,6 +186,7 @@ in {
       dir="${seedDir}"
       mkdir -p "$dir"
 
+      install -m644 ${../assets/k8s/argocd-app-nixos-configuration.yaml} "$dir/argocd-app-nixos-configuration.yaml"
       install -m644 ${../assets/k8s/ca.crt} "$dir/ca.crt"
       install -m600 ${config.sops.secrets."k8s/ca.key".path} "$dir/ca.key"
       install -m600 ${config.sops.secrets.k8s-bootstrap-token.path} "$dir/token"

@@ -67,6 +67,7 @@ apt-get install -y \
   moreutils
 
 # setup containerd
+systemctl stop containerd || true
 mkdir -p /etc/containerd
 containerd config default >/etc/containerd/config.toml
 
@@ -78,10 +79,6 @@ sudo tomlq -t \
   '.plugins."io.containerd.grpc.v1.cri".sandbox_image = "registry.k8s.io/pause:3.10.1"' \
   /etc/containerd/config.toml | sudo sponge /etc/containerd/config.toml
 
-sudo tomlq -t \
-  '.plugins."io.containerd.grpc.v1.cri".systemd_cgroup = true' \
-  /etc/containerd/config.toml | sudo sponge /etc/containerd/config.toml
-
 mkdir -p /etc/systemd/system/containerd.service.d
 cat >/etc/systemd/system/containerd.service.d/10-config.conf <<'EOF'
 [Service]
@@ -89,7 +86,8 @@ ExecStart=
 ExecStart=/usr/bin/containerd --config /etc/containerd/config.toml
 EOF
 systemctl daemon-reload
-systemctl enable --now containerd
+systemctl enable containerd
+systemctl restart containerd
 
 # crictl endpoint
 cat >/etc/crictl.yaml << 'EOF'
@@ -131,6 +129,14 @@ chown -R ${USER_NAME}:${USER_NAME} "${USER_HOME}/.kube"
 
 # CNI
 su - ${USER_NAME} -c "kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/master/Documentation/kube-flannel.yml"
+
+# Argo CD
+kubectl create ns argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+kubectl -n argocd rollout status deploy/argocd-server
+kubectl apply -f argocd-app-nixos-configuration.yaml
+kubectl -n argocd get app nixos-configuration-k8s
+kubectl -n argocd describe app nixos-configuration-k8s
 
 echo "[bootstrap] done."
 
