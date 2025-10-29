@@ -203,7 +203,9 @@ in {
 
       ${pkgs.cdrkit}/bin/genisoimage -quiet -J -r -V payload \
         -o "${seedDir}/payload.iso" \
-        "$dir/ca.crt" "$dir/ca.key" "$dir/token" "$dir/k8s-master-bootstrap.sh"
+        "$dir/ca.crt" "$dir/ca.key" "$dir/token" \
+        "$dir/k8s-master-bootstrap.sh" \
+        "$dir/argocd-app-nixos-configuration.yaml"
     '';
   };
 

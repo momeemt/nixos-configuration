@@ -136,7 +136,7 @@ kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/master/Doc
 kubectl create ns argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 kubectl -n argocd rollout status deploy/argocd-server
-kubectl apply -f argocd-app-nixos-configuration.yaml
+kubectl apply -f /seed/argocd-app-nixos-configuration.yaml
 kubectl -n argocd get app nixos-configuration-k8s
 kubectl -n argocd describe app nixos-configuration-k8s
 
