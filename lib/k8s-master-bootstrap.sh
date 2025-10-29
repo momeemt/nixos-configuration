@@ -55,13 +55,32 @@ net.ipv4.ip_forward = 1
 EOF
 sysctl --system
 
-# setup containerd
+# install tools
 apt-get update -y
-apt-get install -y containerd apt-transport-https ca-certificates curl gpg
+apt-get install -y \
+  containerd \
+  apt-transport-https \
+  ca-certificates \
+  curl \
+  gpg \
+  yq \
+  moreutils
+
+# setup containerd
 mkdir -p /etc/containerd
 containerd config default >/etc/containerd/config.toml
-sed -i 's/SystemdCgroup = false/SystemdCgroup = true/' /etc/containerd/config.toml
-sed -i 's|^\\s*sandbox_image = ".*"|  sandbox_image = "registry.k8s.io/pause:3.10.1|' /etc/containerd/config.toml
+
+sudo tomlq -t \
+  '.plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc.options.SystemdCgroup = true' \
+  /etc/containerd/config.toml | sudo sponge /etc/containerd/config.toml
+
+sudo tomlq -t \
+  '.plugins."io.containerd.grpc.v1.cri".sandbox_image = "registry.k8s.io/pause:3.10.1"' \
+  /etc/containerd/config.toml | sudo sponge /etc/containerd/config.toml
+
+sudo tomlq -t \
+  '.plugins."io.containerd.grpc.v1.cri".systemd_cgroup = true' \
+  /etc/containerd/config.toml | sudo sponge /etc/containerd/config.toml
 
 mkdir -p /etc/systemd/system/containerd.service.d
 cat >/etc/systemd/system/containerd.service.d/10-config.conf <<'EOF'
