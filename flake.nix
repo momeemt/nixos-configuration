@@ -46,6 +46,10 @@
       url = "github:BatteredBunny/brew-api";
       flake = false;
     };
+    NixVirt = {
+      url = "https://flakehub.com/f/AshleyYakeley/NixVirt/v0.6.0.tar.gz";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {flake-parts, ...} @ inputs: let
@@ -59,7 +63,7 @@
       inherit (masterPkgs) vscode-with-extensions;
     };
   in
-    flake-parts.lib.mkFlake {inherit inputs;} {
+    flake-parts.lib.mkFlake {inherit inputs;} ({withSystem, ...}: {
       imports = with inputs; [
         treefmt-nix.flakeModule
         git-hooks-nix.flakeModule
@@ -78,7 +82,49 @@
           ];
           buildInputs = with pkgs; [
             mdbook
+            sops
           ];
+        };
+
+        packages = {
+          encrypt-secrets = pkgs.writeShellApplication {
+            name = "encrypt-secrets";
+            runtimeInputs = with pkgs; [
+              sops
+              findutils
+              coreutils
+            ];
+            text = builtins.readFile ./scripts/encrypt-secrets.sh;
+          };
+
+          updatekeys-secrets = pkgs.writeShellApplication {
+            name = "updatekeys-secrets";
+            runtimeInputs = with pkgs; [
+              sops
+              findutils
+              coreutils
+            ];
+            text = builtins.readFile ./scripts/updatekeys-secrets.sh;
+          };
+
+          destroy-vms = pkgs.writeShellApplication {
+            name = "destroy-vms";
+            runtimeInputs = with pkgs; [
+              libvirt
+            ];
+            text = ''
+              set -euo pipefail
+
+              sudo virsh -c qemu:///system destroy kube-master || true
+              sudo virsh -c qemu:///system destroy kube-worker-emu-1 || true
+              sudo virsh -c qemu:///system destroy kube-worker-emu-2 || true
+              sudo virsh -c qemu:///system destroy kube-worker-shime-1 || true
+              sudo rm -f /var/lib/libvirt/images/kube-master.qcow2
+              sudo rm -f /var/lib/libvirt/images/kube-worker-emu-1.qcow2
+              sudo rm -f /var/lib/libvirt/images/kube-worker-emu-2.qcow2
+              sudo rm -f /var/lib/libvirt/images/kube-worker-shime-1.qcow2
+            '';
+          };
         };
 
         treefmt = {
@@ -118,76 +164,123 @@
       };
 
       flake.nixosConfigurations = {
-        emu = inputs.nixpkgs.lib.nixosSystem {
+        emu = let
           system = "x86_64-linux";
-          modules = with inputs; [
-            ./hosts/emu
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.momeemt = import ./home/emu;
-            }
-            sops-nix.nixosModules.sops
-          ];
-        };
+        in
+          withSystem system ({pkgs, ...}: let
+            myLib = import ./lib {
+              inherit pkgs;
+              inherit (pkgs) lib;
+            };
+          in
+            inputs.nixpkgs.lib.nixosSystem {
+              inherit system;
+              specialArgs = {inherit inputs myLib;};
+              modules = with inputs; [
+                ./hosts/emu
+                home-manager.nixosModules.home-manager
+                {
+                  home-manager.useGlobalPkgs = true;
+                  home-manager.useUserPackages = true;
+                  home-manager.extraSpecialArgs = {inherit inputs;};
+                  home-manager.users.momeemt = import ./home/emu;
+                  home-manager.backupFileExtension = "hm-bak";
+                }
+                sops-nix.nixosModules.sops
+                NixVirt.nixosModules.default
+              ];
+            });
 
-        shime = inputs.nixpkgs.lib.nixosSystem {
+        shime = let
           system = "x86_64-linux";
-          modules = with inputs; [
-            ./hosts/shime
-            (_: {
-              nixpkgs.overlays = [vscodeOverlay];
-            })
-            home-manager.nixosModules.home-manager
-            vscode-server.nixosModules.default
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.extraSpecialArgs = {inherit inputs;};
-              home-manager.users.momeemt = import ./home/shime;
-              home-manager.backupFileExtension = "hm-bak";
-            }
-          ];
-        };
+        in
+          withSystem system ({pkgs, ...}: let
+            myLib = import ./lib {
+              inherit pkgs;
+              inherit (pkgs) lib;
+            };
+          in
+            inputs.nixpkgs.lib.nixosSystem {
+              inherit system;
+              specialArgs = {inherit inputs myLib;};
+              modules = with inputs; [
+                ./hosts/shime
+                (_: {
+                  nixpkgs.overlays = [vscodeOverlay];
+                })
+                home-manager.nixosModules.home-manager
+                vscode-server.nixosModules.default
+                {
+                  home-manager.useGlobalPkgs = true;
+                  home-manager.useUserPackages = true;
+                  home-manager.extraSpecialArgs = {inherit inputs;};
+                  home-manager.users.momeemt = import ./home/shime;
+                  home-manager.backupFileExtension = "hm-bak";
+                }
+                sops-nix.nixosModules.sops
+                NixVirt.nixosModules.default
+              ];
+            });
 
         # system security lab.
-        oshidori = inputs.nixpkgs.lib.nixosSystem {
+        oshidori = let
           system = "x86_64-linux";
-          modules = with inputs; [
-            ./hosts/oshidori
-            (_: {
-              nixpkgs.overlays = [vscodeOverlay];
-            })
-            home-manager.nixosModules.home-manager
-            vscode-server.nixosModules.default
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.extraSpecialArgs = {inherit inputs;};
-              home-manager.users.momeemt = import ./home/oshidori;
-            }
-          ];
-        };
+        in
+          withSystem system ({pkgs, ...}: let
+            myLib = import ./lib {
+              inherit pkgs;
+              inherit (pkgs) lib;
+            };
+          in
+            inputs.nixpkgs.lib.nixosSystem {
+              system = "x86_64-linux";
+              specialArgs = {inherit inputs myLib;};
+              modules = with inputs; [
+                ./hosts/oshidori
+                (_: {
+                  nixpkgs.overlays = [vscodeOverlay];
+                })
+                home-manager.nixosModules.home-manager
+                vscode-server.nixosModules.default
+                {
+                  home-manager.useGlobalPkgs = true;
+                  home-manager.useUserPackages = true;
+                  home-manager.extraSpecialArgs = {inherit inputs;};
+                  home-manager.users.momeemt = import ./home/oshidori;
+                }
+                sops-nix.nixosModules.sops
+              ];
+            });
       };
 
       flake.darwinConfigurations = {
-        uguisu = inputs.nix-darwin.lib.darwinSystem {
+        uguisu = let
           system = "aarch64-darwin";
-          modules = with inputs; [
-            ./hosts/uguisu
-            (_: {
-              nixpkgs.overlays = [inputs.brew-nix.overlays.default];
-            })
-            home-manager.darwinModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.extraSpecialArgs = {inherit inputs;};
-              home-manager.users.momeemt = import ./home/uguisu;
-            }
-          ];
-        };
+        in
+          withSystem system ({pkgs, ...}: let
+            myLib = import ./lib {
+              inherit pkgs;
+              inherit (pkgs) lib;
+            };
+          in
+            inputs.nix-darwin.lib.darwinSystem {
+              system = "aarch64-darwin";
+              specialArgs = {inherit inputs myLib;};
+              modules = with inputs; [
+                ./hosts/uguisu
+                (_: {
+                  nixpkgs.overlays = [inputs.brew-nix.overlays.default];
+                })
+                home-manager.darwinModules.home-manager
+                {
+                  home-manager.useGlobalPkgs = true;
+                  home-manager.useUserPackages = true;
+                  home-manager.extraSpecialArgs = {inherit inputs;};
+                  home-manager.users.momeemt = import ./home/uguisu;
+                }
+                sops-nix.darwinModules.sops
+              ];
+            });
       };
-    };
+    });
 }

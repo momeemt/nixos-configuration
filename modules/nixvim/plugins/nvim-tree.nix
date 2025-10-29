@@ -18,6 +18,16 @@
           end
         '';
       };
+      git = {
+        ignore = false;
+      };
+      filters = {
+        custom = [
+          "^\\.git$"
+          "^node_modules"
+          "^.direnv"
+        ];
+      };
     };
   };
 
