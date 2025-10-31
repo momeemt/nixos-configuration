@@ -191,7 +191,7 @@ in {
       install -m600 ${config.sops.secrets."k8s/ca.key".path} "$dir/ca.key"
       install -m600 ${config.sops.secrets.k8s-bootstrap-token.path} "$dir/token"
 
-      install -m755 ${./k8s-master-bootstrap.sh} "$dir/k8s-master-bootstrap.sh"
+      install -m755 ${../scripts/k8s-master-bootstrap.sh} "$dir/k8s-master-bootstrap.sh"
 
       printf '%s\n' '#cloud-config' > "$dir/user-data"
       cat ${userData} >> "$dir/user-data"

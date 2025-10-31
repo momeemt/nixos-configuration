@@ -187,7 +187,7 @@ in {
 
       install -m600 ${config.sops.secrets.k8s-bootstrap-token.path} "$dir/token"
 
-      install -m755 ${./k8s-worker-bootstrap.sh} "$dir/k8s-worker-bootstrap.sh"
+      install -m755 ${../scripts/k8s-worker-bootstrap.sh} "$dir/k8s-worker-bootstrap.sh"
 
       printf '%s\n' '#cloud-config' > "$dir/user-data"
       cat ${userData} >> "$dir/user-data"

@@ -107,23 +107,12 @@
             text = builtins.readFile ./scripts/updatekeys-secrets.sh;
           };
 
-          destroy-vms = pkgs.writeShellApplication {
-            name = "destroy-vms";
+          destroy-all-vm = pkgs.writeShellApplication {
+            name = "destroy-all-vm";
             runtimeInputs = with pkgs; [
               libvirt
             ];
-            text = ''
-              set -euo pipefail
-
-              sudo virsh -c qemu:///system destroy kube-master || true
-              sudo virsh -c qemu:///system destroy kube-worker-emu-1 || true
-              sudo virsh -c qemu:///system destroy kube-worker-emu-2 || true
-              sudo virsh -c qemu:///system destroy kube-worker-shime-1 || true
-              sudo rm -f /var/lib/libvirt/images/kube-master.qcow2
-              sudo rm -f /var/lib/libvirt/images/kube-worker-emu-1.qcow2
-              sudo rm -f /var/lib/libvirt/images/kube-worker-emu-2.qcow2
-              sudo rm -f /var/lib/libvirt/images/kube-worker-shime-1.qcow2
-            '';
+            text = builtins.readFile ./scripts/destroy-all-vm.sh;
           };
         };
 
