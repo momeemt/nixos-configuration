@@ -16,6 +16,7 @@ in {
   imports = [
     ../../modules/sops
     ../../modules/fonts
+    ../../modules/comin
     (myLib.mkK8sWorker {
       inherit pkgs lib config nixvirtLib sshKeys apiAdvertiseAddress caHash gateway;
       name = "kube-worker-shime-1";

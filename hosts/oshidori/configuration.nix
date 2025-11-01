@@ -5,6 +5,7 @@
 }: {
   imports = [
     ../../modules/fonts
+    ../../modules/comin
   ];
 
   nix = {

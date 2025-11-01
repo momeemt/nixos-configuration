@@ -16,6 +16,7 @@ in {
   imports = [
     ../../modules/sops
     ../../modules/fonts
+    ../../modules/comin
     (myLib.mkK8sMaster {
       inherit pkgs lib config nixvirtLib sshKeys apiAdvertiseAddress gateway;
       name = "kube-master";

@@ -50,6 +50,10 @@
       url = "https://flakehub.com/f/AshleyYakeley/NixVirt/v0.6.0.tar.gz";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    comin = {
+      url = "github:nlewo/comin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {flake-parts, ...} @ inputs: let
@@ -177,6 +181,7 @@
                 }
                 sops-nix.nixosModules.sops
                 NixVirt.nixosModules.default
+                comin.nixosModules.comin
               ];
             });
 
@@ -208,6 +213,7 @@
                 }
                 sops-nix.nixosModules.sops
                 NixVirt.nixosModules.default
+                comin.nixosModules.comin
               ];
             });
 
@@ -238,6 +244,7 @@
                   home-manager.users.momeemt = import ./home/oshidori;
                 }
                 sops-nix.nixosModules.sops
+                comin.nixosModules.comin
               ];
             });
       };

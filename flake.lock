@@ -61,6 +61,26 @@
         "type": "github"
       }
     },
+    "comin": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1760878206,
+        "narHash": "sha256-gafngMT6Dvgpr/awy+BGh65AcsGfbmK+vRzmpLnwoIc=",
+        "owner": "nlewo",
+        "repo": "comin",
+        "rev": "468e31918eff4ccc0d56fd7168f51be857d22193",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nlewo",
+        "repo": "comin",
+        "type": "github"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -437,6 +457,7 @@
         "NixVirt": "NixVirt",
         "brew-api": "brew-api",
         "brew-nix": "brew-nix",
+        "comin": "comin",
         "flake-parts": "flake-parts",
         "git-hooks-nix": "git-hooks-nix",
         "home-manager": "home-manager",
