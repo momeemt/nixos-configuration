@@ -2,6 +2,9 @@
   programs.nixvim = {
     enable = true;
 
+    viAlias = true;
+    vimAlias = true;
+
     colorschemes.vscode.enable = true;
     clipboard.register = "unnamedplus";
     extraConfigLua = ''
