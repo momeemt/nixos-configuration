@@ -11,4 +11,5 @@ with pkgs; [
   nixpkgs-review
   gnupg
   gnumake
+  yazi
 ]
