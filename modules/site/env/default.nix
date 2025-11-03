@@ -11,7 +11,7 @@ in {
     extraSessionPath = mkOption {
       type = types.listOf types.str;
       default = [];
-      description = "List of paths are added to `home.sessionPath`";
+      description = "List of paths to be added to `home.sessionPath`";
     };
     extraSessionVariables = mkOption {
       type = types.attrsOf types.str;
