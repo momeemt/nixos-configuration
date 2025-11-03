@@ -1,6 +1,7 @@
 {
   pkgs,
   inputs,
+  config,
   ...
 }: {
   imports = [
@@ -9,10 +10,10 @@
     ../../modules/git
     inputs.nixvim.homeManagerModules.nixvim
     ../../modules/nixvim
-    # ../../modules/neovim
     ../../modules/starship
     ../../modules/tmux
     ../../modules/zsh
+    ../../modules/site/env
   ];
 
   home = let
@@ -39,4 +40,8 @@
   };
 
   programs.home-manager.enable = true;
+
+  site.env.extraSessionPath = [
+    "${config.home.homeDirectory}/Library/Application Support/JetBrains/Toolbox/scripts"
+  ];
 }

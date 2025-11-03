@@ -9,13 +9,12 @@
     ../../modules/git
     inputs.nixvim.homeManagerModules.nixvim
     ../../modules/nixvim
-    # ../../modules/neovim
     ../../modules/starship
     inputs.tmux-nix.homeModules.tmux-nix
     ../../modules/tmux-nix
-    # ../../modules/tmux
     ../../modules/vscode
     ../../modules/zsh
+    ../../modules/site/env
   ];
 
   home = {
