@@ -16,7 +16,7 @@ in {
     extraSessionVariables = mkOption {
       type = types.attrsOf types.str;
       default = {};
-      description = "Environment variables are merged to `home.sessionVariables`";
+      description = "Environment variables that are merged into `home.sessionVariables`";
     };
   };
 
