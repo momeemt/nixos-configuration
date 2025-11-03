@@ -1,30 +1,43 @@
 {
+  config,
+  ...
+}: {
   programs.zsh = {
     enable = true;
     autosuggestion.enable = true;
     enableCompletion = true;
     syntaxHighlighting.enable = true;
-    completionInit = "autoload -U compinit && compinit -i";
     defaultKeymap = "emacs";
+
     history = {
       expireDuplicatesFirst = true;
       extended = true;
       ignoreDups = true;
-      path = "$HOME/.zsh_history";
+      path = "${config.home.homeDirectory}/.zsh_history";
       save = 10000;
       share = true;
       size = 10000;
     };
+
     shellAliases = {
       ls = "eza";
     };
-    initContent = builtins.readFile ./zshrc;
-    profileExtra = builtins.readFile ./zprofile;
-    loginExtra = ''
-      FPATH=${./functions}:$FPATH
-      export FPATH
 
-      . ${./completion.zsh}
+    completionInit = ''
+      typeset -U fpath
+      fpath=(${./completions} ${./functions} $fpath)
+      autoload -U compinit
+      compinit -i
+    '';
+
+    initContent = ''
+      typeset -U path
+      bindkey -r "^[[A"
+      bindkey -r "^[[B"
+      bindkey -r "^[[C"
+      bindkey -r "^[[D"
+
+      autoload -Uz nr
     '';
   };
 }

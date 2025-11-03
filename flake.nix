@@ -118,6 +118,16 @@
             ];
             text = builtins.readFile ./scripts/destroy-all-vm.sh;
           };
+
+          sw = pkgs.writeShellApplication {
+            name = "switch-config-branch";
+            runtimeInputs = with pkgs; [
+              util-linux
+              coreutils
+              git
+            ];
+            text = builtins.readFile ./scripts/switch-config-branch.sh;
+          };
         };
 
         treefmt = {

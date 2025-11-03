@@ -12,4 +12,5 @@ with pkgs; [
   gnupg
   gnumake
   yazi
+  jq
 ]
