@@ -1,0 +1,9 @@
+#compdef nr
+_nr() {
+  local -a apps
+  local sys
+  sys=$(nix eval --impure --raw --expr 'builtins.currentSystem' 2>/dev/null) || return
+  apps=(${(f)"$(nix flake show --json 2>/dev/null | jq -r ".packages[\"$sys\"] | keys[]?" 2>/dev/null)"})
+  _describe 'nix app' apps
+}
+

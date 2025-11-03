@@ -1,0 +1,17 @@
+#autoload
+emulate -L zsh
+setopt localoptions nounset pipefail err_return
+
+if (( $# == 0 )); then
+  print -u2 "usage: nr <app> [args...]"
+  return 2
+fi
+
+if ! (( $+commands[nix] )); then
+  print -u2 "nr: command not found: nix"
+  return 127
+fi
+
+local app=$1; shift
+command nix run ".#${app}" -- "$@" || return $?
+
