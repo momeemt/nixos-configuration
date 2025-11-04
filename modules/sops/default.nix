@@ -9,7 +9,6 @@
       momeemt-password = {
         neededForUsers = true;
       };
-
       k8s-bootstrap-token = {};
 
       "cloudflared/emu.json" = {
