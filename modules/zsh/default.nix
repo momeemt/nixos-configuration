@@ -8,12 +8,13 @@
     enableCompletion = true;
     syntaxHighlighting.enable = true;
     defaultKeymap = "emacs";
+    dotDir = ".config/zsh";
 
     history = {
       expireDuplicatesFirst = true;
       extended = true;
       ignoreDups = true;
-      path = "${config.home.homeDirectory}/.zsh_history";
+      path = "${config.xdg.stateHome}/zsh/history";
       save = 10000;
       share = true;
       size = 10000;

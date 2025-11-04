@@ -8,6 +8,7 @@
     ./networking.nix
     ./yabai.nix
     ./skhd.nix
+    ../../modules/sops
   ];
 
   environment = {

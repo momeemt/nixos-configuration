@@ -5,6 +5,8 @@
 }: let
   inherit (lib) mkOption types;
   h = config.home.homeDirectory;
+  dataHome = config.xdg.dataHome;
+  stateHome = config.xdg.stateHome;
   cfg = config.site.env;
 in {
   options.site.env = {
@@ -34,13 +36,18 @@ in {
         XDG_DATA_HOME = "${h}/.local/share";
         XDG_STATE_HOME = "${h}/.local/state";
         SATYROGRAPHOS_EXPERIMENTAL = "1";
+        PYTHONHISTFILE = "${stateHome}/python/history";
+        PYTHONSTARTUP = "${../../../scripts/python-startup.py}";
+        # https://doc.rust-lang.org/cargo/reference/environment-variables.html
+        CARGO_HOME = "${dataHome}/cargo";
+        RUSTUP_HOME = "${dataHome}/rustup";
       }
       // cfg.extraSessionVariables;
 
     home.sessionPath =
       [
         "${h}/.local/bin"
-        "${h}/.cargo/bin"
+        "${dataHome}/cargo/bin"
         "${h}/.nimble/bin"
         "${h}/go/bin"
       ]

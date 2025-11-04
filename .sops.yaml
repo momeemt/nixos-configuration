@@ -7,3 +7,7 @@ creation_rules:
       - age1z4cupq3psq9fzfhmjlkjkd2320nn8y56gyu8z7u34633hpkgcfusnxd0t4
       # root@shime (used by sops-nix)
       - age17347f33rwj65zcchfpzecgwrgelgtqmg73gglddjw5kedgxw8e7qwt74e2
+      # root@uguisu (used by sops-nix)
+      - age1kdmggcfqecw5t5yr67sw8llg5s7mw46zxs385u5gk68p5eqykphqd68dgh
+      # momeemt@uguisu
+      - age1m9cyg7vdl74w0gvgtgxta9x4afnhzkymg50pecm0l7uh6gvhpewscxfckw
