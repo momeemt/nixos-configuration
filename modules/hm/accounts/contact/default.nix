@@ -39,7 +39,7 @@
     mkMessage = collection: package: "accounts.calendar: some accounts enable ${package}, but ${collection}.${package}.enable = false.";
   in [
     {
-      assertion = config.programs.khal.enable;
+      assertion = config.programs.khard.enable;
       message = mkMessage "programs" "khard";
     }
     {
