@@ -6,7 +6,7 @@
 
 ```sh
 cd $XDG_DATA_HOME/mail/<account>
-mkdir -p mail/{cur, new, tmp}
+mkdir -p mail/{cur,new,tmp}
 (cd ../ && notmuch new)
 gmi auth # => ブラウザが立ち上がるので認証
 gmi pull
