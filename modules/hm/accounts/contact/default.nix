@@ -36,7 +36,7 @@
   };
 
   assertions = let
-    mkMessage = collection: package: "accounts.calendar: some accounts enable ${package}, but ${collection}.${package}.enable = false.";
+    mkMessage = collection: package: "accounts.contact: some accounts enable ${package}, but ${collection}.${package}.enable = false.";
   in [
     {
       assertion = config.programs.khard.enable;
