@@ -1,9 +1,5 @@
 # It requires to enable CalDAV API (Google API)
 {config, ...}: {
-  programs.khal.enable = true;
-  programs.vdirsyncer.enable = true;
-  services.vdirsyncer.enable = true;
-
   accounts.calendar = {
     basePath = "${config.xdg.dataHome}/calendar";
     accounts = {
@@ -40,4 +36,21 @@
       };
     };
   };
+
+  assertions = let
+    mkMessage = collection: package: "accounts.calendar: some accounts enable ${package}, but ${collection}.${package}.enable = false.";
+  in [
+    {
+      assertion = config.programs.khal.enable;
+      message = mkMessage "programs" "khal";
+    }
+    {
+      assertion = config.programs.vdirsyncer.enable;
+      message = mkMessage "programs" "vdirsyncer";
+    }
+    {
+      assertion = config.services.vdirsyncer.enable;
+      message = mkMessage "services" "vdirsyncer";
+    }
+  ];
 }

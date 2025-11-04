@@ -1,7 +1,5 @@
 # It requires to enable CardDAV API (Google API)
 {config, ...}: {
-  programs.khard.enable = true;
-
   accounts.contact = {
     basePath = "${config.xdg.dataHome}/contacts";
     accounts = {
@@ -36,4 +34,21 @@
       };
     };
   };
+
+  assertions = let
+    mkMessage = collection: package: "accounts.calendar: some accounts enable ${package}, but ${collection}.${package}.enable = false.";
+  in [
+    {
+      assertion = config.programs.khal.enable;
+      message = mkMessage "programs" "khard";
+    }
+    {
+      assertion = config.programs.vdirsyncer.enable;
+      message = mkMessage "programs" "vdirsyncer";
+    }
+    {
+      assertion = config.services.vdirsyncer.enable;
+      message = mkMessage "services" "vdirsyncer";
+    }
+  ];
 }
