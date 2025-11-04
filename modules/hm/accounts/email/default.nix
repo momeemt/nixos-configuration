@@ -1,9 +1,12 @@
-{config, ...}: {
+{config, ...}: let
+  maildirBasePath = "${config.xdg.dataHome}/mail";
+  address = "me@momee.mt";
+  realName = "Mutsuha Asada";
+in {
   accounts.email = {
-    maildirBasePath = "${config.xdg.dataHome}/mail";
-    accounts.main = {
-      address = "me@momee.mt";
-      realName = "Mutsuha Asada";
+    inherit maildirBasePath;
+    accounts.${address} = {
+      inherit address realName;
       primary = true;
       flavor = "gmail.com";
 
@@ -28,8 +31,17 @@
       };
 
       notmuch.enable = true;
-      aerc.enable = true;
-      maildir.path = "main";
+      maildir.path = address;
+
+      # email client
+      aerc = {
+        enable = true;
+        extraAccounts = {
+          source = "maildir://${maildirBasePath}/${address}";
+          outgoing = "msmtp://${address}";
+          from = "${realName} <${address}>";
+        };
+      };
     };
   };
 
