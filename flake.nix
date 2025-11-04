@@ -182,13 +182,16 @@
               modules = with inputs; [
                 ./hosts/emu
                 home-manager.nixosModules.home-manager
-                {
+                ({ config, ... }: {
                   home-manager.useGlobalPkgs = true;
                   home-manager.useUserPackages = true;
-                  home-manager.extraSpecialArgs = {inherit inputs;};
+                  home-manager.extraSpecialArgs = {
+                    inherit inputs;
+                    systemConfig = config;
+                  };
                   home-manager.users.momeemt = import ./home/emu;
                   home-manager.backupFileExtension = "hm-bak";
-                }
+                })
                 sops-nix.nixosModules.sops
                 NixVirt.nixosModules.default
                 comin.nixosModules.comin
@@ -214,13 +217,16 @@
                 })
                 home-manager.nixosModules.home-manager
                 vscode-server.nixosModules.default
-                {
+                ({ config, ... }: {
                   home-manager.useGlobalPkgs = true;
                   home-manager.useUserPackages = true;
-                  home-manager.extraSpecialArgs = {inherit inputs;};
+                  home-manager.extraSpecialArgs = {
+                    inherit inputs;
+                    systemConfig = config;
+                  };
                   home-manager.users.momeemt = import ./home/shime;
                   home-manager.backupFileExtension = "hm-bak";
-                }
+                })
                 sops-nix.nixosModules.sops
                 NixVirt.nixosModules.default
                 comin.nixosModules.comin
@@ -247,12 +253,16 @@
                 })
                 home-manager.nixosModules.home-manager
                 vscode-server.nixosModules.default
-                {
+                ({ config, ... }: {
                   home-manager.useGlobalPkgs = true;
                   home-manager.useUserPackages = true;
-                  home-manager.extraSpecialArgs = {inherit inputs;};
+                  home-manager.extraSpecialArgs = {
+                    inherit inputs;
+                    systemConfig = config;
+                  };
                   home-manager.users.momeemt = import ./home/oshidori;
-                }
+                  home-manager.backupFileExtension = "hm-bak";
+                })
                 sops-nix.nixosModules.sops
                 comin.nixosModules.comin
               ];
@@ -278,12 +288,16 @@
                   nixpkgs.overlays = [inputs.brew-nix.overlays.default];
                 })
                 home-manager.darwinModules.home-manager
-                {
+                ({ config, ... }: {
                   home-manager.useGlobalPkgs = true;
                   home-manager.useUserPackages = true;
-                  home-manager.extraSpecialArgs = {inherit inputs;};
+                  home-manager.extraSpecialArgs = {
+                    inherit inputs;
+                    systemConfig = config;
+                  };
                   home-manager.users.momeemt = import ./home/uguisu;
-                }
+                  home-manager.backupFileExtension = "hm-bak";
+                })
                 sops-nix.darwinModules.sops
               ];
             });

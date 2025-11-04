@@ -17,6 +17,7 @@
     ../../modules/hm/accounts/calendar
     ../../modules/hm/accounts/contact
     ../../modules/hm/accounts/email
+    ../../modules/hm/programs/bash
     ../../modules/hm/sops
     ../../modules/site/env
   ];

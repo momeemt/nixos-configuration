@@ -14,6 +14,7 @@
     ../../modules/tmux-nix
     ../../modules/vscode
     ../../modules/zsh
+    ../../modules/hm/programs/bash
     ../../modules/site/env
   ];
 

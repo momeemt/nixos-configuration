@@ -17,6 +17,13 @@
     };
   };
 
+  environment = {
+    # https://nix-community.github.io/home-manager/options.xhtml#opt-programs.bash.enableCompletion
+    pathsToLink = [
+      "/share/bash-completion"
+    ];
+  };
+
   boot.loader.systemd-boot.enable = false;
   boot.loader.grub = {
     enable = true;

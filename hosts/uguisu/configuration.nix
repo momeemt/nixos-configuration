@@ -16,6 +16,16 @@
       skhd
       tart
     ];
+
+    # https://nix-community.github.io/home-manager/options.xhtml#opt-programs.bash.enableCompletion
+    pathsToLink = [
+      "/share/bash-completion"
+    ];
+
+    shells = with pkgs; [
+      bash
+      zsh
+    ];
   };
 
   # Using DetermineSystems/nix-installer to install Nix
@@ -26,6 +36,10 @@
       "copilot.vim"
       "tart"
     ];
+
+  programs.bash = {
+    enable = true;
+  };
 
   programs.zsh = {
     enable = true;

@@ -56,6 +56,13 @@ in {
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  environment = {
+    # https://nix-community.github.io/home-manager/options.xhtml#opt-programs.bash.enableCompletion
+    pathsToLink = [
+      "/share/bash-completion"
+    ];
+  };
+
   networking = {
     hostName = "emu";
     useNetworkd = true;

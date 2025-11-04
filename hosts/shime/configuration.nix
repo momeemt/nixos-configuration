@@ -39,6 +39,13 @@ in {
     };
   };
 
+  environment = {
+    # https://nix-community.github.io/home-manager/options.xhtml#opt-programs.bash.enableCompletion
+    pathsToLink = [
+      "/share/bash-completion"
+    ];
+  };
+
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
