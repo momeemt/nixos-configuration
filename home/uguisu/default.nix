@@ -16,6 +16,7 @@
     ../../modules/zsh
     ../../modules/hm/accounts/calendar
     ../../modules/hm/accounts/contact
+    ../../modules/hm/accounts/email
     ../../modules/hm/sops
     ../../modules/site/env
   ];
@@ -44,6 +45,21 @@
   };
 
   programs.home-manager.enable = true;
+  programs.aerc = {
+    enable = true;
+    extraConfig = {
+      general = {
+        # Allow accounts.conf (0444) from nix-store
+        "unsafe-accounts-conf" = true;
+      };
+    };
+  };
+  programs.lieer.enable = true;
+  programs.notmuch.enable = true;
+  programs.khal.enable = true;
+  programs.vdirsyncer.enable = true;
+  services.vdirsyncer.enable = true;
+  programs.khard.enable = true;
 
   site.env.extraSessionPath = [
     "${config.home.homeDirectory}/Library/Application Support/JetBrains/Toolbox/scripts"
