@@ -15,6 +15,7 @@
     ../../modules/tmux
     ../../modules/zsh
     ../../modules/hm/accounts/calendar
+    ../../modules/hm/accounts/contact
     ../../modules/hm/sops
     ../../modules/site/env
   ];

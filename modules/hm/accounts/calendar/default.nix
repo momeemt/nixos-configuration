@@ -1,3 +1,4 @@
+# It requires to enable CalDAV API (Google API)
 {config, ...}: {
   programs.khal.enable = true;
   programs.vdirsyncer.enable = true;
@@ -34,7 +35,7 @@
             "cat"
             config.sops.secrets."google-me-momee-mt-client-secret".path
           ];
-          tokenFile = "${config.xdg.cacheHome}/vdirsyncer/google/me@momee.mt/token";
+          tokenFile = "${config.xdg.cacheHome}/vdirsyncer/google/me@momee.mt/calendar_token";
         };
       };
     };
