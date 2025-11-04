@@ -8,7 +8,7 @@ histfile = os.path.join(hist_dir, "history")
 
 try:
     readline.read_history_file(histfile)
-except:
+except FileNotFoundError:
     pass
 
 atexit.register(readline.write_history_file, histfile)
