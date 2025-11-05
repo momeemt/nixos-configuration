@@ -1,4 +1,4 @@
-name: Static Code Analysis
+name: CI
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
       - '**'
 
 jobs:
-  static-analysis:
+  nix-formatting:
     runs-on: ubuntu-24.04
     permissions:
       contents: read
@@ -20,80 +20,178 @@ jobs:
       - name: Setup Nix
         uses: DeterminateSystems/determinate-nix-action@v3
 
-      - name: Install linting tools
-        run: |
-          # Install Nix linters and formatters
-          nix profile install nixpkgs#alejandra
-          nix profile install nixpkgs#deadnix
-          nix profile install nixpkgs#statix
-          
-          # Install shell script linters and formatters
-          nix profile install nixpkgs#shellcheck
-          nix profile install nixpkgs#shfmt
-          
-          # Install Python linters and formatters
-          nix profile install nixpkgs#python312Packages.black
-          nix profile install nixpkgs#ruff
-          
-          # Install markdown and YAML formatters
-          nix profile install nixpkgs#mdformat
-          nix profile install nixpkgs#yamlfmt
-          
-          # Install other linters
-          nix profile install nixpkgs#actionlint
+      - name: Verify Nix flakes is enabled
+        run: nix --version && nix --extra-experimental-features '' flake --version
 
-      - name: Check Nix formatting with alejandra
-        run: |
-          echo "Checking Nix file formatting..."
-          alejandra --check --exclude secrets .
+      - name: Install alejandra
+        run: nix profile install nixpkgs#alejandra
 
-      - name: Check for dead Nix code with deadnix
-        run: |
-          echo "Checking for dead Nix code..."
-          deadnix --fail --exclude secrets .
+      - name: Check Nix formatting
+        run: alejandra --check --exclude secrets .
 
-      - name: Lint Nix files with statix
-        run: |
-          echo "Linting Nix files..."
-          statix check --ignore secrets .
+  nix-dead-code:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Check shell scripts with shellcheck
+      - name: Setup Nix
+        uses: DeterminateSystems/determinate-nix-action@v3
+
+      - name: Install deadnix
+        run: nix profile install nixpkgs#deadnix
+
+      - name: Check for dead Nix code
+        run: deadnix --fail --exclude secrets .
+
+  nix-linting:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Nix
+        uses: DeterminateSystems/determinate-nix-action@v3
+
+      - name: Install statix
+        run: nix profile install nixpkgs#statix
+
+      - name: Lint Nix files
+        run: statix check --ignore secrets .
+
+  shell-linting:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Nix
+        uses: DeterminateSystems/determinate-nix-action@v3
+
+      - name: Install shellcheck
+        run: nix profile install nixpkgs#shellcheck
+
+      - name: Check shell scripts
         run: |
-          echo "Checking shell scripts..."
           find . -type f \( -name "*.sh" -o -name "*.bash" -o -name "*.zsh" \) \
             ! -path "*/.*" ! -path "*/secrets/*" \
             -exec shellcheck {} +
 
-      - name: Check shell script formatting with shfmt
+  shell-formatting:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Nix
+        uses: DeterminateSystems/determinate-nix-action@v3
+
+      - name: Install shfmt
+        run: nix profile install nixpkgs#shfmt
+
+      - name: Check shell script formatting
         run: |
-          echo "Checking shell script formatting..."
           find . -type f \( -name "*.sh" -o -name "*.bash" -o -name "*.zsh" \) \
             ! -path "*/.*" ! -path "*/secrets/*" \
             -exec shfmt -d -i 2 -ci -bn {} +
 
-      - name: Check Python formatting with black
+  python-formatting:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Nix
+        uses: DeterminateSystems/determinate-nix-action@v3
+
+      - name: Install black
+        run: nix profile install nixpkgs#python312Packages.black
+
+      - name: Check Python formatting
         run: |
-          echo "Checking Python formatting..."
           find . -type f -name "*.py" ! -path "*/.*" ! -path "*/secrets/*" \
             -exec black --check --diff {} +
 
-      - name: Lint Python files with ruff
+  python-linting:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Nix
+        uses: DeterminateSystems/determinate-nix-action@v3
+
+      - name: Install ruff
+        run: nix profile install nixpkgs#ruff
+
+      - name: Lint Python files
         run: |
-          echo "Linting Python files..."
           find . -type f -name "*.py" ! -path "*/.*" ! -path "*/secrets/*" \
             -exec ruff check {} +
 
-      - name: Lint GitHub Actions workflows with actionlint
-        run: |
-          echo "Linting GitHub Actions workflows..."
-          actionlint
+  actions-linting:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Check Markdown formatting with mdformat
-        run: |
-          echo "Checking Markdown formatting..."
-          find . -type f -name "*.md" ! -path "*/.*" ! -path "*/secrets/*" -exec mdformat --check {} +
+      - name: Setup Nix
+        uses: DeterminateSystems/determinate-nix-action@v3
 
-      - name: Check YAML formatting with yamlfmt
+      - name: Install actionlint
+        run: nix profile install nixpkgs#actionlint
+
+      - name: Lint GitHub Actions workflows
+        run: actionlint
+
+  markdown-formatting:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Nix
+        uses: DeterminateSystems/determinate-nix-action@v3
+
+      - name: Install mdformat
+        run: nix profile install nixpkgs#mdformat
+
+      - name: Check Markdown formatting
         run: |
-          echo "Checking YAML formatting..."
-          find . -type f \( -name "*.yaml" -o -name "*.yml" \) ! -path "*/.*" ! -path "*/secrets/*" -exec yamlfmt -lint {} +
+          find . -type f -name "*.md" ! -path "*/.*" ! -path "*/secrets/*" \
+            -exec mdformat --check {} +
+
+  yaml-formatting:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Nix
+        uses: DeterminateSystems/determinate-nix-action@v3
+
+      - name: Install yamlfmt
+        run: nix profile install nixpkgs#yamlfmt
+
+      - name: Check YAML formatting
+        run: |
+          find . -type f \( -name "*.yaml" -o -name "*.yml" \) ! -path "*/.*" ! -path "*/secrets/*" \
+            -exec yamlfmt -lint {} +
