@@ -16,28 +16,18 @@
     ../../modules/zsh
     ../../modules/hm/programs/bash
     ../../modules/site/env
+    ../../modules/site/packages
   ];
 
   home = {
     username = "momeemt";
     homeDirectory = "/home/momeemt";
     stateVersion = "25.05";
-    packages = with pkgs;
-      [
-        google-chrome
-        spotify
-        teams-for-linux
-        discord
-        vesktop
-        wl-clipboard
-        todoist-electron
-        todoist
-        gnome-screenshot
-        mpv
-        usbutils
-        (import ../../packages/ncp {inherit pkgs;})
-      ]
-      ++ import ../../system/packages {inherit pkgs;};
+  };
+
+  site.packages = {
+    enable = true;
+    groups.linuxDesktop = true;
   };
 
   programs.home-manager.enable = true;

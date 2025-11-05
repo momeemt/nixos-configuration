@@ -20,22 +20,21 @@
     ../../modules/hm/programs/bash
     ../../modules/hm/sops
     ../../modules/site/env
+    ../../modules/site/packages
   ];
 
-  home = let
-    systemPackages = import ../../system/packages {inherit pkgs;};
-    ncp = import ../../packages/ncp/default.nix {inherit pkgs;};
-  in {
+  home = {
     username = "momeemt";
     homeDirectory = "/Users/momeemt";
     stateVersion = "25.05";
-    packages = with pkgs;
-      [
-        ghq
-        ncp
-        brewCasks.anki
-      ]
-      ++ systemPackages;
+  };
+  
+  site.packages = {
+    enable = true;
+    groups.darwinCasks = true;
+    extraDarwinCasks = with pkgs.brewCasks; [
+      anki
+    ];
   };
 
   programs.git = {

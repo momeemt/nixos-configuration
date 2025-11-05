@@ -16,20 +16,21 @@
     ../../modules/zsh
     ../../modules/hm/programs/bash
     ../../modules/site/env
+    ../../modules/site/packages
   ];
 
   home = {
     username = "momeemt";
     homeDirectory = "/home/momeemt";
     stateVersion = "25.05";
-    packages = with pkgs;
-      [
-        age
-        sops
-        cloudflared
-        quartus-prime-lite
-      ]
-      ++ import ../../system/packages {inherit pkgs;};
+  };
+
+  site.packages = {
+    enable = true;
+    group.linuxDesktop = true;
+    extraPackages = with pkgs; [
+      quartus-prime-lite
+    ];
   };
 
   programs.home-manager.enable = true;
