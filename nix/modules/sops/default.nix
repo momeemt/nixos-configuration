@@ -5,7 +5,7 @@
       keyFile = "/var/lib/sops-nix/key.txt";
       sshKeyPaths = [];
     };
-    defaultSopsFile = ../../secrets/secrets.enc.yml;
+    defaultSopsFile = ../../../secrets/secrets.enc.yml;
     secrets = {
       momeemt-password = {
         neededForUsers = true;
@@ -14,21 +14,21 @@
 
       "cloudflared/emu.json" = {
         format = "json";
-        sopsFile = ../../secrets/cloudflared/emu.enc.json;
+        sopsFile = ../../../secrets/cloudflared/emu.enc.json;
         key = "";
         mode = "0400";
       };
 
       "cloudflared/emu-desktop.json" = {
         format = "json";
-        sopsFile = ../../secrets/cloudflared/emu-desktop.enc.json;
+        sopsFile = ../../../secrets/cloudflared/emu-desktop.enc.json;
         key = "";
         mode = "0400";
       };
 
       "k8s/ca.key" = {
         format = "binary";
-        sopsFile = ../../secrets/k8s/ca.enc.key;
+        sopsFile = ../../../secrets/k8s/ca.enc.key;
         mode = "0400";
       };
     };

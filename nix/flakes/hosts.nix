@@ -24,9 +24,9 @@ in {
       in
         Hosts.mkNixos {
           inherit system siteLib;
-          hostPath = ../../hosts/emu;
+          hostPath = ../hosts/emu;
           users = {
-            momeemt = ../../home/emu;
+            momeemt = ../home/emu;
           };
           extraModules = with inputs; [
             NixVirt.nixosModules.default
@@ -47,9 +47,9 @@ in {
       in
         Hosts.mkNixos {
           inherit system siteLib;
-          hostPath = ../../hosts/shime;
+          hostPath = ../hosts/shime;
           users = {
-            momeemt = ../../home/shime;
+            momeemt = ../home/shime;
           };
           extraModules = with inputs; [
             NixVirt.nixosModules.default
@@ -70,9 +70,9 @@ in {
       in
         Hosts.mkNixos {
           inherit system siteLib;
-          hostPath = ../../hosts/oshidori;
+          hostPath = ../hosts/oshidori;
           users = {
-            momeemt = ../../home/oshidori;
+            momeemt = ../home/oshidori;
           };
           extraModules = with inputs; [
             vscode-server.nixosModules.default
@@ -94,9 +94,9 @@ in {
       in
         Hosts.mkDarwin {
           inherit system siteLib;
-          hostPath = ../../hosts/uguisu;
+          hostPath = ../hosts/uguisu;
           users = {
-            momeemt = ../../home/uguisu;
+            momeemt = ../home/uguisu;
           };
           overlays = [inputs.brew-nix.overlays.default];
         });

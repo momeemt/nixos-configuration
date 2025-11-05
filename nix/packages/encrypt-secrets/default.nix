@@ -6,5 +6,5 @@ pkgs.writeShellApplication {
     findutils
     coreutils
   ];
-  text = builtins.readFile ../../scripts/encrypt-secrets.sh;
+  text = builtins.readFile ../../../scripts/encrypt-secrets.sh;
 }

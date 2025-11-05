@@ -37,7 +37,7 @@ in {
         XDG_STATE_HOME = "${h}/.local/state";
         SATYROGRAPHOS_EXPERIMENTAL = "1";
         PYTHONHISTFILE = "${stateHome}/python/history";
-        PYTHONSTARTUP = "${../../../scripts/python-startup.py}";
+        PYTHONSTARTUP = "${../../../../scripts/python-startup.py}";
         # https://doc.rust-lang.org/cargo/reference/environment-variables.html
         CARGO_HOME = "${dataHome}/cargo";
         RUSTUP_HOME = "${dataHome}/rustup";
