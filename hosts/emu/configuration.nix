@@ -3,7 +3,7 @@
   lib,
   pkgs,
   inputs,
-  myLib,
+  siteLib,
   ...
 }: let
   nixvirtLib = inputs.NixVirt.lib;
@@ -17,7 +17,7 @@ in {
     ../../modules/sops
     ../../modules/fonts
     ../../modules/comin
-    (myLib.mkK8sMaster {
+    (siteLib.mkK8sMaster {
       inherit pkgs lib config nixvirtLib sshKeys apiAdvertiseAddress gateway;
       name = "kube-master";
       uuid = "c0ffee00-0001-0000-0000-000000000001";
@@ -25,11 +25,11 @@ in {
       memoryGiB = 8;
       rootDiskSizeGiB = 30;
       bridge = "br0";
-      ubuntuImage = myLib.images.ubuntu-lts;
+      ubuntuImage = siteLib.images.ubuntu-lts;
       ipAddress = "192.168.32.200/23";
       podCIDR = "10.244.0.0/16";
     })
-    (myLib.mkK8sWorker {
+    (siteLib.mkK8sWorker {
       inherit pkgs lib config nixvirtLib sshKeys apiAdvertiseAddress caHash gateway;
       name = "kube-worker-emu-1";
       uuid = "c0ffee00-0001-0000-0000-000000000002";
@@ -38,9 +38,9 @@ in {
       rootDiskSizeGiB = 30;
       bridge = "br0";
       ipAddress = "192.168.32.201/23";
-      ubuntuImage = myLib.images.ubuntu-lts;
+      ubuntuImage = siteLib.images.ubuntu-lts;
     })
-    (myLib.mkK8sWorker {
+    (siteLib.mkK8sWorker {
       inherit pkgs lib config nixvirtLib sshKeys apiAdvertiseAddress caHash gateway;
       name = "kube-worker-emu-2";
       uuid = "c0ffee00-0001-0000-0000-000000000003";
@@ -49,7 +49,7 @@ in {
       rootDiskSizeGiB = 30;
       bridge = "br0";
       ipAddress = "192.168.32.202/23";
-      ubuntuImage = myLib.images.ubuntu-lts;
+      ubuntuImage = siteLib.images.ubuntu-lts;
     })
   ];
 
