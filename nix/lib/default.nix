@@ -11,6 +11,7 @@
       args // {inherit lib;}
     );
   images = import ./images.nix {inherit pkgs;};
+  publicKeys = import ./publicKeys.nix;
 in {
-  inherit mkK8sMaster mkK8sWorker images;
+  inherit mkK8sMaster mkK8sWorker images publicKeys;
 }

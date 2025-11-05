@@ -1,6 +1,7 @@
 {
   lib,
   pkgs,
+  siteLib,
   ...
 }: {
   imports = [
@@ -64,7 +65,7 @@
     isNormalUser = true;
     extraGroups = ["wheel" "docker"];
     shell = pkgs.zsh;
-    openssh.authorizedKeys.keys = (import ../../system/ssh.nix).public_keys;
+    openssh.authorizedKeys.keys = siteLib.publicKeys;
   };
 
   programs = {
