@@ -31,7 +31,6 @@ jobs:
           
           # Install Python linters and formatters
           nix profile install nixpkgs#python312Packages.black
-          nix profile install nixpkgs#python312Packages.flake8
           nix profile install nixpkgs#ruff
           
           # Install markdown and YAML formatters
@@ -66,30 +65,21 @@ jobs:
       - name: Check shell script formatting with shfmt
         run: |
           echo "Checking shell script formatting..."
-          FILES=$(find . -type f \( -name "*.sh" -o -name "*.bash" -o -name "*.zsh" \) ! -path "*/.*" ! -path "*/secrets/*")
-          if [ -n "$FILES" ]; then
-            shfmt -d -i 2 -ci -bn $FILES
-          fi
+          find . -type f \( -name "*.sh" -o -name "*.bash" -o -name "*.zsh" \) \
+            ! -path "*/.*" ! -path "*/secrets/*" \
+            -exec shfmt -d -i 2 -ci -bn {} +
 
       - name: Check Python formatting with black
         run: |
           echo "Checking Python formatting..."
-          FILES=$(find . -type f -name "*.py" ! -path "*/.*" ! -path "*/secrets/*")
-          if [ -n "$FILES" ]; then
-            black --check --diff $FILES
-          else
-            echo "No Python files found to check"
-          fi
+          find . -type f -name "*.py" ! -path "*/.*" ! -path "*/secrets/*" \
+            -exec black --check --diff {} +
 
       - name: Lint Python files with ruff
         run: |
           echo "Linting Python files..."
-          FILES=$(find . -type f -name "*.py" ! -path "*/.*" ! -path "*/secrets/*")
-          if [ -n "$FILES" ]; then
-            ruff check $FILES
-          else
-            echo "No Python files found to check"
-          fi
+          find . -type f -name "*.py" ! -path "*/.*" ! -path "*/secrets/*" \
+            -exec ruff check {} +
 
       - name: Lint GitHub Actions workflows with actionlint
         run: |
@@ -104,4 +94,4 @@ jobs:
       - name: Check YAML formatting with yamlfmt
         run: |
           echo "Checking YAML formatting..."
-          find . -type f \( -name "*.yaml" -o -name "*.yml" \) ! -path "*/.*" ! -path "*/secrets/*" -exec yamlfmt -lint {} \;
+          find . -type f \( -name "*.yaml" -o -name "*.yml" \) ! -path "*/.*" ! -path "*/secrets/*" -exec yamlfmt -lint {} +
