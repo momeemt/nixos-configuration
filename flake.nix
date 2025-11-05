@@ -4,7 +4,6 @@
       imports = with inputs; [
         treefmt-nix.flakeModule
         git-hooks-nix.flakeModule
-        ./nix/flakes/overlays.nix
         ./nix/flakes/per-system.nix
         ./nix/flakes/hosts.nix
       ];
