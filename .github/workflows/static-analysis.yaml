@@ -1,0 +1,93 @@
+name: Static Code Analysis
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - '**'
+
+jobs:
+  static-analysis:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Nix
+        uses: DeterminateSystems/determinate-nix-action@v3
+
+      - name: Install linting tools
+        run: |
+          # Install Nix linters and formatters
+          nix profile install nixpkgs#alejandra
+          nix profile install nixpkgs#deadnix
+          nix profile install nixpkgs#statix
+          
+          # Install shell script linters and formatters
+          nix profile install nixpkgs#shellcheck
+          nix profile install nixpkgs#shfmt
+          
+          # Install Python linters and formatters
+          nix profile install nixpkgs#python312Packages.black
+          nix profile install nixpkgs#python312Packages.flake8
+          nix profile install nixpkgs#ruff
+          
+          # Install other linters
+          nix profile install nixpkgs#actionlint
+
+      - name: Check Nix formatting with alejandra
+        run: |
+          echo "Checking Nix file formatting..."
+          alejandra --check --exclude secrets .
+
+      - name: Check for dead Nix code with deadnix
+        run: |
+          echo "Checking for dead Nix code..."
+          deadnix --fail --exclude secrets .
+
+      - name: Lint Nix files with statix
+        run: |
+          echo "Linting Nix files..."
+          statix check --ignore secrets .
+
+      - name: Check shell scripts with shellcheck
+        run: |
+          echo "Checking shell scripts..."
+          find . -type f \( -name "*.sh" -o -name "*.bash" -o -name "*.zsh" \) \
+            ! -path "*/.*" ! -path "*/secrets/*" \
+            -exec shellcheck {} +
+
+      - name: Check shell script formatting with shfmt
+        run: |
+          echo "Checking shell script formatting..."
+          FILES=$(find . -type f \( -name "*.sh" -o -name "*.bash" -o -name "*.zsh" \) ! -path "*/.*" ! -path "*/secrets/*")
+          if [ -n "$FILES" ]; then
+            shfmt -d -i 2 -ci -bn $FILES
+          fi
+
+      - name: Check Python formatting with black
+        run: |
+          echo "Checking Python formatting..."
+          FILES=$(find . -type f -name "*.py" ! -path "*/.*" ! -path "*/secrets/*")
+          if [ -n "$FILES" ]; then
+            black --check --diff $FILES
+          else
+            echo "No Python files found to check"
+          fi
+
+      - name: Lint Python files with ruff
+        run: |
+          echo "Linting Python files..."
+          FILES=$(find . -type f -name "*.py" ! -path "*/.*" ! -path "*/secrets/*")
+          if [ -n "$FILES" ]; then
+            ruff check $FILES
+          else
+            echo "No Python files found to check"
+          fi
+
+      - name: Lint GitHub Actions workflows with actionlint
+        run: |
+          echo "Linting GitHub Actions workflows..."
+          actionlint
