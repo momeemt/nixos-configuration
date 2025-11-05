@@ -17,10 +17,10 @@
     };
 
     packages = {
-      encrypt-secrets = pkgs.callPackage ../../packages/encrypt-secrets.nix {};
-      updatekeys-secrets = pkgs.callPackage ../../packages/updatekeys-secrets.nix {};
-      destroy-all-vm = pkgs.callPackage ../../packages/destroy-all-vm.nix {};
-      switch-config-branch = pkgs.callPackage ../../packages/switch-config-branch.nix {};
+      encrypt-secrets = pkgs.callPackage ../../packages/encrypt-secrets {};
+      updatekeys-secrets = pkgs.callPackage ../../packages/updatekeys-secrets {};
+      destroy-all-vm = pkgs.callPackage ../../packages/destroy-all-vm {};
+      switch-config-branch = pkgs.callPackage ../../packages/switch-config-branch {};
     };
 
     treefmt = {
