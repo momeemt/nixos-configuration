@@ -34,6 +34,10 @@ jobs:
           nix profile install nixpkgs#python312Packages.flake8
           nix profile install nixpkgs#ruff
           
+          # Install markdown and YAML formatters
+          nix profile install nixpkgs#mdformat
+          nix profile install nixpkgs#yamlfmt
+          
           # Install other linters
           nix profile install nixpkgs#actionlint
 
@@ -91,3 +95,13 @@ jobs:
         run: |
           echo "Linting GitHub Actions workflows..."
           actionlint
+
+      - name: Check Markdown formatting with mdformat
+        run: |
+          echo "Checking Markdown formatting..."
+          find . -type f -name "*.md" ! -path "*/.*" ! -path "*/secrets/*" -exec mdformat --check {} +
+
+      - name: Check YAML formatting with yamlfmt
+        run: |
+          echo "Checking YAML formatting..."
+          find . -type f \( -name "*.yaml" -o -name "*.yml" \) ! -path "*/.*" ! -path "*/secrets/*" -exec yamlfmt -lint {} \;
