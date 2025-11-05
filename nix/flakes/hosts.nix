@@ -3,7 +3,7 @@
   withSystem,
   ...
 }: let
-  Hosts = import ../../lib/hosts.nix {inherit inputs;};
+  Hosts = import ../lib/hosts.nix {inherit inputs;};
   vscodeOverlay = _final: prev: let
     masterPkgs = import inputs.nixpkgs-master {
       inherit (prev) system config;
@@ -17,7 +17,7 @@ in {
       system = "x86_64-linux";
     in
       withSystem system ({pkgs, ...}: let
-        siteLib = import ../../lib {
+        siteLib = import ../lib {
           inherit pkgs;
           inherit (pkgs) lib;
         };
@@ -40,7 +40,7 @@ in {
       system = "x86_64-linux";
     in
       withSystem system ({pkgs, ...}: let
-        siteLib = import ../../lib {
+        siteLib = import ../lib {
           inherit pkgs;
           inherit (pkgs) lib;
         };
@@ -63,7 +63,7 @@ in {
       system = "x86_64-linux";
     in
       withSystem system ({pkgs, ...}: let
-        siteLib = import ../../lib {
+        siteLib = import ../lib {
           inherit pkgs;
           inherit (pkgs) lib;
         };
@@ -87,7 +87,7 @@ in {
       system = "aarch64-darwin";
     in
       withSystem system ({pkgs, ...}: let
-        siteLib = import ../../lib {
+        siteLib = import ../lib {
           inherit pkgs;
           inherit (pkgs) lib;
         };
