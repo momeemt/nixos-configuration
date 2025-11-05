@@ -1,8 +1,7 @@
-{...}: {
+_: {
   perSystem = {
     pkgs,
     config,
-    lib,
     ...
   }: {
     formatter = pkgs.alejandra;
@@ -49,7 +48,7 @@
       };
       settings.global.excludes = [
         "LICENSE-*"
-        "secrets/*.enc.*"
+        "secrets/*"
         ".github/CODEOWNERS"
         ".gitattributes"
         "modules/tmux/tmux.conf"

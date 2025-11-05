@@ -1,6 +1,6 @@
 {
   outputs = {flake-parts, ...} @ inputs:
-    flake-parts.lib.mkFlake {inherit inputs;} ({withSystem, ...}: {
+    flake-parts.lib.mkFlake {inherit inputs;} ({ ...}: {
       imports = with inputs; [
         treefmt-nix.flakeModule
         git-hooks-nix.flakeModule

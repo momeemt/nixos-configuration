@@ -90,7 +90,7 @@ systemctl enable containerd
 systemctl restart containerd
 
 # crictl endpoint
-cat >/etc/crictl.yaml << 'EOF'
+cat >/etc/crictl.yaml <<'EOF'
 runtime-endpoint: unix:///run/containerd/containerd.sock
 image-endpoint: unix:///run/containerd/containerd.sock
 timeout: 10
@@ -141,4 +141,3 @@ kubectl -n argocd get app nixos-configuration-k8s
 kubectl -n argocd describe app nixos-configuration-k8s
 
 echo "[bootstrap] done."
-

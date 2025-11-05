@@ -3,7 +3,7 @@
     if builtins.isPath spec || builtins.isString spec
     then (import spec)
     else spec;
-  hmUsers = builtins.mapAttrs (_: spec: normalize spec) users;
+  hmUsers = builtins.mapAttrs (_: normalize) users;
 in {
   home-manager = {
     useGlobalPkgs = true;

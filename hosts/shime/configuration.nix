@@ -134,7 +134,7 @@ in {
 
   hardware.graphics = {
     enable = true;
-    extraPackages = [ pkgs.mesa ];
+    extraPackages = [pkgs.mesa];
   };
 
   system.stateVersion = "25.05";

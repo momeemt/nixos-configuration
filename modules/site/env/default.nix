@@ -5,8 +5,8 @@
 }: let
   inherit (lib) mkOption types;
   h = config.home.homeDirectory;
-  dataHome = config.xdg.dataHome;
-  stateHome = config.xdg.stateHome;
+  inherit (config.xdg) dataHome;
+  inherit (config.xdg) stateHome;
   cfg = config.site.env;
 in {
   options.site.env = {

@@ -15,7 +15,7 @@ in {
       modules =
         [
           hostPath
-          ({...}: {nixpkgs.overlays = overlays;})
+          (_: {nixpkgs.overlays = overlays;})
           inputs.home-manager.nixosModules.home-manager
           (hmUsers {inherit users;})
           inputs.sops-nix.nixosModules.sops
@@ -37,7 +37,7 @@ in {
       modules =
         [
           hostPath
-          ({...}: {nixpkgs.overlays = overlays;})
+          (_: {nixpkgs.overlays = overlays;})
           inputs.home-manager.darwinModules.home-manager
           (hmUsers {inherit users;})
           inputs.sops-nix.darwinModules.sops

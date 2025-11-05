@@ -4,7 +4,7 @@
   ...
 }: let
   Hosts = import ../../lib/hosts.nix {inherit inputs;};
-  vscodeOverlay = final: prev: let
+  vscodeOverlay = _final: prev: let
     masterPkgs = import inputs.nixpkgs-master {
       inherit (prev) system config;
     };
@@ -33,7 +33,7 @@ in {
             vscode-server.nixosModules.default
             comin.nixosModules.comin
           ];
-          overlays = [ vscodeOverlay ];
+          overlays = [vscodeOverlay];
         });
 
     shime = let
@@ -56,7 +56,7 @@ in {
             vscode-server.nixosModules.default
             comin.nixosModules.comin
           ];
-          overlays = [ vscodeOverlay ];
+          overlays = [vscodeOverlay];
         });
 
     oshidori = let
@@ -78,7 +78,7 @@ in {
             vscode-server.nixosModules.default
             comin.nixosModules.comin
           ];
-          overlays = [ vscodeOverlay ];
+          overlays = [vscodeOverlay];
         });
   };
 
@@ -98,7 +98,7 @@ in {
           users = {
             momeemt = ../../home/uguisu;
           };
-          overlays = [ inputs.brew-nix.overlays.default ];
+          overlays = [inputs.brew-nix.overlays.default];
         });
   };
 }

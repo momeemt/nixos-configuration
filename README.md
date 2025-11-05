@@ -124,11 +124,11 @@ emuとshimeに合わせて4台のVMを建てて、Kubernetesクラスタを運�
 マニフェストは[./k8s](./k8s/)をご覧ください。
 
 - master
-    - kube-master (emu)
+  - kube-master (emu)
 - worker
-    - kube-worker-emu-1 (emu)
-    - kube-worker-emu-2 (emu)
-    - kube-worker-shime-1 (shime)
+  - kube-worker-emu-1 (emu)
+  - kube-worker-emu-2 (emu)
+  - kube-worker-shime-1 (shime)
 
 ```sh
 ubuntu@kube-master:~$ kubectl get nodes

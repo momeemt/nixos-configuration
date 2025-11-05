@@ -1,10 +1,8 @@
 name: "flake.lock: update Nix dependencies"
-
 on:
   workflow_dispatch:
   schedule:
     - cron: '0 15 * * *'
-
 jobs:
   nix-flake-update:
     permissions:
@@ -21,4 +19,3 @@ jobs:
           pr-title: "Update Nix flake inputs"
           pr-labels: |
             dependencies
-

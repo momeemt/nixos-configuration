@@ -29,11 +29,13 @@
       match.name = "en*";
       dhcp4 = false;
       dhcp6 = false;
-      addresses = [ ipAddress ];
-      routes = [{
-        to = "0.0.0.0/0";
-        via = gateway;
-      }];
+      addresses = [ipAddress];
+      routes = [
+        {
+          to = "0.0.0.0/0";
+          via = gateway;
+        }
+      ];
       nameservers = {
         addresses = [
           "1.1.1.1"

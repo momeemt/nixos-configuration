@@ -11,4 +11,3 @@ mkdir -p mail/{cur,new,tmp}
 gmi auth # => ブラウザが立ち上がるので認証
 gmi pull
 ```
-
