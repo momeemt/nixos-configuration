@@ -49,7 +49,7 @@
       };
       settings.global.excludes = [
         "LICENSE-*"
-        "secrets/secrets.yml"
+        "secrets/*.enc.*"
         ".github/CODEOWNERS"
         ".gitattributes"
         "modules/tmux/tmux.conf"
