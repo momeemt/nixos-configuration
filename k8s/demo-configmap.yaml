@@ -5,4 +5,3 @@ metadata:
   namespace: default
 data:
   hello: "world-$(date +%s)"
-

@@ -7,4 +7,3 @@ UUID="$(uuidgen)"
 BRANCH_NAME="config/$DATE-$UUID"
 
 git switch -c "$BRANCH_NAME"
-

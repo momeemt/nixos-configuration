@@ -12,4 +12,3 @@ for file in $TARGETS; do
   sops updatekeys "$file"
 done
 echo "[updatekeys-secrets] All secrets updated!"
-

@@ -56,7 +56,7 @@ systemctl enable containerd
 systemctl restart containerd
 
 # crictl endpoint
-cat >/etc/crictl.yaml << 'EOF'
+cat >/etc/crictl.yaml <<'EOF'
 runtime-endpoint: unix:///run/containerd/containerd.sock
 image-endpoint: unix:///run/containerd/containerd.sock
 timeout: 10
@@ -73,4 +73,3 @@ apt-get update -y
 apt-get install -y kubelet kubeadm kubectl
 systemctl enable --now kubelet
 apt-mark hold kubelet kubeadm kubectl
-
