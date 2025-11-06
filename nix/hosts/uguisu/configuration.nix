@@ -9,6 +9,7 @@
     ./yabai.nix
     ./skhd.nix
     ../../modules/sops
+    ../../modules/hosts/fonts
   ];
 
   environment = {

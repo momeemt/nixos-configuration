@@ -1,6 +1,7 @@
 {
   pkgs,
   lib,
+  config,
 }: let
   mkK8sMaster = args:
     import ./mkK8sMaster.nix (
@@ -14,4 +15,9 @@
   publicKeys = import ./publicKeys.nix;
 in {
   inherit mkK8sMaster mkK8sWorker images publicKeys;
+
+  isNixOS =
+    pkgs.stdenv.isLinux
+    && builtins.hasAttr "system" config
+    && builtins.hasAttr "nixos" config.system;
 }

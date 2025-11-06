@@ -1,6 +1,7 @@
 {
   inputs,
   withSystem,
+  config,
   ...
 }: let
   Hosts = import ../lib/hosts.nix {inherit inputs;};
@@ -20,6 +21,7 @@ in {
         siteLib = import ../lib {
           inherit pkgs;
           inherit (pkgs) lib;
+          inherit config;
         };
       in
         Hosts.mkNixos {
@@ -43,6 +45,7 @@ in {
         siteLib = import ../lib {
           inherit pkgs;
           inherit (pkgs) lib;
+          inherit config;
         };
       in
         Hosts.mkNixos {
@@ -66,6 +69,7 @@ in {
         siteLib = import ../lib {
           inherit pkgs;
           inherit (pkgs) lib;
+          inherit config;
         };
       in
         Hosts.mkNixos {
@@ -90,6 +94,7 @@ in {
         siteLib = import ../lib {
           inherit pkgs;
           inherit (pkgs) lib;
+          inherit config;
         };
       in
         Hosts.mkDarwin {

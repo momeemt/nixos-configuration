@@ -15,7 +15,7 @@
 in {
   imports = [
     ../../modules/sops
-    ../../modules/fonts
+    ../../modules/hosts/fonts
     ../../modules/comin
     (siteLib.mkK8sWorker {
       inherit pkgs lib config nixvirtLib sshKeys apiAdvertiseAddress caHash gateway;
