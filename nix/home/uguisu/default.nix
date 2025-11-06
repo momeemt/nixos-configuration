@@ -19,21 +19,17 @@
     ../../modules/hm/accounts/email
     ../../modules/hm/programs/bash
     ../../modules/hm/sops
-    ../../modules/site/env
-    ../../modules/site/packages
+    ../../modules/site/home
   ];
-
-  home = {
-    username = "momeemt";
-    homeDirectory = "/Users/momeemt";
-    stateVersion = "25.05";
-  };
   
-  site.packages = {
-    enable = true;
+  site.home = {
+    username = "momeemt";
     groups.darwinCasks = true;
     extraDarwinCasks = with pkgs.brewCasks; [
       anki
+    ];
+    extraSessionPath = [
+      "${config.home.homeDirectory}/Library/Application Support/JetBrains/Toolbox/scripts"
     ];
   };
 
@@ -60,8 +56,4 @@
   programs.vdirsyncer.enable = true;
   services.vdirsyncer.enable = true;
   programs.khard.enable = true;
-
-  site.env.extraSessionPath = [
-    "${config.home.homeDirectory}/Library/Application Support/JetBrains/Toolbox/scripts"
-  ];
 }

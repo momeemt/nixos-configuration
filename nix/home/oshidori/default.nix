@@ -1,5 +1,4 @@
 {
-  pkgs,
   inputs,
   ...
 }: {
@@ -15,18 +14,11 @@
     ../../modules/vscode
     ../../modules/zsh
     ../../modules/hm/programs/bash
-    ../../modules/site/env
-    ../../modules/site/packages
+    ../../modules/site/home
   ];
 
-  home = {
+  site.home = {
     username = "momeemt";
-    homeDirectory = "/home/momeemt";
-    stateVersion = "25.05";
-  };
-
-  site.packages = {
-    enable = true;
     groups.linuxDesktop = true;
   };
 
