@@ -21,7 +21,7 @@
 
   site.home = {
     username = "momeemt";
-    group.linuxDesktop = true;
+    groups.linuxDesktop = true;
     extraPackages = with pkgs; [
       quartus-prime-lite
     ];
