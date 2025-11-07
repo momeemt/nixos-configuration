@@ -222,10 +222,9 @@ in {
       atomix
     ]);
 
-
   virtualisation = {
     docker.enable = true;
-    
+
     libvirtd = {
       enable = true;
       qemu = {
