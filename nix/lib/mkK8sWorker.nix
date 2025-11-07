@@ -174,60 +174,66 @@
     };
   domainXml = nixvirtLib.domain.writeXML withIso;
 in {
-  systemd.tmpfiles.rules = [
-    "d ${seedDir} 0750 root root -"
-  ];
+  systemd = {
+    tmpfiles.rules = [
+      "d ${seedDir} 0750 root root -"
+    ];
 
-  systemd.services."vm-cloudinit-${name}" = {
-    after = ["sops-nix.service"];
-    wantedBy = ["multi-user.target"];
-    serviceConfig.Type = "oneshot";
-    script = ''
-      set -euo pipefail
-      dir="${seedDir}"
-      mkdir -p "$dir"
+    services = {
+      "vm-cloudinit-${name}" = {
+        after = ["sops-nix.service"];
+        wantedBy = ["multi-user.target"];
+        serviceConfig.Type = "oneshot";
+        script = ''
+          set -euo pipefail
+          dir="${seedDir}"
+          mkdir -p "$dir"
 
-      install -m600 ${config.sops.secrets.k8s-bootstrap-token.path} "$dir/token"
+          install -m600 ${config.sops.secrets.k8s-bootstrap-token.path} "$dir/token"
 
-      install -m755 ${../scripts/k8s-worker-bootstrap.sh} "$dir/k8s-worker-bootstrap.sh"
+          install -m755 ${../scripts/k8s-worker-bootstrap.sh} "$dir/k8s-worker-bootstrap.sh"
 
-      printf '%s\n' '#cloud-config' > "$dir/user-data"
-      cat ${userData} >> "$dir/user-data"
-      cp ${metaData} "$dir/meta-data"
+          printf '%s\n' '#cloud-config' > "$dir/user-data"
+          cat ${userData} >> "$dir/user-data"
+          cp ${metaData} "$dir/meta-data"
 
-      ${pkgs.cloud-utils}/bin/cloud-localds \
-        --network-config ${networkConfig} \
-        "${isoPath}" "$dir/user-data" "$dir/meta-data"
+          ${pkgs.cloud-utils}/bin/cloud-localds \
+            --network-config ${networkConfig} \
+            "${isoPath}" "$dir/user-data" "$dir/meta-data"
 
-      ${pkgs.cdrkit}/bin/genisoimage -quiet -J -r -V payload \
-        -o "${seedDir}/payload.iso" \
-        "$dir/token" "$dir/k8s-worker-bootstrap.sh"
-    '';
+          ${pkgs.cdrkit}/bin/genisoimage -quiet -J -r -V payload \
+            -o "${seedDir}/payload.iso" \
+            "$dir/token" "$dir/k8s-worker-bootstrap.sh"
+        '';
+      };
+
+      "vm-disk-${name}" = {
+        after = ["libvirtd.service"];
+        wantedBy = ["multi-user.target"];
+        serviceConfig.Type = "oneshot";
+        script = ''
+          set -euo pipefail
+          mkdir -p /var/lib/libvirt/images
+          if [ ! -e "${diskPath}" ]; then
+            ${pkgs.qemu_kvm}/bin/qemu-img create -f qcow2 -F qcow2 -b "${ubuntuImage}" "${diskPath}" ${toString rootDiskSizeGiB}G
+            chmod 0644 "${diskPath}"
+          fi
+        '';
+      };
+
+      nixvirt = {
+        wants = [
+          "vm-disk-${name}.service"
+          "vm-cloudinit-${name}.service"
+        ];
+
+        after = [
+          "vm-disk-${name}.service"
+          "vm-cloudinit-${name}.service"
+        ];
+      };
+    };
   };
-
-  systemd.services."vm-disk-${name}" = {
-    after = ["libvirtd.service"];
-    wantedBy = ["multi-user.target"];
-    serviceConfig.Type = "oneshot";
-    script = ''
-      set -euo pipefail
-      mkdir -p /var/lib/libvirt/images
-      if [ ! -e "${diskPath}" ]; then
-        ${pkgs.qemu_kvm}/bin/qemu-img create -f qcow2 -F qcow2 -b "${ubuntuImage}" "${diskPath}" ${toString rootDiskSizeGiB}G
-        chmod 0644 "${diskPath}"
-      fi
-    '';
-  };
-
-  systemd.services.nixvirt.wants = [
-    "vm-disk-${name}.service"
-    "vm-cloudinit-${name}.service"
-  ];
-
-  systemd.services.nixvirt.after = [
-    "vm-disk-${name}.service"
-    "vm-cloudinit-${name}.service"
-  ];
 
   virtualisation.libvirt.connections."qemu:///system".domains = lib.mkAfter [
     {

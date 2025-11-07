@@ -25,28 +25,33 @@
     ];
   };
 
-  boot.loader.systemd-boot.enable = false;
-  boot.loader.grub = {
-    enable = true;
-    version = 2;
-    device = "/dev/nvme0n1";
+  boot.loader = {
+    systemd-boot.enable = false;
+    grub = {
+      enable = true;
+      version = 2;
+      device = "/dev/nvme0n1";
+    };
   };
 
   time.timeZone = "Asia/Tokyo";
 
-  networking.hostName = "oshidori";
-  networking.networkmanager.enable = false;
-  networking.wireless.enable = true;
+  networking = {
+    hostName = "oshidori";
+    networkmanager.enable = false;
+    wireless.enable = true;
 
-  networking.firewall = {
-    enable = true;
+    firewall = {
+      enable = true;
+      trustedInterfaces = ["tailscale0"];
+    };
+
+    nameservers = [
+      "1.1.1.1"
+      "8.8.8.8"
+      "8.8.4.4"
+    ];
   };
-
-  networking.nameservers = [
-    "1.1.1.1"
-    "8.8.8.8"
-    "8.8.4.4"
-  ];
 
   nixpkgs.config.allowUnfreePredicate = pkg:
     builtins.elem (lib.getName pkg) [
@@ -76,20 +81,49 @@
     };
   };
 
-  services.resolved = {
-    enable = true;
-    dnssec = "true";
-    domains = ["~."];
-    fallbackDns = ["1.1.1.1" "8.8.8.8" "8.8.4.4"];
-    dnsovertls = "true";
-  };
-
-  services.xserver = {
-    enable = true;
-    displayManager.gdm = {
+  services = {
+    resolved = {
       enable = true;
+      dnssec = "true";
+      domains = ["~."];
+      fallbackDns = ["1.1.1.1" "8.8.8.8" "8.8.4.4"];
+      dnsovertls = "true";
     };
-    desktopManager.gnome.enable = true;
+
+    xserver = {
+      enable = true;
+      displayManager.gdm = {
+        enable = true;
+      };
+      desktopManager.gnome.enable = true;
+    };
+
+    xrdp = {
+      enable = true;
+      defaultWindowManager = "${pkgs.gnome-session}/bin/gnome-session";
+      openFirewall = true;
+    };
+
+    pipewire = {
+      enable = true;
+      pulse.enable = true;
+      wireplumber.enable = true;
+    };
+
+    tailscale = {
+      enable = true;
+      openFirewall = true;
+    };
+
+    openssh = {
+      enable = true;
+      settings.PasswordAuthentication = false;
+    };
+
+    vscode-server = {
+      enable = true;
+      enableFHS = true;
+    };
   };
 
   # https://github.com/NixOS/nixpkgs/issues/100390
@@ -105,39 +139,35 @@
     });
   '';
 
-  services.xrdp = {
-    enable = true;
-    defaultWindowManager = "${pkgs.gnome-session}/bin/gnome-session";
-    openFirewall = true;
-  };
+  environment = {
+    variables = {
+      GTK_IM_MODULE = "fcitx";
+      QT_IM_MODULE = "fcitx";
+      XMODIFIERS = "@im=fcitx";
+      GLFW_IM_MODULE = "ibus";
+    };
 
-  environment.variables = {
-    GTK_IM_MODULE = "fcitx";
-    QT_IM_MODULE = "fcitx";
-    XMODIFIERS = "@im=fcitx";
-    GLFW_IM_MODULE = "ibus";
+    gnome.excludePackages =
+      (with pkgs; [
+        gnome-photos
+        gnome-tour
+      ])
+      ++ (with pkgs; [
+        cheese
+        gnome-music
+        gnome-terminal
+        gedit
+        epiphany
+        geary
+        evince
+        gnome-characters
+        totem
+        tali
+        iagno
+        hitori
+        atomix
+      ]);
   };
-
-  environment.gnome.excludePackages =
-    (with pkgs; [
-      gnome-photos
-      gnome-tour
-    ])
-    ++ (with pkgs; [
-      cheese
-      gnome-music
-      gnome-terminal
-      gedit
-      epiphany
-      geary
-      evince
-      gnome-characters
-      totem
-      tali
-      iagno
-      hitori
-      atomix
-    ]);
 
   i18n.inputMethod = {
     enable = true;
@@ -150,36 +180,11 @@
     };
   };
 
-  services.pipewire = {
-    enable = true;
-    pulse.enable = true;
-    wireplumber.enable = true;
-  };
-
   xdg.portal = {
     enable = true;
     extraPortals = [
       pkgs.xdg-desktop-portal-gtk
     ];
-  };
-
-  services.tailscale = {
-    enable = true;
-    openFirewall = true;
-  };
-
-  services.openssh = {
-    enable = true;
-    settings.PasswordAuthentication = false;
-  };
-
-  services.vscode-server = {
-    enable = true;
-    enableFHS = true;
-  };
-
-  networking.firewall = {
-    trustedInterfaces = ["tailscale0"];
   };
 
   system.stateVersion = "25.05";

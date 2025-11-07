@@ -100,7 +100,7 @@ in {
       if pkgs.stdenv.isLinux
       then "/home/${cfg.username}"
       else "/Users/${cfg.username}";
-    username = cfg.username;
+    inherit (cfg) username;
     preferXdgDirectories = true;
 
     sessionVariables =

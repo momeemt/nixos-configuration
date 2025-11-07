@@ -20,6 +20,7 @@ _: {
       updatekeys-secrets = pkgs.callPackage ../packages/updatekeys-secrets {};
       destroy-all-vm = pkgs.callPackage ../packages/destroy-all-vm {};
       switch-config-branch = pkgs.callPackage ../packages/switch-config-branch {};
+      treefmt = config.treefmt.build.wrapper;
     };
 
     treefmt = {
@@ -29,17 +30,14 @@ _: {
         alejandra.enable = true;
         deadnix.enable = true;
         mdformat.enable = true;
+        ruff-check.enable = true;
+        ruff-format.enable = true;
         shellcheck.enable = true;
         shfmt = {
           enable = true;
           includes = [
             "*.sh"
             "*.bash"
-            "*.envrc"
-            "*.envrc.*"
-            "*.zsh"
-            "**/zshrc"
-            "**/zprofile"
           ];
         };
         statix.enable = true;

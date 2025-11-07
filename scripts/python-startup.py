@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-import os, atexit, readline, pathlib
+import os
+import atexit
+import readline
+import pathlib
 
 xdg_state = os.getenv("XDG_STATE_HOME", os.path.expanduser("~/.local/state"))
 hist_dir = os.path.join(xdg_state, "python")
@@ -12,4 +15,3 @@ except FileNotFoundError:
     pass
 
 atexit.register(readline.write_history_file, histfile)
-
