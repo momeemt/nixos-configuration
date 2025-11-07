@@ -28,7 +28,7 @@
     homeDirectory = "/Users/momeemt";
     stateVersion = "25.05";
   };
-  
+
   site.packages = {
     enable = true;
     groups.darwinCasks = true;
