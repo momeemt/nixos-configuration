@@ -16,8 +16,5 @@
 in {
   inherit mkK8sMaster mkK8sWorker images publicKeys;
 
-  isNixOS =
-    pkgs.stdenv.isLinux
-    && builtins.hasAttr "system" config
-    && builtins.hasAttr "nixos" config.system;
+  isNixOS = pkgs.stdenv.isLinux;
 }
