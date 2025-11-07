@@ -48,24 +48,14 @@ jobs:
           find . -type f \( -name "*.sh" -o -name "*.bash" -o -name "*.zsh" \) \
             ! -path "*/.*" ! -path "*/secrets/*" \
             -exec shfmt -d -i 2 -ci -bn {} +
-  black:
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v4
-      - uses: DeterminateSystems/determinate-nix-action@v3
-      - run: nix profile install nixpkgs#python312Packages.black
-      - run: |
-          find . -type f -name "*.py" ! -path "*/.*" ! -path "*/secrets/*" \
-            -exec black --check --diff {} +
   ruff:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: DeterminateSystems/determinate-nix-action@v3
       - run: nix profile install nixpkgs#ruff
-      - run: |
-          find . -type f -name "*.py" ! -path "*/.*" ! -path "*/secrets/*" \
-            -exec ruff check {} +
+      - run: ruff check
+      - run: ruff format --check
   actionlint:
     runs-on: ubuntu-24.04
     steps:
