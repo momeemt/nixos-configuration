@@ -3,7 +3,7 @@
     fontconfig = {
       enable = true;
       defaultFonts = {
-        sanSerif = [
+        sansSerif = [
           "Noto Sans CJK JP"
         ];
         serif = [
