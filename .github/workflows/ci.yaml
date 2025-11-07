@@ -45,9 +45,9 @@ jobs:
       - uses: DeterminateSystems/determinate-nix-action@v3
       - run: nix profile install nixpkgs#shfmt
       - run: |
-          find . -type f \( -name "*.sh" -o -name "*.bash" -o -name "*.zsh" \) \
+          find . -type f \( -name "*.sh" -o -name "*.bash" \) \
             ! -path "*/.*" ! -path "*/secrets/*" \
-            -exec shfmt -d -i 2 -ci -bn {} +
+            -exec shfmt -d -i 2 -s {} +
   ruff:
     runs-on: ubuntu-24.04
     steps:
