@@ -46,8 +46,10 @@ in {
     ];
   };
 
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader = {
+    systemd-boot.enable = true;
+    efi.canTouchEfiVariables = true;
+  };
 
   i18n.defaultLocale = "ja_JP.UTF-8";
   console = {
@@ -68,9 +70,11 @@ in {
       "8.8.8.8"
       "8.8.4.4"
     ];
-    interfaces.enp4s0.useDHCP = false;
+    interfaces = {
+      enp4s0.useDHCP = false;
+      br0.useDHCP = true;
+    };
     bridges.br0.interfaces = ["enp4s0"];
-    interfaces.br0.useDHCP = true;
   };
 
   nixpkgs.config.allowUnfreePredicate = pkg:
@@ -99,38 +103,41 @@ in {
       enable = true;
       enableCompletion = false;
     };
+    virt-manager.enable = true;
   };
 
-  services.tailscale = {
-    enable = true;
-    openFirewall = true;
-  };
+  services = {
+    tailscale = {
+      enable = true;
+      openFirewall = true;
+    };
 
-  services.openssh = {
-    enable = true;
-    settings.PasswordAuthentication = false;
-  };
+    openssh = {
+      enable = true;
+      settings.PasswordAuthentication = false;
+    };
 
-  services.vscode-server = {
-    enable = true;
-    enableFHS = true;
-  };
-
-  virtualisation.libvirtd = {
-    enable = true;
-    qemu = {
-      package = pkgs.qemu_kvm;
-      runAsRoot = true;
+    vscode-server = {
+      enable = true;
+      enableFHS = true;
     };
   };
 
-  virtualisation.libvirt = {
-    enable = true;
-    verbose = true;
-    connections."qemu:///system".pools = null;
-  };
+  virtualisation = {
+    libvirtd = {
+      enable = true;
+      qemu = {
+        package = pkgs.qemu_kvm;
+        runAsRoot = true;
+      };
+    };
 
-  programs.virt-manager.enable = true;
+    libvirt = {
+      enable = true;
+      verbose = true;
+      connections."qemu:///system".pools = null;
+    };
+  };
 
   hardware.graphics = {
     enable = true;

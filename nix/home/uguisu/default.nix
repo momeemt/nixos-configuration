@@ -34,27 +34,31 @@
     ];
   };
 
-  programs.git = {
-    signing = {
-      key = "ACB54F0CBC6AA7C6";
-      signByDefault = true;
-    };
-  };
-
-  programs.home-manager.enable = true;
-  programs.aerc = {
-    enable = true;
-    extraConfig = {
-      general = {
-        # Allow accounts.conf (0444) from nix-store
-        "unsafe-accounts-conf" = true;
+  programs = {
+    git = {
+      signing = {
+        key = "ACB54F0CBC6AA7C6";
+        signByDefault = true;
       };
     };
+
+    aerc = {
+      enable = true;
+      extraConfig = {
+        general = {
+          # Allow accounts.conf (0444) from nix-store
+          "unsafe-accounts-conf" = true;
+        };
+      };
+    };
+
+    home-manager.enable = true;
+    lieer.enable = true;
+    notmuch.enable = true;
+    khal.enable = true;
+    vdirsyncer.enable = true;
+    khard.enable = true;
   };
-  programs.lieer.enable = true;
-  programs.notmuch.enable = true;
-  programs.khal.enable = true;
-  programs.vdirsyncer.enable = true;
+
   services.vdirsyncer.enable = true;
-  programs.khard.enable = true;
 }
