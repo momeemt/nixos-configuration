@@ -1,0 +1,104 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - '**'
+
+jobs:
+  alejandra:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/determinate-nix-action@v3
+      - run: nix profile install nixpkgs#alejandra
+      - run: alejandra --check .
+
+  deadnix:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/determinate-nix-action@v3
+      - run: nix profile install nixpkgs#deadnix
+      - run: deadnix --fail .
+
+  statix:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/determinate-nix-action@v3
+      - run: nix profile install nixpkgs#statix
+      - run: statix check .
+
+  shellcheck:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/determinate-nix-action@v3
+      - run: nix profile install nixpkgs#shellcheck
+      - run: |
+          find . -type f \( -name "*.sh" -o -name "*.bash" -o -name "*.zsh" \) \
+            ! -path "*/.*" ! -path "*/secrets/*" \
+            -exec shellcheck {} +
+
+  shfmt:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/determinate-nix-action@v3
+      - run: nix profile install nixpkgs#shfmt
+      - run: |
+          find . -type f \( -name "*.sh" -o -name "*.bash" -o -name "*.zsh" \) \
+            ! -path "*/.*" ! -path "*/secrets/*" \
+            -exec shfmt -d -i 2 -ci -bn {} +
+
+  black:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/determinate-nix-action@v3
+      - run: nix profile install nixpkgs#python312Packages.black
+      - run: |
+          find . -type f -name "*.py" ! -path "*/.*" ! -path "*/secrets/*" \
+            -exec black --check --diff {} +
+
+  ruff:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/determinate-nix-action@v3
+      - run: nix profile install nixpkgs#ruff
+      - run: |
+          find . -type f -name "*.py" ! -path "*/.*" ! -path "*/secrets/*" \
+            -exec ruff check {} +
+
+  actionlint:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/determinate-nix-action@v3
+      - run: nix profile install nixpkgs#actionlint
+      - run: actionlint
+
+  mdformat:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/determinate-nix-action@v3
+      - run: nix profile install nixpkgs#mdformat
+      - run: |
+          find . -type f -name "*.md" ! -path "*/.*" ! -path "*/secrets/*" \
+            -exec mdformat --check {} +
+
+  yamlfmt:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/determinate-nix-action@v3
+      - run: nix profile install nixpkgs#yamlfmt
+      - run: |
+          find . -type f \( -name "*.yaml" -o -name "*.yml" \) ! -path "*/.*" ! -path "*/secrets/*" \
+            -exec yamlfmt -lint {} +
