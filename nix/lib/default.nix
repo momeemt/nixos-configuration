@@ -1,6 +1,7 @@
 {
   pkgs,
   lib,
+  system,
 }: let
   mkK8sMaster = args:
     import ./mkK8sMaster.nix (
@@ -14,4 +15,7 @@
   publicKeys = import ./publicKeys.nix;
 in {
   inherit mkK8sMaster mkK8sWorker images publicKeys;
+
+  isLinux = lib.hasInfix "linux" system;
+  isDarwin = lib.hasInfix "darwin" system;
 }

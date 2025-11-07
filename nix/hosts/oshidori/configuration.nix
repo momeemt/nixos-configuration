@@ -5,7 +5,7 @@
   ...
 }: {
   imports = [
-    ../../modules/fonts
+    ../../modules/hosts/fonts
     ../../modules/comin
   ];
 

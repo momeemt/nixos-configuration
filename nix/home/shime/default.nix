@@ -1,5 +1,4 @@
 {
-  pkgs,
   inputs,
   ...
 }: {
@@ -14,17 +13,11 @@
     ../../modules/tmux-nix
     ../../modules/vscode
     ../../modules/zsh
+    ../../modules/hm/nix
     ../../modules/hm/programs/bash
-    ../../modules/site/env
-    ../../modules/site/packages
+    ../../modules/site/home
   ];
 
-  home = {
-    username = "momeemt";
-    homeDirectory = "/home/momeemt";
-    stateVersion = "25.05";
-  };
-
-  site.packages.enable = true;
+  site.home.username = "momeemt";
   programs.home-manager.enable = true;
 }
