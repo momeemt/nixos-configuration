@@ -18,7 +18,7 @@ in {
     in
       withSystem system ({pkgs, ...}: let
         siteLib = import ../lib {
-          inherit pkgs;
+          inherit pkgs system;
           inherit (pkgs) lib;
         };
       in
@@ -41,7 +41,7 @@ in {
     in
       withSystem system ({pkgs, ...}: let
         siteLib = import ../lib {
-          inherit pkgs;
+          inherit pkgs system;
           inherit (pkgs) lib;
         };
       in
@@ -64,7 +64,7 @@ in {
     in
       withSystem system ({pkgs, ...}: let
         siteLib = import ../lib {
-          inherit pkgs;
+          inherit pkgs system;
           inherit (pkgs) lib;
         };
       in
@@ -88,7 +88,7 @@ in {
     in
       withSystem system ({pkgs, ...}: let
         siteLib = import ../lib {
-          inherit pkgs;
+          inherit pkgs system;
           inherit (pkgs) lib;
         };
       in
