@@ -16,7 +16,7 @@ shime_SWITCH_COMMAND := sudo nixos-rebuild switch --flake '$(FLAKE_ROOT)\#shime'
 apply: $(HOSTNAME)
 
 $(uguisu_FLAKE_TARGET):
-	@nix build '$(FLAKE_ROOT)#$(uguisu_FLAKE_TARGET)' $(NIX_FLAGS)
+	@nix build --show-trace '$(FLAKE_ROOT)#$(uguisu_FLAKE_TARGET)' $(NIX_FLAGS)
 
 uguisu: $(uguisu_FLAKE_TARGET)
 	@$(uguisu_SWITCH_COMMAND)

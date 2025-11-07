@@ -13,6 +13,7 @@
     ../../modules/tmux-nix
     ../../modules/vscode
     ../../modules/zsh
+    ../../modules/hm/nix
     ../../modules/hm/programs/bash
     ../../modules/site/home
   ];

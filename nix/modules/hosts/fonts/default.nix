@@ -4,7 +4,7 @@
   siteLib,
   ...
 }: {
-  imports = lib.optionals siteLib.isNixOS [
+  imports = lib.optionals siteLib.isLinux [
     ./nixos.nix
   ];
 
