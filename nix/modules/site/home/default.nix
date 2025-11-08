@@ -120,6 +120,7 @@ in {
         PYTHONHISTFILE = "${stateHome}/python/history";
         PYTHONSTARTUP = "${../../../../scripts/python-startup.py}";
         AZURE_CONFIG_DIR = "${configHome}/azure";
+        DOCKER_CONFIG = "${configHome}/docker";
         # https://doc.rust-lang.org/cargo/reference/environment-variables.html
         CARGO_HOME = "${dataHome}/cargo";
         RUSTUP_HOME = "${dataHome}/rustup";
