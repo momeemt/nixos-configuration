@@ -131,7 +131,7 @@ in {
       [
         "${h}/.local/bin"
         "${dataHome}/cargo/bin"
-        "${configHome}/.nimble/bin"
+        "${configHome}/nimble/bin"
         "${h}/go/bin"
       ]
       ++ cfg.extraSessionPath;
