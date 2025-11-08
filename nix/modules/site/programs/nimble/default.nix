@@ -75,15 +75,16 @@ in {
     # }];
 
     xdg.configFile."nimble/nimble.ini".text = lib.generators.toINIWithGlobalSection {} {
-      globalSection = (lib.optionalAttrs (cfg.nimbleDir != null) {
-        nimbleDir = cfg.nimbleDir;
-      })
-      // {
-        cloneUsingHttps = cfg.cloneUsingHttps;
-      }
-      // (lib.optionalAttrs (cfg.httpProxy != null) {
-        httpProxy = cfg.httpProxy;
-      });
+      globalSection =
+        (lib.optionalAttrs (cfg.nimbleDir != null) {
+          inherit (cfg) nimbleDir;
+        })
+        // {
+          inherit (cfg) cloneUsingHttps;
+        }
+        // (lib.optionalAttrs (cfg.httpProxy != null) {
+          inherit (cfg) httpProxy;
+        });
     };
   };
 }
