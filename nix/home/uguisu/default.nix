@@ -21,17 +21,26 @@
     ../../modules/hm/programs/bash
     ../../modules/hm/sops
     ../../modules/site/home
+    ../../modules/site/programs/nimble
   ];
 
-  site.home = {
-    username = "momeemt";
-    groups.darwinCasks = true;
-    extraDarwinCasks = with pkgs.brewCasks; [
-      anki
-    ];
-    extraSessionPath = [
-      "${config.home.homeDirectory}/Library/Application Support/JetBrains/Toolbox/scripts"
-    ];
+  site = {
+    home = {
+      username = "momeemt";
+      groups.darwinCasks = true;
+      extraDarwinCasks = with pkgs.brewCasks; [
+        anki
+      ];
+      extraSessionPath = [
+        "${config.home.homeDirectory}/Library/Application Support/JetBrains/Toolbox/scripts"
+      ];
+    };
+    programs = {
+      nimble = {
+        enable = true;
+        nimbleDir = "${config.xdg.configHome}/nimble/";
+      };
+    };
   };
 
   programs = {
