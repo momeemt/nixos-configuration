@@ -7,7 +7,7 @@
   inherit (lib) mkEnableOption mkOption types;
   cfg = config.site.home;
   h = config.home.homeDirectory;
-  inherit (config.xdg) dataHome stateHome;
+  inherit (config.xdg) dataHome stateHome configHome;
   ncp = import ../../../packages/ncp {inherit pkgs;};
 in {
   options.site.home = {
@@ -119,6 +119,7 @@ in {
         SATYROGRAPHOS_EXPERIMENTAL = "1";
         PYTHONHISTFILE = "${stateHome}/python/history";
         PYTHONSTARTUP = "${../../../../scripts/python-startup.py}";
+        AZURE_CONFIG_DIR = "${configHome}/azure";
         # https://doc.rust-lang.org/cargo/reference/environment-variables.html
         CARGO_HOME = "${dataHome}/cargo";
         RUSTUP_HOME = "${dataHome}/rustup";
@@ -129,7 +130,7 @@ in {
       [
         "${h}/.local/bin"
         "${dataHome}/cargo/bin"
-        "${h}/.nimble/bin"
+        "${configHome}/.nimble/bin"
         "${h}/go/bin"
       ]
       ++ cfg.extraSessionPath;
