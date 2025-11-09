@@ -14,5 +14,8 @@ in {
     };
     backupFileExtension = "hm-bak";
     users = hmUsers;
+    sharedModules = [
+      inputs.mac-app-util.homeManagerModules.default
+    ];
   };
 }

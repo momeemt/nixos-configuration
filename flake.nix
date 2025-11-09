@@ -29,6 +29,7 @@
     brew-api.url = "github:BatteredBunny/brew-api";
     NixVirt.url = "https://flakehub.com/f/AshleyYakeley/NixVirt/v0.6.0.tar.gz";
     comin.url = "github:nlewo/comin";
+    mac-app-util.url = "github:hraban/mac-app-util";
 
     # --- inputs.<input>.follows ---
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -44,5 +45,7 @@
     brew-api.flake = false;
     NixVirt.inputs.nixpkgs.follows = "nixpkgs";
     comin.inputs.nixpkgs.follows = "nixpkgs";
+    # see https://github.com/hraban/mac-app-util/issues/39#issuecomment-3503946041
+    mac-app-util.inputs.cl-nix-lite.url = "github:r4v3n6101/cl-nix-lite/url-fix";
   };
 }

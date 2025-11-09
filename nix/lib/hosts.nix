@@ -41,6 +41,7 @@ in {
           inputs.home-manager.darwinModules.home-manager
           (hmUsers {inherit users;})
           inputs.sops-nix.darwinModules.sops
+          inputs.mac-app-util.darwinModules.default
         ]
         ++ extraModules;
     };
