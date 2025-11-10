@@ -95,7 +95,6 @@ in {
         docker-desktop
         element
         figma
-        firefox
         jetbrains-toolbox
         github
         (google-chrome.overrideAttrs (oldAttrs: {

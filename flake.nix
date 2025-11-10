@@ -71,5 +71,9 @@
       # see https://github.com/hraban/mac-app-util/issues/39#issuecomment-3503946041
       inputs.cl-nix-lite.url = "github:r4v3n6101/cl-nix-lite/url-fix";
     };
+    firefox-addons = {
+      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 }
