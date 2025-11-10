@@ -68,6 +68,7 @@ in {
       usbutils
       ncp
       nim
+      python314
     ];
 
     linuxDesktopPackages = with pkgs; [
