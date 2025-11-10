@@ -19,6 +19,7 @@
     ../../modules/hm/accounts/email
     ../../modules/hm/nix
     ../../modules/hm/programs/bash
+    ../../modules/hm/programs/firefox
     ../../modules/hm/sops
     ../../modules/site/home
     ../../modules/site/programs/nimble

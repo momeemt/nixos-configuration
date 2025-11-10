@@ -1,5 +1,8 @@
 {inputs}: let
   hmUsers = import ./hm-users.nix {inherit inputs;};
+  localOverlays = with inputs; [
+    firefox-addons.overlays.default
+  ];
 in {
   mkNixos = {
     system,
@@ -15,7 +18,7 @@ in {
       modules =
         [
           hostPath
-          (_: {nixpkgs.overlays = overlays;})
+          (_: {nixpkgs.overlays = overlays ++ localOverlays;})
           inputs.home-manager.nixosModules.home-manager
           (hmUsers {inherit users;})
           inputs.sops-nix.nixosModules.sops
@@ -37,7 +40,7 @@ in {
       modules =
         [
           hostPath
-          (_: {nixpkgs.overlays = overlays;})
+          (_: {nixpkgs.overlays = overlays ++ localOverlays;})
           inputs.home-manager.darwinModules.home-manager
           (hmUsers {inherit users;})
           inputs.sops-nix.darwinModules.sops
