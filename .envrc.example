@@ -1,0 +1,8 @@
+# NixOS Configuration Development Environment
+# Copy this file to .envrc and run `direnv allow`
+
+use flake
+
+# Optional: Set up pre-commit hooks automatically
+# Uncomment the following line to enable:
+# pre-commit install

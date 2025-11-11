@@ -67,7 +67,18 @@ in {
         usbutils
         nim
         python314
+        # Development tools
+        fd
+        ripgrep
+        fzf
+        nix-tree
+        nix-output-monitor
+        # Custom packages
         myPackages.ncp
+        myPackages.devtools
+        myPackages.nix-update
+        myPackages.nix-clean
+        myPackages.quick-switch
       ]
       ++ lib.optionals pkgs.stdenv.isDarwin [
         myPackages.quitapp

@@ -1,0 +1,40 @@
+name: Build Configurations
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  build-darwin:
+    runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+        host: [uguisu]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/determinate-nix-action@v3
+      - name: Build ${{ matrix.host }} configuration
+        run: |
+          nix build .#darwinConfigurations.${{ matrix.host }}.system --show-trace
+
+  build-nixos:
+    runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+        host: [emu, shime, oshidori]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/determinate-nix-action@v3
+      - name: Build ${{ matrix.host }} configuration
+        run: |
+          nix build .#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel --show-trace
+
+  check-flake:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/determinate-nix-action@v3
+      - name: Check flake
+        run: nix flake check --show-trace

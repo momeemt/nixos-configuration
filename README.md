@@ -41,6 +41,59 @@ direnv allow
 nix develop .
 ```
 
+## 開発ツール
+
+このリポジトリには、開発効率を向上させるための便利なツールが含まれています。
+
+### devtools - 統合開発ツール
+
+```sh
+# すべての利用可能なコマンドを表示
+devtools help
+
+# すべてのチェックを実行（フォーマット、リント、ビルド）
+devtools check
+
+# 設定を素早く適用
+devtools switch
+
+# 設定の差分を表示
+devtools diff
+
+# 世代の一覧を表示
+devtools generations
+
+# 前の世代にロールバック
+devtools rollback
+```
+
+### 個別ツール
+
+```sh
+# flake.lock を更新
+nix run .#nix-update
+
+# 古い世代をクリーンアップ
+nix run .#nix-clean
+
+# 素早く設定を適用（フォーマット + ビルド + 適用）
+nix run .#quick-switch
+```
+
+### シェルエイリアス
+
+開発環境では便利なエイリアスが利用可能です：
+
+- `nrs` - `make apply` の短縮形
+- `nfu` - `nix flake update`
+- `nfc` - `nix flake check`
+- `nfmt` - `nix fmt`
+- `ll` - `eza -la` (詳細リスト表示)
+- `gs` - `git status`
+- `gd` - `git diff`
+
+詳細は [CONTRIBUTING.md](./CONTRIBUTING.md) を参照してください。
+
 ## hosts
 
 ### [uguisu](https://upload.wikimedia.org/wikipedia/commons/6/66/Cettia_diphone.jpg)

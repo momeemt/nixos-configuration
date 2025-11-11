@@ -1,5 +1,21 @@
+# Direnv
 .envrc
 .direnv
+
+# macOS
 .DS_Store
+
+# Nix
 result
+result-*
+
+# Development
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Temporary files
+/tmp/
 
