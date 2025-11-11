@@ -51,7 +51,6 @@ in {
         neofetch
         gh
         ghq
-        ripgrep
         eza
         bat
         bottom

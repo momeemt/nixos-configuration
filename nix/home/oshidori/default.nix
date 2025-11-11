@@ -11,7 +11,7 @@
     ../../modules/vscode
     ../../modules/zsh
     ../../modules/hm/nix
-    ../../modules/hm/programs/bash
+    ../../modules/hm/programs
     ../../modules/site/home
   ];
 
