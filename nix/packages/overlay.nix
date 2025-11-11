@@ -1,4 +1,4 @@
-self: super: let
+_self: super: let
   pkgs = super;
   subscribePackages = import ./subscribe {inherit pkgs;};
 in {
@@ -9,8 +9,8 @@ in {
     quitapp = import ./quitapp {inherit pkgs;};
     switch-config-branch = import ./switch-config-branch {inherit pkgs;};
     updatekeys-secrets = import ./updatekeys-secrets {inherit pkgs;};
-    ok = subscribePackages.ok;
-    ng = subscribePackages.ng;
-    subscribe = subscribePackages.subscribe;
+    inherit (subscribePackages) ok;
+    inherit (subscribePackages) ng;
+    inherit (subscribePackages) subscribe;
   };
 }
