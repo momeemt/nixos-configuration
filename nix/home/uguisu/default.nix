@@ -7,13 +7,8 @@
   imports = [
     inputs.nixvim.homeManagerModules.nixvim
     inputs.sops-nix.homeManagerModules.sops
-    ../../modules/alacritty
-    ../../modules/direnv
-    ../../modules/git
     ../../modules/nixvim
-    ../../modules/starship
     ../../modules/tmux
-    ../../modules/zsh
     ../../modules/hm/accounts/calendar
     ../../modules/hm/accounts/contact
     ../../modules/hm/accounts/email

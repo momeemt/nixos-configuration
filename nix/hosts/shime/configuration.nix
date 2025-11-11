@@ -77,18 +77,7 @@ in {
     bridges.br0.interfaces = ["enp4s0"];
   };
 
-  nixpkgs.config.allowUnfreePredicate = pkg:
-    builtins.elem (lib.getName pkg) [
-      "copilot.vim"
-      "google-chrome"
-      "spotify"
-      "discord"
-      "todoist-electron"
-      "vscode"
-      "vscode-extension-ms-vscode-remote-remote-containers"
-      "vscode-extension-ms-vscode-remote-remote-ssh"
-      "vscode-extension-ms-vscode-remote-remote-ssh-edit"
-    ];
+  nixpkgs.config.allowUnfree = true;
 
   users.users.momeemt = {
     isNormalUser = true;

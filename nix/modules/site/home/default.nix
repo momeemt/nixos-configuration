@@ -173,7 +173,6 @@ in {
             hash = "sha256-sj1ZdeVk/p5ZQfR75HMDVYnmAPzcyYIAFaRYXQPZK2s=";
           };
         }))
-        visual-studio-code
         # windows-app
         zoom
       ];
