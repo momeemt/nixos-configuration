@@ -70,7 +70,12 @@ in {
         python314
         myPackages.ncp
       ]
-      ++ lib.optionals pkgs.stdenv.isDarwin [myPackages.quitapp];
+      ++ lib.optionals pkgs.stdenv.isDarwin [
+        myPackages.quitapp
+        myPackages.ok
+        myPackages.ng
+        myPackages.subscribe
+      ];
 
     linuxDesktopPackages = with pkgs; [
       google-chrome

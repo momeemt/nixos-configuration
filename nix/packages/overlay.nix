@@ -1,5 +1,6 @@
 self: super: let
   pkgs = super;
+  subscribePackages = import ./subscribe {inherit pkgs;};
 in {
   myPackages = {
     destroy-all-vm = import ./destroy-all-vm {inherit pkgs;};
@@ -8,5 +9,8 @@ in {
     quitapp = import ./quitapp {inherit pkgs;};
     switch-config-branch = import ./switch-config-branch {inherit pkgs;};
     updatekeys-secrets = import ./updatekeys-secrets {inherit pkgs;};
+    ok = subscribePackages.ok;
+    ng = subscribePackages.ng;
+    subscribe = subscribePackages.subscribe;
   };
 }
