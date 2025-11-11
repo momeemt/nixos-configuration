@@ -2,6 +2,7 @@
   hmUsers = import ./hm-users.nix {inherit inputs;};
   localOverlays = with inputs; [
     firefox-addons.overlays.default
+    (import ../packages/overlay.nix)
   ];
 in {
   mkNixos = {

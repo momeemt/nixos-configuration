@@ -6,5 +6,5 @@ pkgs.writeShellApplication {
     findutils
     coreutils
   ];
-  text = builtins.readFile ../../../scripts/updatekeys-secrets.sh;
+  text = builtins.readFile ./main.sh;
 }

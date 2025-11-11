@@ -8,8 +8,6 @@
   cfg = config.site.home;
   h = config.home.homeDirectory;
   inherit (config.xdg) dataHome stateHome configHome;
-  ncp = import ../../../packages/ncp {inherit pkgs;};
-  quitapp = import ../../../packages/quitapp {inherit pkgs;};
 in {
   options.site.home = {
     username = mkOption {
@@ -68,11 +66,11 @@ in {
         cloudflared
         todoist
         usbutils
-        ncp
         nim
         python314
+        myPackages.ncp
       ]
-      ++ lib.optionals pkgs.stdenv.isDarwin [quitapp];
+      ++ lib.optionals pkgs.stdenv.isDarwin [myPackages.quitapp];
 
     linuxDesktopPackages = with pkgs; [
       google-chrome
