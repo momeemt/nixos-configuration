@@ -1,1 +1,14 @@
-hosts/emu/hardware-configuration.nix linguist-generated=true
+*.md linguist-detectable=true
+*.yml linguist-detectable=true
+*.yaml linguist-detectable=true
+*.json linguist-detectable=true
+*.toml linguist-detectable=true
+*.sql linguist-detectable=true
+
+nix/modules/hm/programs/zsh/{completions,functions}/* linguist-language=Shell
+*.zsh linguist-language=Shell
+
+hosts/*/hardware-configuration.nix linguist-generated=true
+flake.lock linguist-generated=true
+secrets/* linguist-generated=true
+
