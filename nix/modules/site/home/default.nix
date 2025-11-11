@@ -9,6 +9,7 @@
   h = config.home.homeDirectory;
   inherit (config.xdg) dataHome stateHome configHome;
   ncp = import ../../../packages/ncp {inherit pkgs;};
+  quitapp = import ../../../packages/quitapp {inherit pkgs;};
 in {
   options.site.home = {
     username = mkOption {
@@ -47,29 +48,31 @@ in {
   };
 
   config.home = let
-    basePackages = with pkgs; [
-      neofetch
-      gh
-      ghq
-      ripgrep
-      eza
-      bat
-      bottom
-      nixpkgs-review
-      gnupg
-      gnumake
-      yazi
-      jq
-      yq
-      sops
-      age
-      cloudflared
-      todoist
-      usbutils
-      ncp
-      nim
-      python314
-    ];
+    basePackages = with pkgs;
+      [
+        neofetch
+        gh
+        ghq
+        ripgrep
+        eza
+        bat
+        bottom
+        nixpkgs-review
+        gnupg
+        gnumake
+        yazi
+        jq
+        yq
+        sops
+        age
+        cloudflared
+        todoist
+        usbutils
+        ncp
+        nim
+        python314
+      ]
+      ++ lib.optionals pkgs.stdenv.isDarwin [quitapp];
 
     linuxDesktopPackages = with pkgs; [
       google-chrome
