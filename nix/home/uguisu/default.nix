@@ -7,19 +7,13 @@
   imports = [
     inputs.nixvim.homeManagerModules.nixvim
     inputs.sops-nix.homeManagerModules.sops
-    ../../modules/alacritty
-    ../../modules/direnv
-    ../../modules/git
     ../../modules/nixvim
-    ../../modules/starship
     ../../modules/tmux
-    ../../modules/zsh
     ../../modules/hm/accounts/calendar
     ../../modules/hm/accounts/contact
     ../../modules/hm/accounts/email
     ../../modules/hm/nix
-    ../../modules/hm/programs/bash
-    ../../modules/hm/programs/firefox
+    ../../modules/hm/programs
     ../../modules/hm/sops
     ../../modules/site/home
     ../../modules/site/programs/nimble

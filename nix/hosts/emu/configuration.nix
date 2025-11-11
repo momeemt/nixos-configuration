@@ -100,20 +100,7 @@ in {
     ];
   };
 
-  nixpkgs.config.allowUnfreePredicate = pkg:
-    builtins.elem (lib.getName pkg) [
-      "quartus-prime-lite-unwrapped"
-      "quartus-prime-lite"
-      "copilot.vim"
-      "google-chrome"
-      "spotify"
-      "discord"
-      "todoist-electron"
-      "vscode"
-      "vscode-extension-ms-vscode-remote-remote-containers"
-      "vscode-extension-ms-vscode-remote-remote-ssh"
-      "vscode-extension-ms-vscode-remote-remote-ssh-edit"
-    ];
+  nixpkgs.config.allowUnfree = true;
 
   programs.zsh.enable = true;
 

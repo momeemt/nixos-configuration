@@ -8,7 +8,6 @@
   cfg = config.site.home;
   h = config.home.homeDirectory;
   inherit (config.xdg) dataHome stateHome configHome;
-  ncp = import ../../../packages/ncp {inherit pkgs;};
 in {
   options.site.home = {
     username = mkOption {
@@ -47,28 +46,35 @@ in {
   };
 
   config.home = let
-    basePackages = with pkgs; [
-      neofetch
-      gh
-      ghq
-      ripgrep
-      eza
-      bat
-      bottom
-      nixpkgs-review
-      gnupg
-      gnumake
-      yazi
-      jq
-      yq
-      sops
-      age
-      cloudflared
-      todoist
-      usbutils
-      ncp
-      nim
-    ];
+    basePackages = with pkgs;
+      [
+        neofetch
+        gh
+        ghq
+        eza
+        bat
+        bottom
+        nixpkgs-review
+        gnupg
+        gnumake
+        yazi
+        jq
+        yq
+        sops
+        age
+        cloudflared
+        todoist
+        usbutils
+        nim
+        python314
+        myPackages.ncp
+      ]
+      ++ lib.optionals pkgs.stdenv.isDarwin [
+        myPackages.quitapp
+        myPackages.ok
+        myPackages.ng
+        myPackages.subscribe
+      ];
 
     linuxDesktopPackages = with pkgs; [
       google-chrome
@@ -167,7 +173,6 @@ in {
             hash = "sha256-sj1ZdeVk/p5ZQfR75HMDVYnmAPzcyYIAFaRYXQPZK2s=";
           };
         }))
-        visual-studio-code
         # windows-app
         zoom
       ];

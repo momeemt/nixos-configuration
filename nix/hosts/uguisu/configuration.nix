@@ -1,8 +1,4 @@
-{
-  pkgs,
-  lib,
-  ...
-}: {
+{pkgs, ...}: {
   imports = [
     ./dock.nix
     ./networking.nix
@@ -32,11 +28,7 @@
   # Using DetermineSystems/nix-installer to install Nix
   nix.enable = false;
 
-  nixpkgs.config.allowUnfreePredicate = pkg:
-    builtins.elem (lib.getName pkg) [
-      "copilot.vim"
-      "tart"
-    ];
+  nixpkgs.config.allowUnfree = true;
 
   programs.bash = {
     enable = true;

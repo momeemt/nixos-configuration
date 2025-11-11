@@ -6,5 +6,5 @@ pkgs.writeShellApplication {
     coreutils
     git
   ];
-  text = builtins.readFile ../../../scripts/switch-config-branch.sh;
+  text = builtins.readFile ./main.sh;
 }
