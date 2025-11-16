@@ -106,12 +106,18 @@ in {
     example = let
       system = "x86_64-linux";
     in
-      withSystem system ({pkgs, ...}:
+      withSystem system ({pkgs, ...}: let
+        siteLib = import ../lib {
+          inherit pkgs system;
+          inherit (pkgs) lib;
+        };
+      in
         inputs.home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           modules = [
             ../home/example
           ];
+          specialArgs = {inherit inputs siteLib;};
         });
   };
 }
