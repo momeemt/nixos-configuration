@@ -1,9 +1,15 @@
-_: {
+{inputs, ...}: {
   perSystem = {
     pkgs,
     config,
+    system,
     ...
   }: {
+    _module.args.pkgs = import inputs.nixpkgs {
+      inherit system;
+      config.allowUnfree = true;
+    };
+
     formatter = pkgs.alejandra;
 
     devShells.default = pkgs.mkShell {
@@ -13,6 +19,7 @@ _: {
       ];
       buildInputs = with pkgs; [
         sops
+        terraform
       ];
     };
 
