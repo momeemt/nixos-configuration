@@ -104,7 +104,7 @@ in {
 
   flake.homeConfigurations = {
     example = let
-      system = "x86_64-linux";
+      system = builtins.currentSystem;
     in
       withSystem system ({pkgs, ...}: let
         siteLib = import ../lib {
@@ -115,6 +115,7 @@ in {
         inputs.home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           modules = [
+            (_: {nixpkgs.overlays = [(import ../packages/overlay.nix)];})
             ../home/example
           ];
           extraSpecialArgs = {inherit inputs siteLib;};
