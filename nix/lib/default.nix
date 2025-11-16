@@ -4,11 +4,11 @@
   system,
 }: let
   mkK8sMaster = args:
-    import ./mkK8sMaster.nix (
+    import ./mkK8sMaster (
       args // {inherit lib;}
     );
   mkK8sWorker = args:
-    import ./mkK8sWorker.nix (
+    import ./mkK8sWorker (
       args // {inherit lib;}
     );
   images = import ./images.nix {inherit pkgs;};

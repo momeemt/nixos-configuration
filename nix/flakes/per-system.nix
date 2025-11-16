@@ -1,17 +1,25 @@
-_: {
+{inputs, ...}: {
   perSystem = {
     pkgs,
     config,
+    system,
     ...
   }: {
+    _module.args.pkgs = import inputs.nixpkgs {
+      inherit system;
+      config.allowUnfree = true;
+    };
+
     formatter = pkgs.alejandra;
 
     devShells.default = pkgs.mkShell {
       inputsFrom = [
         config.treefmt.build.devShell
+        config.just-flake.outputs.devShell
       ];
       buildInputs = with pkgs; [
         sops
+        terraform
       ];
     };
 
@@ -21,6 +29,10 @@ _: {
       destroy-all-vm = pkgs.callPackage ../packages/destroy-all-vm {};
       switch-config-branch = pkgs.callPackage ../packages/switch-config-branch {};
       treefmt = config.treefmt.build.wrapper;
+    };
+
+    just-flake.features = {
+      treefmt.enable = true;
     };
 
     treefmt = {

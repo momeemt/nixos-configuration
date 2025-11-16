@@ -2,4 +2,4 @@
 .direnv
 .DS_Store
 result
-
+just-flake.just
