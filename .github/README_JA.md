@@ -5,7 +5,7 @@
 ## 設定の反映
 
 > [!WARNING]
-> このconfigを試したい場合には、[使ってみる](#使ってみる)セクションで説明されている通り、Dockerコンテナで利用することをおすすめします。これらの設定はユーザ名やパス、[クレデンシャル](./secrets)など[作者](https://github.com/momeemt)個人の情報に大きく依存しており、あなたの環境にそのまま適用することはできません。ただし、ツールやシステムの設定はモジュールとして切り出されているため、十分にNixの知識がある場合にはこのリポジトリをフォークして、不要なファイルを削除して、設定項目を更新してから、自己責任で設定を反映するようにしてください。
+> このconfigを試したい場合には、[使ってみる](#使ってみる)セクションで説明されている通り、Dockerコンテナで利用することをおすすめします。これらの設定はユーザ名やパス、[クレデンシャル](../secrets)など[作者](https://github.com/momeemt)個人の情報に大きく依存しており、あなたの環境にそのまま適用することはできません。ただし、ツールやシステムの設定はモジュールとして切り出されているため、十分にNixの知識がある場合にはこのリポジトリをフォークして、不要なファイルを削除して、設定項目を更新してから、自己責任で設定を反映するようにしてください。
 
 設定の反映には、[Nix](https://github.com/NixOS/nix) が必要です。
 以下のいずれかの方法でNixをインストールしてください。
@@ -24,8 +24,10 @@
 
 ```sh
 git clone https://github.com/momeemt/config
+
 # もし gh が利用可能な環境なら
 gh repo clone momeemt/config
+
 # もし ghq が利用可能な環境なら
 ghq get momeemt/config
 ```
@@ -37,7 +39,7 @@ ghq get momeemt/config
 ```
 
 最後に、以下のスクリプトを実行して設定を反映させてください。
-ただし、一般的な Unix システムに存在する`/bin/sh`に依存します。
+ただし、一般的な Unix システムに存在する`/bin/bash`に依存します。
 
 ```sh
 ./assets/scripts/apply.sh
@@ -59,6 +61,28 @@ just apply
 ## ドキュメント
 
 ## 開発する
+
+通常の場合、[nix-direnv](https://github.com/nix-community/nix-direnv) を用いて開発環境に入ることができます。
+
+```sh
+echo "use flake" > .envrc
+direnv allow
+```
+
+また、git サブモジュールとしてローカルにダウンロードした NixOS モジュールを `import` した環境に入る場合には、`.envrc`を次のように変更してから適用します。以下に例を示します。
+
+```sh
+cat <<EOF > .envrc
+use flake . --override-input tmux-nix path:./nix/flakes/tmux-nix
+EOF
+direnv allow
+```
+
+なお、just を利用して環境定義ファイルを生成できます。
+
+```sh
+just env
+```
 
 ## ライセンス
 
