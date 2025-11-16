@@ -7,30 +7,30 @@ FLAKE_ROOT="."
 
 NIX_FLAGS=()
 if [ -n "${SHOWTRACE:-}" ]; then
-    NIX_FLAGS+=(--show-trace)
+  NIX_FLAGS+=(--show-trace)
 fi
 if [ -n "${DEV:-}" ]; then
-    NIX_FLAGS+=(--override-input tmux-nix path:./nix/flakes/tmux-nix)
+  NIX_FLAGS+=(--override-input tmux-nix path:./nix/flakes/tmux-nix)
 fi
 NIX_FLAGS+=(--experimental-features "nix-command flakes")
 
 echo "[apply.sh] NIX_FLAGS: ${NIX_FLAGS[*]}"
 
 case $HOST_NAME in
-    uguisu)
-        nix build \
-            "$FLAKE_ROOT#darwinConfigurations.$HOST_NAME.system" \
-            "${NIX_FLAGS[@]}"
-        sudo ./result/sw/bin/darwin-rebuild switch \
-            --flake "$FLAKE_ROOT#${HOST_NAME}"
-        ;;
-    emu | oshidori | shime)
-        sudo nixos-rebuild switch \
-            --flake "$FLAKE_ROOT#$HOST_NAME" \
-            "${NIX_FLAGS[@]}"
-        ;;
-    *)
-        echo "Unknown host: $HOST_NAME"
-        exit 1
-        ;;
+uguisu)
+  nix build \
+    "$FLAKE_ROOT#darwinConfigurations.$HOST_NAME.system" \
+    "${NIX_FLAGS[@]}"
+  sudo ./result/sw/bin/darwin-rebuild switch \
+    --flake "$FLAKE_ROOT#${HOST_NAME}"
+  ;;
+emu | oshidori | shime)
+  sudo nixos-rebuild switch \
+    --flake "$FLAKE_ROOT#$HOST_NAME" \
+    "${NIX_FLAGS[@]}"
+  ;;
+*)
+  echo "Unknown host: $HOST_NAME"
+  exit 1
+  ;;
 esac
