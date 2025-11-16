@@ -56,9 +56,36 @@ just apply
 
 ## なぜ Nix/NixOS を選ぶのか
 
+ビルドシステムに対して同じ入力（ソースコード、ビルドマニフェスト）を与えた時、任意の環境でビルドを実行してもビット単位で同一の成果物が得られるようなビルドを、[再現性のあるビルド](https://reproducible-builds.org/)と言います。
+[Nix](https://nixos.org/) は再現性のあるビルドを実現するビルドシステムの1つです。
+
+したがって、適切に固定された Nix の設定は、時間が経っても高い再現性で再構築できます。
+また、Nix で書かれたこのリポジトリの設定や他のユーザの設定を共有することも容易です。
+
+Nix は単体でソフトウェアビルドを行うことができますが、[home-manager](https://github.com/nix-community/home-manager) を利用すればユーザ空間の設定を、[NixOS](https://nixos.org/download) や [nix-darwin](https://github.com/nix-darwin/nix-darwin) を利用すれば、システム空間の設定をNixで記述して反映させることができます。
+
+![Repository size/freshness map](https://repology.org/graph/map_repo_size_fresh.svg)
+
+Nix が提供する公式のパッケージリポジトリ [nixpkgs](https://github.com/NixOS/nixpkgs) からは、2025年11月現在は[12万件以上のパッケージ](https://search.nixos.org/packages)を利用することができます。
+システムの設定には利用せず、便利なパッケージマネージャとして利用するのも一つの手です。
+もし興味があれば以下のリソースを参照してください。
+
+- [Nix Tutorials](https://nix.dev/tutorials/) (英語)
+- [Nix Reference Manual](https://nix.dev/manual/nix/2.24/) (英語)
+- [Nix入門](https://zenn.dev/asa1984/books/nix-introduction) (日本語)
+- [Nix入門: ハンズオン編](https://zenn.dev/asa1984/books/nix-hands-on) (日本語)
+
 ## 使ってみる
 
+このリポジトリの設定を、以下のツールを利用して部分的に試すことができます。
+
+### Docker を利用する
+
 ## ドキュメント
+
+設定のドキュメントは以下のリンクからアクセスできます。ドキュメントは現在執筆中です。
+
+[https://config.momee.mt](https://config.momee.mt)
 
 ## 開発する
 
@@ -84,6 +111,10 @@ direnv allow
 just env
 ```
 
+## フィードバック
+
+新しい提案や改善があれば[お気軽にどうぞ](https://github.com/momeemt/config/issues)！😌
+
 ## ライセンス
 
 このリポジトリのソースコードおよびリソースは、特に明記がない限り [Apache-2.0](https://licenses.opensource.jp/Apache-2.0/Apache-2.0.html) でライセンスされています。
@@ -95,3 +126,13 @@ just env
 1. サブディレクトリ内に LICENSE ファイルがある場合、そのディレクトリ配下のファイルには、その LICENSE に記載されたライセンスが適用されます。
 
 なお、本ライセンスの適用は利用者の属する地域で許容される範囲に限られます。
+
+## 参考文献
+
+私の設定は、以下のユーザのdotfilesや設定ファイルを参考に実装しました。
+
+- Nix configurations
+    - [ryota-ka/dotfiles](https://github.com/ryota-ka/dotfiles)
+    - [natsukium/dotfiles](https://github.com/natsukium/dotfiles)
+- Kubernetes
+    - [walnuts1018/infra](https://github.com/walnuts1018/infra)
