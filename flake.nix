@@ -4,6 +4,7 @@
       imports = with inputs; [
         treefmt-nix.flakeModule
         git-hooks-nix.flakeModule
+        just-flake.flakeModule
         ./nix/flakes/per-system.nix
         ./nix/flakes/hosts.nix
       ];
@@ -75,5 +76,6 @@
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    just-flake.url = "github:juspay/just-flake";
   };
 }

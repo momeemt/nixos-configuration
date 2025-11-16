@@ -9,6 +9,7 @@ _: {
     devShells.default = pkgs.mkShell {
       inputsFrom = [
         config.treefmt.build.devShell
+        config.just-flake.outputs.devShell
       ];
       buildInputs = with pkgs; [
         sops
@@ -21,6 +22,10 @@ _: {
       destroy-all-vm = pkgs.callPackage ../packages/destroy-all-vm {};
       switch-config-branch = pkgs.callPackage ../packages/switch-config-branch {};
       treefmt = config.treefmt.build.wrapper;
+    };
+
+    just-flake.features = {
+      treefmt.enable = true;
     };
 
     treefmt = {
