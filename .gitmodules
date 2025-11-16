@@ -1,0 +1,3 @@
+[submodule "nix/flakes/tmux-nix"]
+	path = nix/flakes/tmux-nix
+	url = https://github.com/momeemt/tmux-nix
