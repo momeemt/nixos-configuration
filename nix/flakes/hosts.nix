@@ -117,7 +117,7 @@ in {
           modules = [
             ../home/example
           ];
-          specialArgs = {inherit inputs siteLib;};
+          extraSpecialArgs = {inherit inputs siteLib;};
         });
   };
 }
