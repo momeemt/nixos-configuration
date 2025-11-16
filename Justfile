@@ -18,9 +18,9 @@ default:
 apply:
 	#!/usr/bin/env zsh
 	set -euo pipefail
-	@case {{host_name}} in
+	case {{host_name}} in
 		uguisu)
-			@nix build \
+			nix build \
 				{{showtrace_flag}} \
 				'{{flake_root}}#darwinConfigurations.{{host_name}}.system' \
 				{{nix_flags}} \
@@ -35,7 +35,7 @@ apply:
 				{{dev_flag}}
 			;;
 		*)
-			@echo "Unknown host: {{host_name}}"
+			echo "Unknown host: {{host_name}}"
 			exit 1
 			;;
 	esac
