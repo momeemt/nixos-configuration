@@ -209,7 +209,7 @@ in {
         XDG_STATE_HOME = "${h}/.local/state";
         SATYROGRAPHOS_EXPERIMENTAL = "1";
         PYTHONHISTFILE = "${stateHome}/python/history";
-        PYTHONSTARTUP = "${../../../../scripts/python-startup.py}";
+        PYTHONSTARTUP = "${./python-startup.py}";
         AZURE_CONFIG_DIR = "${configHome}/azure";
         DOCKER_CONFIG = "${configHome}/docker";
         # https://doc.rust-lang.org/cargo/reference/environment-variables.html
