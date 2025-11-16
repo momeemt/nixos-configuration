@@ -20,6 +20,7 @@
       buildInputs = with pkgs; [
         sops
         terraform
+        nodejs_24
       ];
     };
 
