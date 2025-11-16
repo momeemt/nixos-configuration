@@ -5,7 +5,7 @@
 ## 設定の反映
 
 > [!WARNING]
-> このconfigを試したい場合には、[使ってみる](#使ってみる)セクションで説明されている通り、Dockerコンテナで利用することをおすすめします。これらの設定はユーザ名やパス、[クレデンシャル](../secrets)など[作者](https://github.com/momeemt)個人の情報に大きく依存しており、あなたの環境にそのまま適用することはできません。ただし、ツールやシステムの設定はモジュールとして切り出されているため、十分にNixの知識がある場合にはこのリポジトリをフォークして、不要なファイルを削除して、設定項目を更新してから、自己責任で設定を反映するようにしてください。
+> このconfigを試したい場合には、[使ってみる](#%E4%BD%BF%E3%81%A3%E3%81%A6%E3%81%BF%E3%82%8B)セクションで説明されている通り、Dockerコンテナで利用することをおすすめします。これらの設定はユーザ名やパス、[クレデンシャル](../secrets)など[作者](https://github.com/momeemt)個人の情報に大きく依存しており、あなたの環境にそのまま適用することはできません。ただし、ツールやシステムの設定はモジュールとして切り出されているため、十分にNixの知識がある場合にはこのリポジトリをフォークして、不要なファイルを削除して、設定項目を更新してから、自己責任で設定を反映するようにしてください。
 
 設定の反映には、[Nix](https://github.com/NixOS/nix) が必要です。
 以下のいずれかの方法でNixをインストールしてください。
@@ -132,7 +132,7 @@ just env
 私の設定は、以下のユーザのdotfilesや設定ファイルを参考に実装しました。
 
 - Nix configurations
-    - [ryota-ka/dotfiles](https://github.com/ryota-ka/dotfiles)
-    - [natsukium/dotfiles](https://github.com/natsukium/dotfiles)
+  - [ryota-ka/dotfiles](https://github.com/ryota-ka/dotfiles)
+  - [natsukium/dotfiles](https://github.com/natsukium/dotfiles)
 - Kubernetes
-    - [walnuts1018/infra](https://github.com/walnuts1018/infra)
+  - [walnuts1018/infra](https://github.com/walnuts1018/infra)

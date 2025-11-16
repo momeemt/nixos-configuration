@@ -101,4 +101,17 @@ in {
           overlays = [inputs.brew-nix.overlays.default];
         });
   };
+
+  flake.homeConfigurations = {
+    example = let
+      system = "x86_64-linux";
+    in
+      withSystem system ({pkgs, ...}:
+        inputs.home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          modules = [
+            ../home/example
+          ];
+        });
+  };
 }
