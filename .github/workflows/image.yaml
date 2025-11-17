@@ -1,16 +1,13 @@
 name: Image
-
 on:
   push:
     branches:
       - develop
       - main
   workflow_dispatch:
-
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-
 jobs:
   build-image:
     runs-on: ubuntu-24.04
@@ -51,7 +48,7 @@ jobs:
             } >> "$GITHUB_OUTPUT"
             exit 0
           fi
-          
+
           {
             echo "IMAGE_TAGS<<EOF"
             echo "${REGISTRY}/${IMAGE_NAME}:unstable"
