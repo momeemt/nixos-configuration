@@ -1,8 +1,25 @@
-<h1 align="center">️❄️ config</h1>
-
-<div style="display: grid; justify-items: center; align-items: center; margin: 50px 0;">
-  <img src="../assets/screenshot.png" style="width: 75%;" />
+<div align="center">
+  <h1>️❄️ config</h1>
+  <a href="./README.md">English</a>　|　日本語
+  <br />
+  <br />
+  <img src="../assets/screenshot.png" style="width: 400" />
+  <br />
+  <br />
+  <a href="https://builtwithnix.org">
+    <img alt="built with nix" src="https://builtwithnix.org/badge.svg" />
+  </a>
+  <br />
+  <br />
+  <a href="https://github.com/momeemt/config/actions/workflows/ci.yaml">
+    <img alt="CI" src="https://github.com/momeemt/config/actions/workflows/ci.yaml/badge.svg" />
+  </a>
+  <a href="https://github.com/momeemt/config/actions/workflows/image.yaml">
+    <img alt="Image" src="https://github.com/momeemt/config/actions/workflows/image.yaml/badge.svg" />
+  </a>
 </div>
+
+<br />
 
 システム、ユーザ環境、インフラストラクチャ、複数のノードなどを宣言的に管理する設定群です。
 
