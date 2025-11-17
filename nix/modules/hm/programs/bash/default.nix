@@ -2,9 +2,10 @@
   pkgs,
   lib,
   config,
-  systemConfig,
   ...
-}: {
+} @ args: let
+  systemConfig = args.systemConfig or null;
+in {
   programs.bash = {
     enable = true;
     enableCompletion = true;
@@ -32,21 +33,24 @@
       "rm"
     ];
 
-    shellAliases = {
-      ls = "eza";
-      bash = "/run/current-system/sw/bin/bash";
-      zsh = "/run/current-system/sw/bin/zsh";
-    };
+    shellAliases =
+      {
+        ls = "eza";
+      }
+      // lib.optionalAttrs (systemConfig != null) {
+        bash = "/run/current-system/sw/bin/bash";
+        zsh = "/run/current-system/sw/bin/zsh";
+      };
   };
 
   # https://nix-community.github.io/home-manager/options.xhtml#opt-programs.bash.enableCompletion
-  assertions = [
+  assertions =
+    lib.optional (systemConfig != null)
     {
       assertion = lib.elem "/share/bash-completion" (systemConfig.environment.pathsToLink or []);
       message = ''
         When `programs.bash.enableCompletion = true`,
         system `environment.pathsToLink` must include "/share/bash-completion".
       '';
-    }
-  ];
+    };
 }

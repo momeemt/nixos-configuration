@@ -68,6 +68,7 @@ in {
         nim
         python314
         myPackages.ncp
+        docker-client
       ]
       ++ lib.optionals pkgs.stdenv.isDarwin [
         myPackages.quitapp
@@ -106,7 +107,7 @@ in {
         (google-chrome.overrideAttrs (oldAttrs: {
           src = pkgs.fetchurl {
             url = lib.lists.head oldAttrs.src.urls;
-            hash = "sha256-v1MwK8oFbBk+PcnP5tkh0WgYmzKGYr2VkxD+otKN9xg";
+            hash = "sha256-iWXiWFsETuZB5pDRH3bXHU9l6rxEB6owe0f73C22ofU=";
           };
         }))
         # (google-drive.overrideAttrs (oldAttrs: {
@@ -160,7 +161,7 @@ in {
         (spotify.overrideAttrs (oldAttrs: {
           src = pkgs.fetchurl {
             url = lib.lists.head oldAttrs.src.urls;
-            hash = "sha256-gEZxRBT7Jo2m6pirf+CreJiMeE2mhIkpe9Mv5t0RI58=";
+            hash = "sha256-lei5QA9LHPPTcGrOeTV6rR161HsVJQpW24EMJcDdvHg=";
           };
         }))
         # synology-drive
@@ -211,7 +212,6 @@ in {
         PYTHONHISTFILE = "${stateHome}/python/history";
         PYTHONSTARTUP = "${./python-startup.py}";
         AZURE_CONFIG_DIR = "${configHome}/azure";
-        DOCKER_CONFIG = "${configHome}/docker";
         # https://doc.rust-lang.org/cargo/reference/environment-variables.html
         CARGO_HOME = "${dataHome}/cargo";
         RUSTUP_HOME = "${dataHome}/rustup";

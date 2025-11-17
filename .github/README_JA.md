@@ -1,0 +1,140 @@
+<h1 align="center">️❄️ config</h1>
+
+システム、ユーザ環境、インフラストラクチャ、複数のノードなどを宣言的に管理する設定群です。
+
+## 設定の反映
+
+> [!WARNING]
+> このconfigを試したい場合には、[使ってみる](#%E4%BD%BF%E3%81%A3%E3%81%A6%E3%81%BF%E3%82%8B)セクションで説明されている通り、Dockerコンテナで利用することをおすすめします。これらの設定はユーザ名やパス、[クレデンシャル](../secrets)など[作者](https://github.com/momeemt)個人の情報に大きく依存しており、あなたの環境にそのまま適用することはできません。ただし、ツールやシステムの設定はモジュールとして切り出されているため、十分にNixの知識がある場合にはこのリポジトリをフォークして、不要なファイルを削除して、設定項目を更新してから、自己責任で設定を反映するようにしてください。
+
+設定の反映には、[Nix](https://github.com/NixOS/nix) が必要です。
+以下のいずれかの方法でNixをインストールしてください。
+
+- [nix-installer](https://github.com/DeterminateSystems/nix-installer) (推奨)
+- [Nix Download](https://nixos.org/download/)
+
+また、以下のOSに対する反映をサポートしています。
+
+- [macOS Tahoe](https://www.apple.com/jp/os/macos/)
+- [NixOS 25.05](https://nixos.org/download/)
+
+### 初回の反映
+
+最初にこのリポジトリをcloneしてください。
+
+```sh
+git clone https://github.com/momeemt/config
+
+# もし gh が利用可能な環境なら
+gh repo clone momeemt/config
+
+# もし ghq が利用可能な環境なら
+ghq get momeemt/config
+```
+
+次に、以下のスクリプトを実行してデフォルトの設定を作成してください。
+
+```sh
+
+```
+
+最後に、以下のスクリプトを実行して設定を反映させてください。
+ただし、一般的な Unix システムに存在する`/bin/bash`に依存します。
+
+```sh
+./assets/scripts/apply.sh
+```
+
+### 2回目以降の反映
+
+devShell に入ると、タスクランナーツールである [just](https://github.com/casey/just) が利用できるようになります。
+2回目以降は以下のコマンドを発行して設定を反映させてください。
+
+```sh
+just apply
+```
+
+## なぜ Nix/NixOS を選ぶのか
+
+ビルドシステムに対して同じ入力（ソースコード、ビルドマニフェスト）を与えた時、任意の環境でビルドを実行してもビット単位で同一の成果物が得られるようなビルドを、[再現性のあるビルド](https://reproducible-builds.org/)と言います。
+[Nix](https://nixos.org/) は再現性のあるビルドを実現するビルドシステムの1つです。
+
+したがって、適切に固定された Nix の設定は、時間が経っても高い再現性で再構築できます。
+また、Nix で書かれたこのリポジトリの設定や他のユーザの設定を共有することも容易です。
+
+Nix は単体でソフトウェアビルドを行うことができますが、[home-manager](https://github.com/nix-community/home-manager) を利用すればユーザ空間の設定を、[NixOS](https://nixos.org/download) や [nix-darwin](https://github.com/nix-darwin/nix-darwin) を利用すれば、システム空間の設定をNixで記述して反映させることができます。
+
+![Repository size/freshness map](https://repology.org/graph/map_repo_size_fresh.svg)
+
+Nix が提供する公式のパッケージリポジトリ [nixpkgs](https://github.com/NixOS/nixpkgs) からは、2025年11月現在は[12万件以上のパッケージ](https://search.nixos.org/packages)を利用することができます。
+システムの設定には利用せず、便利なパッケージマネージャとして利用するのも一つの手です。
+もし興味があれば以下のリソースを参照してください。
+
+- [Nix Tutorials](https://nix.dev/tutorials/) (英語)
+- [Nix Reference Manual](https://nix.dev/manual/nix/2.24/) (英語)
+- [Nix入門](https://zenn.dev/asa1984/books/nix-introduction) (日本語)
+- [Nix入門: ハンズオン編](https://zenn.dev/asa1984/books/nix-hands-on) (日本語)
+
+## 使ってみる
+
+このリポジトリの設定を、以下のツールを利用して部分的に試すことができます。
+
+### Docker を利用する
+
+## ドキュメント
+
+設定のドキュメントは以下のリンクからアクセスできます。ドキュメントは現在執筆中です。
+
+[https://config.momee.mt](https://config.momee.mt)
+
+## 開発する
+
+通常の場合、[nix-direnv](https://github.com/nix-community/nix-direnv) を用いて開発環境に入ることができます。
+
+```sh
+echo "use flake" > .envrc
+direnv allow
+```
+
+また、git サブモジュールとしてローカルにダウンロードした NixOS モジュールを `import` した環境に入る場合には、`.envrc`を次のように変更してから適用します。以下に例を示します。
+
+```sh
+cat <<EOF > .envrc
+use flake . --override-input tmux-nix path:./nix/flakes/tmux-nix
+EOF
+direnv allow
+```
+
+なお、just を利用して環境定義ファイルを生成できます。
+
+```sh
+just env
+```
+
+## フィードバック
+
+新しい提案や改善があれば[お気軽にどうぞ](https://github.com/momeemt/config/issues)！😌
+
+## ライセンス
+
+このリポジトリのソースコードおよびリソースは、特に明記がない限り [Apache-2.0](https://licenses.opensource.jp/Apache-2.0/Apache-2.0.html) でライセンスされています。
+したがって、このリポジトリの内容を商用利用含めた利用・複製・改変・再配布することは自由ですが、著作権表記を残し、ライセンス文を同梱し、変更箇所を明示する必要があります。
+
+ただし、以下のように部分的に異なるライセンスが適用される場合があります。
+
+1. ファイル内に明示的なライセンス表記がある場合、その表記が最も優先されます。
+1. サブディレクトリ内に LICENSE ファイルがある場合、そのディレクトリ配下のファイルには、その LICENSE に記載されたライセンスが適用されます。
+
+なお、本ライセンスの適用は利用者の属する地域で許容される範囲に限られます。
+
+## 参考文献
+
+私の設定は、以下のユーザのdotfilesや設定ファイルを参考に実装しました。
+
+- Nix configurations
+  - [ryota-ka/dotfiles](https://github.com/ryota-ka/dotfiles)
+  - [natsukium/dotfiles](https://github.com/natsukium/dotfiles)
+  - [glassesneo/dotfiles](https://github.com/glassesneo/dotfiles)
+  - [misumisumi/nixos-desktop-config](misumisumi/nixos-desktop-config)
+- Kubernetes
+  - [walnuts1018/infra](https://github.com/walnuts1018/infra)

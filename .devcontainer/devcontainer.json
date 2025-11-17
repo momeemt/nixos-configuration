@@ -1,0 +1,10 @@
+{
+    "name": "momeemt's config",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": "..",
+        "args": {}
+    },
+    "remoteUser": "example",
+    "overrideCommand": false
+}
