@@ -16,6 +16,7 @@
       inputsFrom = [
         config.treefmt.build.devShell
         config.just-flake.outputs.devShell
+        config.pre-commit.devShell
       ];
       buildInputs = with pkgs; [
         sops
