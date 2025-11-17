@@ -1,5 +1,9 @@
 <h1 align="center">️❄️ config</h1>
 
+<div style="display: grid; justify-items: center; align-items: center; margin: 50px 0;">
+  <img src="../assets/screenshot.png" style="width: 75%;" />
+</div>
+
 システム、ユーザ環境、インフラストラクチャ、複数のノードなどを宣言的に管理する設定群です。
 
 ## 設定の反映
@@ -162,5 +166,7 @@ just env
   - [natsukium/dotfiles](https://github.com/natsukium/dotfiles)
   - [glassesneo/dotfiles](https://github.com/glassesneo/dotfiles)
   - [misumisumi/nixos-desktop-config](misumisumi/nixos-desktop-config)
+- dotfiles
+  - [wasabi315/dotfiles](https://github.com/wasabi315/dotfiles)
 - Kubernetes
   - [walnuts1018/infra](https://github.com/walnuts1018/infra)
