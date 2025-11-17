@@ -39,7 +39,7 @@
 
 ### 初回の反映
 
-最初にこのリポジトリをcloneしてください。
+まずこのリポジトリをcloneしてください。
 
 ```sh
 git clone https://github.com/momeemt/config
@@ -51,13 +51,7 @@ gh repo clone momeemt/config
 ghq get momeemt/config
 ```
 
-次に、以下のスクリプトを実行してデフォルトの設定を作成してください。
-
-```sh
-
-```
-
-最後に、以下のスクリプトを実行して設定を反映させてください。
+次に、以下のスクリプトを実行して設定を反映させてください。
 ただし、一般的な Unix システムに存在する`/bin/bash`に依存します。
 
 ```sh
@@ -81,7 +75,7 @@ just apply
 したがって、適切に固定された Nix の設定は、時間が経っても高い再現性で再構築できます。
 また、Nix で書かれたこのリポジトリの設定や他のユーザの設定を共有することも容易です。
 
-Nix は単体でソフトウェアビルドを行うことができますが、[home-manager](https://github.com/nix-community/home-manager) を利用すればユーザ空間の設定を、[NixOS](https://nixos.org/download) や [nix-darwin](https://github.com/nix-darwin/nix-darwin) を利用すれば、システム空間の設定をNixで記述して反映させることができます。
+[home-manager](https://github.com/nix-community/home-manager) を利用すればユーザ空間の設定を、[NixOS](https://nixos.org/download) や [nix-darwin](https://github.com/nix-darwin/nix-darwin) を利用すれば、システム空間の設定をNixで記述して反映させることができます。
 
 ![Repository size/freshness map](https://repology.org/graph/map_repo_size_fresh.svg)
 
@@ -105,7 +99,6 @@ Nix が提供する公式のパッケージリポジトリ [nixpkgs](https://git
 > [!WARNING]
 > 設定の安定版がリリースされた際に、main ブランチにマージされます。
 > 現在はまだリリースを行っていないため、当分の間は `unstable` タグのイメージをご利用ください。
-> `_debug-${GITHUB_SHA}` タグが付与されたイメージは、開発のためのデバッグイメージです。動作保証はありません。
 
 ```sh
 # main ブランチの HEAD
@@ -152,6 +145,15 @@ direnv allow
 
 ```sh
 just env
+```
+
+## テンプレート
+
+Nix flake のテンプレートを利用できます。
+Rust を用いたプロジェクトの `flake.nix` を生成する例を示します。
+
+```sh
+nix flake init --template "github:momeemt/config#rust"
 ```
 
 ## フィードバック
