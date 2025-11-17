@@ -1,16 +1,18 @@
 <div align="center">
 
-  # ❄️ config
-  <a href="./README.md">English</a>　|　日本語
-  <br />
-  <br />
-  <img src="../assets/screenshot.png" style="width: 400" />
-  <br />
+# ❄️ config
 
-  [![built with nix](https://builtwithnix.org/badge.svg)](https://builtwithnix.org)
+<a href="./README.md">English</a>　|　日本語
+<br />
+<br />
+<img src="../assets/screenshot.png" style="width: 400" />
+<br />
 
-  [![CI](https://github.com/momeemt/config/actions/workflows/ci.yaml/badge.svg)](https://github.com/momeemt/config/actions/workflows/ci.yaml)
-  [![Image](https://github.com/momeemt/config/actions/workflows/image.yaml/badge.svg)](https://github.com/momeemt/config/actions/workflows/image.yaml)
+[![built with nix](https://builtwithnix.org/badge.svg)](https://builtwithnix.org)
+
+[![CI](https://github.com/momeemt/config/actions/workflows/ci.yaml/badge.svg)](https://github.com/momeemt/config/actions/workflows/ci.yaml)
+[![Image](https://github.com/momeemt/config/actions/workflows/image.yaml/badge.svg)](https://github.com/momeemt/config/actions/workflows/image.yaml)
+
 </div>
 
 <br />

@@ -32,6 +32,10 @@
       treefmt = config.treefmt.build.wrapper;
     };
 
+    checks = {
+      formatting = config.treefmt.build.check config.treefmt.projectRoot;
+    };
+
     just-flake.features = {
       treefmt.enable = true;
     };

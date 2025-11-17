@@ -1,7 +1,7 @@
 {pkgs, ...}: {
   programs.vscode = {
     enable = true;
-    extensions = with pkgs.vscode-extensions; [
+    profiles.default.extensions = with pkgs.vscode-extensions; [
       tobiasalthoff.atom-material-theme
       ms-vscode-remote.remote-containers
       ms-vscode-remote.remote-ssh
