@@ -5,8 +5,9 @@
         treefmt-nix.flakeModule
         git-hooks-nix.flakeModule
         just-flake.flakeModule
-        ./nix/flakes/per-system.nix
         ./nix/flakes/hosts.nix
+        ./nix/flakes/per-system.nix
+        ./nix/flakes/templates.nix
       ];
 
       systems = import inputs.systems;

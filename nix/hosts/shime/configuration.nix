@@ -83,7 +83,7 @@ in {
     isNormalUser = true;
     extraGroups = ["wheel" "docker" "libvirtd"];
     shell = pkgs.zsh;
-    openssh.authorizedKeys.keys = (import ../../system/ssh.nix).public_keys;
+    openssh.authorizedKeys.keys = sshKeys;
   };
 
   programs = {
@@ -92,7 +92,6 @@ in {
       enable = true;
       enableCompletion = false;
     };
-    virt-manager.enable = true;
   };
 
   services = {

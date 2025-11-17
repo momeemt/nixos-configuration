@@ -109,7 +109,7 @@ in {
     extraGroups = ["wheel" "docker"];
     shell = pkgs.zsh;
     hashedPasswordFile = config.sops.secrets.momeemt-password.path;
-    openssh.authorizedKeys.keys = (import ../../system/ssh.nix).public_keys;
+    openssh.authorizedKeys.keys = sshKeys;
   };
 
   services = {
@@ -171,8 +171,6 @@ in {
     };
 
     udev.packages = [pkgs.usb-blaster-udev-rules];
-
-    virt-manager.enable = true;
   };
 
   # https://github.com/NixOS/nixpkgs/issues/100390

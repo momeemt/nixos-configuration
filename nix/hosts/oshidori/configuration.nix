@@ -28,7 +28,6 @@
     systemd-boot.enable = false;
     grub = {
       enable = true;
-      version = 2;
       device = "/dev/nvme0n1";
     };
   };

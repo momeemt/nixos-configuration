@@ -3,3 +3,4 @@
 .DS_Store
 result
 just-flake.just
+.pre-commit-config.yaml

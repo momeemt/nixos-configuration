@@ -1,6 +1,5 @@
-{pkgs, ...}: {
+_: {
   nix = {
-    package = pkgs.nix;
     settings = {
       accept-flake-config = true;
       experimental-features = [
@@ -10,9 +9,6 @@
       sandbox = true;
     };
     checkConfig = true;
-    channels = {
-      nixpkgs = pkgs.path;
-    };
     gc = {
       automatic = true;
     };

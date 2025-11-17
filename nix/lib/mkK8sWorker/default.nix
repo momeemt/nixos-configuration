@@ -220,18 +220,6 @@ in {
           fi
         '';
       };
-
-      nixvirt = {
-        wants = [
-          "vm-disk-${name}.service"
-          "vm-cloudinit-${name}.service"
-        ];
-
-        after = [
-          "vm-disk-${name}.service"
-          "vm-cloudinit-${name}.service"
-        ];
-      };
     };
   };
 

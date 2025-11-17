@@ -2,15 +2,15 @@
   imports = [
     ./dock.nix
     ./networking.nix
-    ./yabai.nix
-    ./skhd.nix
+    ./wallpapers.nix
     ../../modules/sops
     ../../modules/hosts/fonts
+    ../../modules/hosts/system/defaults
+    ../../modules/site/services/set-wallpapers
   ];
 
   environment = {
     systemPackages = with pkgs; [
-      skhd
       tart
     ];
 

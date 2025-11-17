@@ -119,7 +119,7 @@ in {
               (_: {nixpkgs.overlays = [(import ../packages/overlay.nix)];})
               ../home/example
             ];
-            extraSpecialArgs = {inherit inputs siteLib;};
+            extraSpecialArgs = {inherit inputs siteLib system;};
           });
     };
   };

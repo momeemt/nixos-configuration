@@ -27,7 +27,11 @@ WORKDIR ${HOME}
 
 SHELL [ "/bin/bash", "-lc" ]
 
-RUN sh <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install) --no-daemon
+RUN sudo mkdir -p /etc/nix && \
+    echo 'sandbox = false' | sudo tee -a /etc/nix/nix.conf && \
+    # see https://github.com/NixOS/nix/issues/5258
+    echo 'filter-syscalls = false' | sudo tee -a /etc/nix/nix.conf && \
+    sh <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install) --no-daemon
 
 COPY --chown=${USER}:${USER} . ${HOME}/config
 WORKDIR ${HOME}/config

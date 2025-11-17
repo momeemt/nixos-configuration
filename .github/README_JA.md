@@ -1,11 +1,30 @@
-<h1 align="center">️❄️ config</h1>
+<div align="center">
+
+# ❄️ config
+
+<a href="./README.md">English</a>　|　日本語
+<br />
+<br />
+<img src="../assets/screenshot.png" style="width: 400" />
+<br />
+
+[![built with nix](https://builtwithnix.org/badge.svg)](https://builtwithnix.org)
+
+[![CI](https://github.com/momeemt/config/actions/workflows/ci.yaml/badge.svg)](https://github.com/momeemt/config/actions/workflows/ci.yaml)
+[![Image](https://github.com/momeemt/config/actions/workflows/image.yaml/badge.svg)](https://github.com/momeemt/config/actions/workflows/image.yaml)
+
+</div>
+
+<br />
 
 システム、ユーザ環境、インフラストラクチャ、複数のノードなどを宣言的に管理する設定群です。
 
 ## 設定の反映
 
 > [!WARNING]
-> このconfigを試したい場合には、[使ってみる](#%E4%BD%BF%E3%81%A3%E3%81%A6%E3%81%BF%E3%82%8B)セクションで説明されている通り、Dockerコンテナで利用することをおすすめします。これらの設定はユーザ名やパス、[クレデンシャル](../secrets)など[作者](https://github.com/momeemt)個人の情報に大きく依存しており、あなたの環境にそのまま適用することはできません。ただし、ツールやシステムの設定はモジュールとして切り出されているため、十分にNixの知識がある場合にはこのリポジトリをフォークして、不要なファイルを削除して、設定項目を更新してから、自己責任で設定を反映するようにしてください。
+> このconfigを試したい場合には、[使ってみる](#%E4%BD%BF%E3%81%A3%E3%81%A6%E3%81%BF%E3%82%8B)セクションで説明されている通り、Dockerコンテナで利用することをおすすめします。
+> これらの設定はユーザ名やパス、[クレデンシャル](../secrets)など[作者](https://github.com/momeemt)個人の情報に大きく依存しており、あなたの環境にそのまま適用することはできません。
+> ただし、ツールやシステムの設定はモジュールとして切り出されているため、十分にNixの知識がある場合にはこのリポジトリをフォークして、不要なファイルを削除して、設定項目を更新してから、自己責任で設定を反映することもできます。
 
 設定の反映には、[Nix](https://github.com/NixOS/nix) が必要です。
 以下のいずれかの方法でNixをインストールしてください。
@@ -20,7 +39,7 @@
 
 ### 初回の反映
 
-最初にこのリポジトリをcloneしてください。
+まずこのリポジトリをcloneしてください。
 
 ```sh
 git clone https://github.com/momeemt/config
@@ -32,13 +51,7 @@ gh repo clone momeemt/config
 ghq get momeemt/config
 ```
 
-次に、以下のスクリプトを実行してデフォルトの設定を作成してください。
-
-```sh
-
-```
-
-最後に、以下のスクリプトを実行して設定を反映させてください。
+次に、以下のスクリプトを実行して設定を反映させてください。
 ただし、一般的な Unix システムに存在する`/bin/bash`に依存します。
 
 ```sh
@@ -62,7 +75,7 @@ just apply
 したがって、適切に固定された Nix の設定は、時間が経っても高い再現性で再構築できます。
 また、Nix で書かれたこのリポジトリの設定や他のユーザの設定を共有することも容易です。
 
-Nix は単体でソフトウェアビルドを行うことができますが、[home-manager](https://github.com/nix-community/home-manager) を利用すればユーザ空間の設定を、[NixOS](https://nixos.org/download) や [nix-darwin](https://github.com/nix-darwin/nix-darwin) を利用すれば、システム空間の設定をNixで記述して反映させることができます。
+[home-manager](https://github.com/nix-community/home-manager) を利用すればユーザ空間の設定を、[NixOS](https://nixos.org/download) や [nix-darwin](https://github.com/nix-darwin/nix-darwin) を利用すれば、システム空間の設定をNixで記述して反映させることができます。
 
 ![Repository size/freshness map](https://repology.org/graph/map_repo_size_fresh.svg)
 
@@ -77,13 +90,36 @@ Nix が提供する公式のパッケージリポジトリ [nixpkgs](https://git
 
 ## 使ってみる
 
-このリポジトリの設定を、以下のツールを利用して部分的に試すことができます。
+このリポジトリの設定の一部は、仮想環境を利用して試すことができます。
 
 ### Docker を利用する
 
+`.devcontainer/Dockerfile` に定義されている Docker イメージは、GitHub Container registry (GHCR) で[公開](https://github.com/momeemt/config/pkgs/container/config)されています。
+
+> [!WARNING]
+> 設定の安定版がリリースされた際に、main ブランチにマージされます。
+> 現在はまだリリースを行っていないため、当分の間は `unstable` タグのイメージをご利用ください。
+
+```sh
+# main ブランチの HEAD
+docker pull ghcr.io/momeemt/config:latest
+
+# develop ブランチの HEAD
+docker pull ghcr.io/momeemt/config:unstable
+```
+
+また、[Development Containers](https://containers.dev/) を利用して、コンテナ内の環境にアクセスすることもできます。
+
+```sh
+devcontainer up --workspace-folder .
+```
+
 ## ドキュメント
 
-設定のドキュメントは以下のリンクからアクセスできます。ドキュメントは現在執筆中です。
+設定のドキュメントは以下のリンクからアクセスできます。
+
+> [!WARNING]
+> ドキュメントは現在執筆中であり不完全です。
 
 [https://config.momee.mt](https://config.momee.mt)
 
@@ -111,6 +147,15 @@ direnv allow
 just env
 ```
 
+## テンプレート
+
+Nix flake のテンプレートを利用できます。
+Rust を用いたプロジェクトの `flake.nix` を生成する例を示します。
+
+```sh
+nix flake init --template "github:momeemt/config#rust"
+```
+
 ## フィードバック
 
 新しい提案や改善があれば[お気軽にどうぞ](https://github.com/momeemt/config/issues)！😌
@@ -136,5 +181,7 @@ just env
   - [natsukium/dotfiles](https://github.com/natsukium/dotfiles)
   - [glassesneo/dotfiles](https://github.com/glassesneo/dotfiles)
   - [misumisumi/nixos-desktop-config](misumisumi/nixos-desktop-config)
+- dotfiles
+  - [wasabi315/dotfiles](https://github.com/wasabi315/dotfiles)
 - Kubernetes
   - [walnuts1018/infra](https://github.com/walnuts1018/infra)

@@ -16,6 +16,7 @@
       inputsFrom = [
         config.treefmt.build.devShell
         config.just-flake.outputs.devShell
+        config.pre-commit.devShell
       ];
       buildInputs = with pkgs; [
         sops
@@ -32,8 +33,21 @@
       treefmt = config.treefmt.build.wrapper;
     };
 
+    checks = {
+      formatting = config.treefmt.build.check config.treefmt.projectRoot;
+    };
+
     just-flake.features = {
       treefmt.enable = true;
+    };
+
+    pre-commit = {
+      check.enable = true;
+      settings = {
+        hooks = {
+          treefmt.enable = true;
+        };
+      };
     };
 
     treefmt = {
