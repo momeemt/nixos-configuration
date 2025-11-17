@@ -29,7 +29,7 @@ jobs:
           branch="${GITHUB_REF_NAME}"
 
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            TAG="_debug-${GITHUB_REF_NAME}-${GITHUB_SHA}"
+            TAG="_debug-${GITHUB_SHA}"
             {
               echo "IMAGE_TAGS<<EOF"
               echo "${REGISTRY}/${IMAGE_NAME}:${TAG}"
