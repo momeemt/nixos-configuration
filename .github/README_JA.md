@@ -134,5 +134,7 @@ just env
 - Nix configurations
   - [ryota-ka/dotfiles](https://github.com/ryota-ka/dotfiles)
   - [natsukium/dotfiles](https://github.com/natsukium/dotfiles)
+  - [glassesneo/dotfiles](https://github.com/glassesneo/dotfiles)
+  - [misumisumi/nixos-desktop-config](misumisumi/nixos-desktop-config)
 - Kubernetes
   - [walnuts1018/infra](https://github.com/walnuts1018/infra)
