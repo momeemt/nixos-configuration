@@ -8,12 +8,12 @@
     inputs.nixvim.homeManagerModules.nixvim
     inputs.sops-nix.homeManagerModules.sops
     ../../modules/nixvim
-    ../../modules/tmux
     ../../modules/hm/accounts/calendar
     ../../modules/hm/accounts/contact
     ../../modules/hm/accounts/email
     ../../modules/hm/nix
     ../../modules/hm/programs
+    ../../modules/hm/programs/tmux
     ../../modules/hm/sops
     ../../modules/site/home
     ../../modules/site/programs/nimble
