@@ -40,6 +40,15 @@
       treefmt.enable = true;
     };
 
+    pre-commit = {
+      check.enable = true;
+      settings = {
+        hooks = {
+          treefmt.enable = true;
+        };
+      };
+    };
+
     treefmt = {
       projectRootFile = "flake.nix";
       programs = {
