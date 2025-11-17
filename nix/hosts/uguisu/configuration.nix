@@ -1,13 +1,12 @@
-{
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   imports = [
     ./dock.nix
     ./networking.nix
+    ./wallpapers.nix
     ../../modules/sops
     ../../modules/hosts/fonts
     ../../modules/hosts/system/defaults
+    ../../modules/site/services/set-wallpapers
   ];
 
   environment = {
