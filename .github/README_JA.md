@@ -6,9 +6,7 @@
 
 > [!WARNING]
 > このconfigを試したい場合には、[使ってみる](#%E4%BD%BF%E3%81%A3%E3%81%A6%E3%81%BF%E3%82%8B)セクションで説明されている通り、Dockerコンテナで利用することをおすすめします。
->
 > これらの設定はユーザ名やパス、[クレデンシャル](../secrets)など[作者](https://github.com/momeemt)個人の情報に大きく依存しており、あなたの環境にそのまま適用することはできません。
->
 > ただし、ツールやシステムの設定はモジュールとして切り出されているため、十分にNixの知識がある場合にはこのリポジトリをフォークして、不要なファイルを削除して、設定項目を更新してから、自己責任で設定を反映することもできます。
 
 設定の反映には、[Nix](https://github.com/NixOS/nix) が必要です。
@@ -85,12 +83,12 @@ Nix が提供する公式のパッケージリポジトリ [nixpkgs](https://git
 
 ### Docker を利用する
 
-`.devcontainer/Dockerfile` に定義されている Docker イメージは、GitHub Container registry (GHCR) で公開されています。
+`.devcontainer/Dockerfile` に定義されている Docker イメージは、GitHub Container registry (GHCR) で[公開](https://github.com/momeemt/config/pkgs/container/config)されています。
 
 > [!WARNING]
 > 設定の安定版がリリースされた際に、main ブランチにマージされます。
->
-> 現在はまだリリースを行っていないため、当分の間は unstable タグのイメージをご利用ください。
+> 現在はまだリリースを行っていないため、当分の間は `unstable` タグのイメージをご利用ください。
+> `_debug-${GITHUB_SHA}` タグが付与されたイメージは、開発のためのデバッグイメージです。動作保証はありません。
 
 ```sh
 # main ブランチの HEAD
