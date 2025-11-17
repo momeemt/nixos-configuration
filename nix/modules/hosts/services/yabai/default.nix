@@ -1,9 +1,18 @@
-{pkgs, ...}: {
+# yabai module doesn't work now.
+# see https://github.com/koekeishiya/yabai/issues/2688
+{
+  inputs,
+  system,
+  ...
+}: let
+  pkgs-master = import inputs.nixpkgs-master {inherit system;};
+in {
   services.yabai = {
     enable = true;
-    package = pkgs.yabai;
     enableScriptingAddition = false;
+    package = pkgs-master.yabai;
     config = {
+      # TODO: reconsider these settings
       mouse_follows_focus = "off";
       focus_follows_mouse = "off";
       window_origin_display = "default";
@@ -33,5 +42,6 @@
       right_padding = 12;
       window_gap = 06;
     };
+    extraConfig = builtins.readFile ./yabai.conf;
   };
 }

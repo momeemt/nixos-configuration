@@ -1,16 +1,16 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  ...
+}: {
   imports = [
     ./dock.nix
     ./networking.nix
-    ./yabai.nix
-    ./skhd.nix
     ../../modules/sops
     ../../modules/hosts/fonts
   ];
 
   environment = {
     systemPackages = with pkgs; [
-      skhd
       tart
     ];
 

@@ -15,7 +15,7 @@ in {
   }:
     inputs.nixpkgs.lib.nixosSystem {
       inherit system;
-      specialArgs = {inherit inputs siteLib;};
+      specialArgs = {inherit inputs siteLib system;};
       modules =
         [
           hostPath
@@ -37,7 +37,7 @@ in {
   }:
     inputs.nix-darwin.lib.darwinSystem {
       inherit system;
-      specialArgs = {inherit inputs siteLib;};
+      specialArgs = {inherit inputs siteLib system;};
       modules =
         [
           hostPath
