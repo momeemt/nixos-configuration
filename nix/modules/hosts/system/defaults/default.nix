@@ -4,7 +4,7 @@
       # Sets the mouse tracking speed.
       "com.apple.mouse.scaling" = 3.0;
     };
-    
+
     ActivityMonitor = {
       # CPU usage graph in Dock icon.
       IconType = 5;

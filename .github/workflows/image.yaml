@@ -8,7 +8,6 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-
 jobs:
   compute-tags:
     runs-on: ubuntu-24.04
@@ -49,7 +48,6 @@ jobs:
             echo "${REGISTRY}/${IMAGE_NAME}:unstable"
             echo "EOF"
           } >> "$GITHUB_OUTPUT"
-  
   build-arch-images:
     needs: compute-tags
     strategy:
@@ -91,7 +89,6 @@ jobs:
           platforms: linux/${{ matrix.arch }}
           push: true
           tags: ${{ steps.prep-tags.outputs.TAGS }}
-
   publish-manifest:
     needs:
       - compute-tags
