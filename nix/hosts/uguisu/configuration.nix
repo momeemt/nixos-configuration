@@ -7,6 +7,7 @@
     ./networking.nix
     ../../modules/sops
     ../../modules/hosts/fonts
+    ../../modules/hosts/system/defaults
   ];
 
   environment = {
