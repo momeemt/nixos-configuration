@@ -86,7 +86,7 @@
           ];
 
           nativeBuildInputs = with pkgs; [
-            pkgs-config
+            pkg-config
           ];
         };
 
