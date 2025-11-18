@@ -26,7 +26,8 @@
       buildInputs = with pkgs; [
         sops
         pkgs-master.terraform
-        pkgs-master.terraform-providers.cloudflare
+        pkgs-master.terraform-providers.cloudflare_cloudflare
+        pkgs-master.terraform-providers.carlpett_sops
         nodejs_24
       ];
     };
