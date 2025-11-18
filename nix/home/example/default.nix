@@ -1,4 +1,8 @@
-{inputs, ...}: {
+{
+  inputs,
+  pkgs,
+  ...
+}: {
   imports = [
     inputs.nixvim.homeManagerModules.nixvim
     ../../modules/nixvim
@@ -9,6 +13,7 @@
     ../../modules/site/home
   ];
 
+  nix.package = pkgs.nix;
   site.home.username = "example";
   programs.home-manager.enable = true;
 }

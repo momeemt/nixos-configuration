@@ -4,7 +4,12 @@
     config,
     system,
     ...
-  }: {
+  }: let
+    pkgs-master = import inputs.nixpkgs-master {
+      inherit system;
+      config.allowUnfree = true;
+    };
+  in {
     _module.args.pkgs = import inputs.nixpkgs {
       inherit system;
       config.allowUnfree = true;
@@ -20,7 +25,9 @@
       ];
       buildInputs = with pkgs; [
         sops
-        terraform
+        pkgs-master.terraform
+        pkgs-master.terraform-providers.cloudflare_cloudflare
+        pkgs-master.terraform-providers.carlpett_sops
         nodejs_24
       ];
     };
@@ -69,6 +76,7 @@
         };
         statix.enable = true;
         stylua.enable = true;
+        terraform.enable = true;
         yamlfmt.enable = true;
       };
       settings.global.excludes = [
