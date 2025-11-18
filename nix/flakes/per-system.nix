@@ -75,6 +75,7 @@
         };
         statix.enable = true;
         stylua.enable = true;
+        terraform.enable = true;
         yamlfmt.enable = true;
       };
       settings.global.excludes = [
