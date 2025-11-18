@@ -1,9 +1,9 @@
 provider "cloudflare" {
-  api_token = var.cloudflare_api_token
+  api_token = local.cloudflare_api_token
 }
 
 resource "cloudflare_dns_record" "www_dns_record" {
-  zone_id = var.cloudflare_zone_id
+  zone_id = local.cloudflare_zone_id
   name    = "www"
   type    = "CNAME"
   content = "momee.mt"
@@ -13,7 +13,7 @@ resource "cloudflare_dns_record" "www_dns_record" {
 }
 
 resource "cloudflare_dns_record" "root_dns_record" {
-  zone_id = var.cloudflare_zone_id
+  zone_id = local.cloudflare_zone_id
   name    = "momee.mt"
   type    = "CNAME"
   content = "momeemt.github.io"
@@ -23,7 +23,7 @@ resource "cloudflare_dns_record" "root_dns_record" {
 }
 
 resource "cloudflare_dns_record" "blog_dns_record" {
-  zone_id = var.cloudflare_zone_id
+  zone_id = local.cloudflare_zone_id
   name    = "blog"
   type    = "CNAME"
   content = "blog-momee-mt.pages.dev"
@@ -33,7 +33,7 @@ resource "cloudflare_dns_record" "blog_dns_record" {
 }
 
 resource "cloudflare_dns_record" "wascaml_dns_record" {
-  zone_id = var.cloudflare_zone_id
+  zone_id = local.cloudflare_zone_id
   name    = "wascaml"
   type    = "CNAME"
   content = "momeemt.github.io"
@@ -43,7 +43,7 @@ resource "cloudflare_dns_record" "wascaml_dns_record" {
 }
 
 resource "cloudflare_dns_record" "note_dns_record" {
-  zone_id = var.cloudflare_zone_id
+  zone_id = local.cloudflare_zone_id
   name    = "note"
   type    = "CNAME"
   content = "momeemt.github.io"
@@ -53,7 +53,7 @@ resource "cloudflare_dns_record" "note_dns_record" {
 }
 
 resource "cloudflare_dns_record" "beta_blog_dns_record" {
-  zone_id = var.cloudflare_zone_id
+  zone_id = local.cloudflare_zone_id
   name    = "beta.blog"
   type    = "CNAME"
   content = "cname.vercel-dns.com"
@@ -63,7 +63,7 @@ resource "cloudflare_dns_record" "beta_blog_dns_record" {
 }
 
 resource "cloudflare_dns_record" "discord_verification" {
-  zone_id = var.cloudflare_zone_id
+  zone_id = local.cloudflare_zone_id
   name    = "_discord"
   type    = "TXT"
   content = "\"dh=2e77ca64445ab63e1f162fcac219561b3c130875\""
@@ -72,7 +72,7 @@ resource "cloudflare_dns_record" "discord_verification" {
 }
 
 resource "cloudflare_dns_record" "keybase_verification" {
-  zone_id = var.cloudflare_zone_id
+  zone_id = local.cloudflare_zone_id
   name    = "momee.mt"
   type    = "TXT"
   content = "\"keybase-site-verification=uFhhJXlVtYpXOJu1UUm-CLj_z6YwIa1nKAe40aJez6s\""
@@ -81,7 +81,7 @@ resource "cloudflare_dns_record" "keybase_verification" {
 }
 
 resource "cloudflare_dns_record" "openai_verification" {
-  zone_id = var.cloudflare_zone_id
+  zone_id = local.cloudflare_zone_id
   name    = "openai"
   type    = "TXT"
   content = "\"openai-domain-verification=dv-kKZVqBQ4A8qyubcbqOpsFWEh\""
@@ -90,7 +90,7 @@ resource "cloudflare_dns_record" "openai_verification" {
 }
 
 resource "cloudflare_dns_record" "google_site_verification_1" {
-  zone_id = var.cloudflare_zone_id
+  zone_id = local.cloudflare_zone_id
   name    = "google-site-verification"
   type    = "TXT"
   content = "\"google-site-verification=lJLyU_Pwc5FLoSU3BfswBFEwuovJlgUlwCP8W1_Su-I\""
@@ -99,7 +99,7 @@ resource "cloudflare_dns_record" "google_site_verification_1" {
 }
 
 resource "cloudflare_dns_record" "google_site_verification_2" {
-  zone_id = var.cloudflare_zone_id
+  zone_id = local.cloudflare_zone_id
   name    = "google-site-verification"
   type    = "TXT"
   content = "\"google-site-verification=nrsbgKT0ypYdJ5Q0jNJi9pc52dWOL_w1jrw38Xf8AUo\""
@@ -108,7 +108,7 @@ resource "cloudflare_dns_record" "google_site_verification_2" {
 }
 
 resource "cloudflare_dns_record" "gmail_mx_records_1" {
-  zone_id  = var.cloudflare_zone_id
+  zone_id  = local.cloudflare_zone_id
   name     = "momee.mt"
   type     = "MX"
   priority = 1
@@ -118,7 +118,7 @@ resource "cloudflare_dns_record" "gmail_mx_records_1" {
 }
 
 resource "cloudflare_dns_record" "gmail_mx_records_2" {
-  zone_id  = var.cloudflare_zone_id
+  zone_id  = local.cloudflare_zone_id
   name     = "momee.mt"
   type     = "MX"
   priority = 5
@@ -128,7 +128,7 @@ resource "cloudflare_dns_record" "gmail_mx_records_2" {
 }
 
 resource "cloudflare_dns_record" "gmail_mx_records_3" {
-  zone_id  = var.cloudflare_zone_id
+  zone_id  = local.cloudflare_zone_id
   name     = "momee.mt"
   type     = "MX"
   priority = 5
@@ -138,7 +138,7 @@ resource "cloudflare_dns_record" "gmail_mx_records_3" {
 }
 
 resource "cloudflare_dns_record" "gmail_mx_records_4" {
-  zone_id  = var.cloudflare_zone_id
+  zone_id  = local.cloudflare_zone_id
   name     = "momee.mt"
   type     = "MX"
   priority = 10
@@ -148,7 +148,7 @@ resource "cloudflare_dns_record" "gmail_mx_records_4" {
 }
 
 resource "cloudflare_dns_record" "gmail_mx_records_5" {
-  zone_id  = var.cloudflare_zone_id
+  zone_id  = local.cloudflare_zone_id
   name     = "momee.mt"
   type     = "MX"
   priority = 10
@@ -158,7 +158,7 @@ resource "cloudflare_dns_record" "gmail_mx_records_5" {
 }
 
 resource "cloudflare_dns_record" "dmarc_record" {
-  zone_id = var.cloudflare_zone_id
+  zone_id = local.cloudflare_zone_id
   name    = "_dmarc"
   type    = "TXT"
   content = "\"v=DMARC1;  p=none; rua=mailto:59f123c54a6241b2bffded3408e5b014@dmarc-reports.cloudflare.net\""
@@ -167,7 +167,7 @@ resource "cloudflare_dns_record" "dmarc_record" {
 }
 
 resource "cloudflare_dns_record" "bluesky_verification" {
-  zone_id = var.cloudflare_zone_id
+  zone_id = local.cloudflare_zone_id
   name    = "_atproto"
   type    = "TXT"
   content = "\"did=did:plc:w5ccyes44tjzyfza56uffbfz\""
@@ -176,7 +176,7 @@ resource "cloudflare_dns_record" "bluesky_verification" {
 }
 
 resource "cloudflare_dns_record" "sendgrid_link_branding_1" {
-  zone_id = var.cloudflare_zone_id
+  zone_id = local.cloudflare_zone_id
   name    = "39108174"
   type    = "CNAME"
   content = "sendgrid.net"
@@ -186,7 +186,7 @@ resource "cloudflare_dns_record" "sendgrid_link_branding_1" {
 }
 
 resource "cloudflare_dns_record" "sendgrid_link_branding_2" {
-  zone_id = var.cloudflare_zone_id
+  zone_id = local.cloudflare_zone_id
   name    = "url5751"
   type    = "CNAME"
   content = "sendgrid.net"
@@ -196,7 +196,7 @@ resource "cloudflare_dns_record" "sendgrid_link_branding_2" {
 }
 
 resource "cloudflare_dns_record" "sendgrid_domain_authentication_dkim_1" {
-  zone_id = var.cloudflare_zone_id
+  zone_id = local.cloudflare_zone_id
   name    = "s1._domainkey"
   type    = "CNAME"
   content = "s1.domainkey.u39108174.wl175.sendgrid.net"
@@ -206,7 +206,7 @@ resource "cloudflare_dns_record" "sendgrid_domain_authentication_dkim_1" {
 }
 
 resource "cloudflare_dns_record" "sendgrid_domain_authentication_dkim_2" {
-  zone_id = var.cloudflare_zone_id
+  zone_id = local.cloudflare_zone_id
   name    = "s2._domainkey"
   type    = "CNAME"
   content = "s2.domainkey.u39108174.wl175.sendgrid.net"
@@ -216,7 +216,7 @@ resource "cloudflare_dns_record" "sendgrid_domain_authentication_dkim_2" {
 }
 
 resource "cloudflare_dns_record" "sendgrid_domain_authentication_spf" {
-  zone_id = var.cloudflare_zone_id
+  zone_id = local.cloudflare_zone_id
   name    = "em40"
   type    = "CNAME"
   content = "u39108174.wl175.sendgrid.net"
@@ -226,7 +226,7 @@ resource "cloudflare_dns_record" "sendgrid_domain_authentication_spf" {
 }
 
 resource "cloudflare_dns_record" "calendly_dns_record" {
-  zone_id = var.cloudflare_zone_id
+  zone_id = local.cloudflare_zone_id
   name    = "calendly"
   type    = "A"
   content = "192.0.2.1"
