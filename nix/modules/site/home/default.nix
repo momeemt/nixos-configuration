@@ -69,6 +69,7 @@ in {
         python314
         myPackages.ncp
         docker-client
+        cloc
       ]
       ++ lib.optionals pkgs.stdenv.isDarwin [
         myPackages.quitapp

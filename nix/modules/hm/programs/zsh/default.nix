@@ -21,6 +21,8 @@
       ls = "eza";
       bash = "/run/current-system/sw/bin/bash";
       zsh = "/run/current-system/sw/bin/zsh";
+      clocg = "cloc --vcs=git";
+      clocgi = "cloc --vcs=git --exlude-list-file=.clocignore";
     };
 
     completionInit = ''

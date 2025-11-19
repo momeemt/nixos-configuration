@@ -1,0 +1,10 @@
+docs/package.json
+docs/package-lock.json
+nix/hosts/emu/hardware-configuration.nix
+nix/hosts/oshidori/hardware-configuration.nix
+nix/hosts/shime/hardware-configuration.nix
+flake.lock
+secrets/cloudflared/emu-desktop.enc.json
+secrets/cloudflared/emu.enc.json
+secrets/k8s/ca.enc.key
+secrets/secrets.enc.yml
