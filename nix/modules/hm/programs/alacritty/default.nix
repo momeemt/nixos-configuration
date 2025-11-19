@@ -23,11 +23,12 @@
       };
 
       window = {
-        opacity = 0.7;
+        opacity = 0.8;
         padding = {
           x = 8;
           y = 8;
         };
+        decorations = "none";
       };
 
       terminal.shell = {

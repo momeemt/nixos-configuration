@@ -22,6 +22,25 @@
       }
     '';
 
+    highlight = {
+      Normal = {
+        bg = "none";
+        ctermbg = "none";
+      };
+      NonText = {
+        bg = "none";
+        ctermbg = "none";
+      };
+      NormalNC = {bg = "none";};
+      NormalSB = {bg = "none";};
+      NvimTreeNormal = {bg = "none";};
+      NvimTreeNormalNC = {bg = "none";};
+      NvimTreeEndOfBuffer = {bg = "none";};
+      NvimTreeWinSeparator = {bg = "none";};
+      NvimTreeStatusLine = {bg = "none";};
+      NvimTreeStatusLineNC = {bg = "none";};
+    };
+
     plugins = {
       wakatime.enable = true;
       web-devicons.enable = true;
