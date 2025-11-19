@@ -92,7 +92,6 @@ in
       obsidian
       ollama-app
       readdle-spark
-      setapp
       slack
       spotify
       # synology-drive
