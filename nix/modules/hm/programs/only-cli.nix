@@ -6,6 +6,7 @@
     ./git
     ./ripgrep
     ./starship
+    ./zoxide
     ./zsh
   ];
 }
