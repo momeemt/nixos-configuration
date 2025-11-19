@@ -22,7 +22,7 @@
       bash = "/run/current-system/sw/bin/bash";
       zsh = "/run/current-system/sw/bin/zsh";
       clocg = "cloc --vcs=git";
-      clocgi = "cloc --vcs=git --exlude-list-file=.clocignore";
+      clocgi = "cloc --vcs=git --exclude-list-file=.clocignore";
     };
 
     completionInit = ''
