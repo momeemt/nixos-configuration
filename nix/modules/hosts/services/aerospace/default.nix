@@ -1,8 +1,12 @@
 {pkgs, ...}: {
+  imports = [
+    ./main.nix
+    ./service.nix
+  ];
+
   services.aerospace = {
     enable = true;
     package = pkgs.aerospace;
-    # launchd.enable = true;
     settings = {
       gaps = {
         outer = {
@@ -11,12 +15,6 @@
           top = 8;
           right = 8;
         };
-      };
-      mode.main.binding = {
-        alt-h = "focus left";
-        alt-j = "focus down";
-        alt-k = "focus up";
-        alt-l = "focus right";
       };
     };
   };
