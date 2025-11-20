@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  siteLib,
   ...
 }: let
   sshHome = "${config.home.homeDirectory}/.ssh";
@@ -36,32 +37,32 @@ in {
           port = null;
         };
         emu = sshMatchBlock {
-          hostname = "192.168.32.145";
+          hostname = siteLib.ip.emu;
           identityFile = "${sshHome}/nixos-configurations";
           user = "momeemt";
         };
         shime = sshMatchBlock {
-          hostname = "192.168.32.146";
+          hostname = siteLib.ip.shime;
           identityFile = "${sshHome}/nixos-configurations";
           user = "momeemt";
         };
         kube-master = sshMatchBlock {
-          hostname = "192.168.32.200";
+          hostname = siteLib.ip.kube-master;
           identityFile = "${sshHome}/nixos-configurations";
           user = "ubuntu";
         };
         kube-worker-emu-1 = sshMatchBlock {
-          hostname = "192.168.32.201";
+          hostname = siteLib.ip.kube-worker-emu-1;
           identityFile = "${sshHome}/nixos-configurations";
           user = "ubuntu";
         };
         kube-worker-emu-2 = sshMatchBlock {
-          hostname = "192.168.32.202";
+          hostname = siteLib.ip.kube-worker-emu-2;
           identityFile = "${sshHome}/nixos-configurations";
           user = "ubuntu";
         };
         kube-worker-shime-1 = sshMatchBlock {
-          hostname = "192.168.32.203";
+          hostname = siteLib.ip.kube-worker-shime-1;
           identityFile = "${sshHome}/nixos-configurations";
           user = "ubuntu";
         };

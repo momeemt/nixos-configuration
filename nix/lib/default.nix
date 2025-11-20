@@ -13,8 +13,9 @@
     );
   images = import ./images.nix {inherit pkgs;};
   publicKeys = import ./publicKeys.nix;
+  ip = import ./ip.nix;
 in {
-  inherit mkK8sMaster mkK8sWorker images publicKeys;
+  inherit mkK8sMaster mkK8sWorker images publicKeys ip;
 
   isLinux = lib.hasInfix "linux" system;
   isDarwin = lib.hasInfix "darwin" system;
