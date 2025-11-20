@@ -5,6 +5,7 @@
     ./wallpapers.nix
     ../../modules/sops
     ../../modules/hosts/fonts
+    ../../modules/hosts/services/aerospace
     ../../modules/hosts/system/defaults
     ../../modules/site/services/set-wallpapers
   ];

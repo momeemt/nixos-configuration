@@ -1,5 +1,14 @@
-{config, ...}: {
+{
+  config,
+  lib,
+  ...
+} @ args: let
+  systemConfig = args.systemConfig or null;
+  shellAliases = import ../common/aliases.nix {inherit config lib systemConfig;};
+in {
   programs.zsh = {
+    inherit shellAliases;
+
     enable = true;
     autosuggestion.enable = true;
     enableCompletion = true;
@@ -15,12 +24,6 @@
       save = 10000;
       share = true;
       size = 10000;
-    };
-
-    shellAliases = {
-      ls = "eza";
-      bash = "/run/current-system/sw/bin/bash";
-      zsh = "/run/current-system/sw/bin/zsh";
     };
 
     completionInit = ''

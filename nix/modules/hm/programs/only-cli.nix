@@ -1,11 +1,11 @@
 {
   imports = [
-    ./bash
     ./direnv
     ./docker-cli
     ./git
     ./ripgrep
+    ./shells
     ./starship
-    ./zsh
+    ./zoxide
   ];
 }

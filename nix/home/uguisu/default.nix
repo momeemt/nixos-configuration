@@ -1,6 +1,5 @@
 {
   pkgs,
-  lib,
   inputs,
   config,
   ...
@@ -12,6 +11,7 @@
     ../../modules/hm/accounts/calendar
     ../../modules/hm/accounts/contact
     ../../modules/hm/accounts/email
+    ../../modules/hm/homebrew
     ../../modules/hm/nix
     ../../modules/hm/programs
     ../../modules/hm/programs/tmux
@@ -63,14 +63,6 @@
     khal.enable = true;
     vdirsyncer.enable = true;
     khard.enable = true;
-  };
-
-  home.activation = {
-    installHomebrewAndBundle = lib.hm.dag.entryAfter ["writeBoundary"] ''
-      export BREWFILE="${./Brewfile}"
-      export PATH="${pkgs.curl}/bin:${pkgs.bash}/bin:$PATH"
-      ${pkgs.bash}/bin/bash ${./install-homebrew.sh}
-    '';
   };
 
   services.vdirsyncer.enable = true;
