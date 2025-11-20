@@ -2,12 +2,15 @@
   config,
   lib,
   pkgs,
+  inputs,
+  system,
   ...
 }: let
   inherit (lib) mkEnableOption mkOption types;
   cfg = config.site.home;
   h = config.home.homeDirectory;
   inherit (config.xdg) dataHome stateHome configHome;
+  pkgs-master = import inputs.nixpkgs-master {inherit system;};
 in {
   options.site.home = {
     username = mkOption {
@@ -72,6 +75,7 @@ in {
           docker-client
           cloc
           nodejs_24
+          pkgs-master.codex
         ]
         ++ lib.optionals pkgs.stdenv.isDarwin [
           myPackages.quitapp
