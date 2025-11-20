@@ -10,7 +10,7 @@ in
   {
     ls = "eza";
     clocg = "cloc --vcs=git";
-    clocgi = "cloc --vcs=git --exclude-list-file=.clockignore";
+    clocgi = "cloc --vcs=git --exclude-list-file=.clocignore";
     bashrc = "source ${h}/.bashrc";
     zshrc = "source ${configHome}/zsh/.zshrc";
     back = "cd $OLDPWD";
