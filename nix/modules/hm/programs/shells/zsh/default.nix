@@ -1,4 +1,10 @@
-{config, ...}: {
+{
+  config,
+  lib,
+  ...
+} @ args: let
+  systemConfig = args.systemConfig or null;
+in {
   programs.zsh = {
     enable = true;
     autosuggestion.enable = true;
@@ -17,13 +23,16 @@
       size = 10000;
     };
 
-    shellAliases = {
-      ls = "eza";
-      bash = "/run/current-system/sw/bin/bash";
-      zsh = "/run/current-system/sw/bin/zsh";
-      clocg = "cloc --vcs=git";
-      clocgi = "cloc --vcs=git --exclude-list-file=.clocignore";
-    };
+    shellAliases =
+      {
+        ls = "eza";
+        clocg = "cloc --vcs=git";
+        clocgi = "cloc --vcs=git --exclude-list-file=.clocignore";
+      }
+      // lib.optionalAttrs (systemConfig != null) {
+        bash = "/run/current-system/sw/bin/bash";
+        zsh = "/run/current-system/sw/bin/zsh";
+      };
 
     completionInit = ''
       typeset -U fpath
