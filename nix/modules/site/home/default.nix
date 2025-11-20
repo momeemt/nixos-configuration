@@ -78,6 +78,7 @@ in {
           myPackages.ok
           myPackages.ng
           myPackages.subscribe
+          myPackages.xdg-compliance-checker
         ];
 
       linuxDesktopPackages = with pkgs; [
