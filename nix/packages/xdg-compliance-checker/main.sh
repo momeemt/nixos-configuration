@@ -26,6 +26,21 @@ contains() {
   return 1
 }
 
+read_list_file() {
+  local path="$1"
+  local line
+
+  [ -f "$path" ] || return 0
+
+  while IFS= read -r line; do
+    line="${line%%$'\r'}"
+    case "$line" in
+    '' | \#*) continue ;;
+    *) printf '%s\n' "$line" ;;
+    esac
+  done <"$path"
+}
+
 basename_if_under_home() {
   local var="$1"
   local val
