@@ -14,10 +14,13 @@
     ../../modules/hm/homebrew
     ../../modules/hm/nix
     ../../modules/hm/programs
+    ../../modules/hm/programs/ssh
     ../../modules/hm/programs/tmux
     ../../modules/hm/sops
+    ../../modules/hm/wakatime
     ../../modules/site/home
     ../../modules/site/programs/nimble
+    ../../modules/site/programs/wget
   ];
 
   site = {
@@ -31,11 +34,13 @@
         "${config.home.homeDirectory}/Library/Application Support/JetBrains/Toolbox/scripts"
       ];
     };
+
     programs = {
       nimble = {
         enable = true;
         nimbleDir = "${config.xdg.configHome}/nimble/";
       };
+      wget.enable = true;
     };
   };
 

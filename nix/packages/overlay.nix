@@ -9,6 +9,7 @@ in {
     quitapp = import ./quitapp {inherit pkgs;};
     switch-config-branch = import ./switch-config-branch {inherit pkgs;};
     updatekeys-secrets = import ./updatekeys-secrets {inherit pkgs;};
+    xdg-compliance-checker = import ./xdg-compliance-checker {inherit pkgs;};
     inherit (subscribePackages) ok;
     inherit (subscribePackages) ng;
     inherit (subscribePackages) subscribe;

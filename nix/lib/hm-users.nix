@@ -1,4 +1,7 @@
-{inputs}: {users}: {config, ...}: let
+{inputs}: {
+  users,
+  siteLib,
+}: {config, ...}: let
   normalize = spec:
     if builtins.isPath spec || builtins.isString spec
     then (import spec)
@@ -9,7 +12,7 @@ in {
     useGlobalPkgs = true;
     useUserPackages = true;
     extraSpecialArgs = {
-      inherit inputs;
+      inherit inputs siteLib;
       systemConfig = config;
     };
     backupFileExtension = "hm-bak";
