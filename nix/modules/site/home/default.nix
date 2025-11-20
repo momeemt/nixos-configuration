@@ -130,6 +130,7 @@ in {
           PYTHONSTARTUP = "${configHome}/python/pythonstartup";
           AZURE_CONFIG_DIR = "${configHome}/azure";
           NPM_CONFIG_USERCONFIG = "${configHome}/npm/npmrc";
+          GHQ_ROOT = "${dataHome}/ghq";
           # https://doc.rust-lang.org/cargo/reference/environment-variables.html
           CARGO_HOME = "${dataHome}/cargo";
           RUSTUP_HOME = "${dataHome}/rustup";
