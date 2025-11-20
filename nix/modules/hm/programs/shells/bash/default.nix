@@ -5,8 +5,11 @@
   ...
 } @ args: let
   systemConfig = args.systemConfig or null;
+  shellAliases = import ../common/aliases.nix {inherit lib systemConfig;};
 in {
   programs.bash = {
+    inherit shellAliases;
+
     enable = true;
     enableCompletion = true;
     # VTE integration not needed for Alacritty
@@ -32,15 +35,6 @@ in {
       "exit"
       "rm"
     ];
-
-    shellAliases =
-      {
-        ls = "eza";
-      }
-      // lib.optionalAttrs (systemConfig != null) {
-        bash = "/run/current-system/sw/bin/bash";
-        zsh = "/run/current-system/sw/bin/zsh";
-      };
   };
 
   # https://nix-community.github.io/home-manager/options.xhtml#opt-programs.bash.enableCompletion

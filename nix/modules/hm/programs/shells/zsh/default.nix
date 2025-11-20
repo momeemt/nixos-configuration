@@ -4,8 +4,11 @@
   ...
 } @ args: let
   systemConfig = args.systemConfig or null;
+  shellAliases = import ../common/aliases.nix {inherit lib systemConfig;};
 in {
   programs.zsh = {
+    inherit shellAliases;
+
     enable = true;
     autosuggestion.enable = true;
     enableCompletion = true;
@@ -22,17 +25,6 @@ in {
       share = true;
       size = 10000;
     };
-
-    shellAliases =
-      {
-        ls = "eza";
-        clocg = "cloc --vcs=git";
-        clocgi = "cloc --vcs=git --exclude-list-file=.clocignore";
-      }
-      // lib.optionalAttrs (systemConfig != null) {
-        bash = "/run/current-system/sw/bin/bash";
-        zsh = "/run/current-system/sw/bin/zsh";
-      };
 
     completionInit = ''
       typeset -U fpath
