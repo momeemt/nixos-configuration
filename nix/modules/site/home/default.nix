@@ -99,7 +99,6 @@ in {
         basePackages
         ++ (lib.optionals cfg.groups.linuxDesktop linuxDesktopPackages)
         ++ (lib.optionals cfg.groups.darwinCasks darwinCasks)
-        ++ darwinCasks
         ++ cfg.extraPackages
         ++ cfg.extraDarwinCasks;
 
