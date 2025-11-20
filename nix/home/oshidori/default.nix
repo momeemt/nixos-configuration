@@ -6,6 +6,7 @@
     ../../modules/tmux-nix
     ../../modules/hm/nix
     ../../modules/hm/programs
+    ../../modules/hm/wakatime
     ../../modules/site/home
   ];
 

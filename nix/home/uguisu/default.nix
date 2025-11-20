@@ -17,6 +17,7 @@
     ../../modules/hm/programs/ssh
     ../../modules/hm/programs/tmux
     ../../modules/hm/sops
+    ../../modules/hm/wakatime
     ../../modules/site/home
     ../../modules/site/programs/nimble
   ];
