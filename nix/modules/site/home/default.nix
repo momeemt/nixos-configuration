@@ -131,6 +131,7 @@ in {
           NODE_REPL_HISTORY = "${dataHome}/node_repl_history";
           NPM_CONFIG_USERCONFIG = "${configHome}/npm/npmrc";
           GHQ_ROOT = "${dataHome}/ghq";
+          WASMER_DIR = "${dataHome}/wasmer";
           # https://doc.rust-lang.org/cargo/reference/environment-variables.html
           CARGO_HOME = "${dataHome}/cargo";
           RUSTUP_HOME = "${dataHome}/rustup";
