@@ -70,12 +70,13 @@ in {
           todoist
           usbutils
           nim
-          python314
+          (lib.meta.hiPrio python314)
           myPackages.ncp
           docker-client
           cloc
           nodejs_24
           pkgs-master.codex
+          pkgs-master.jupyter-all
         ]
         ++ lib.optionals pkgs.stdenv.isDarwin [
           myPackages.quitapp
@@ -137,6 +138,8 @@ in {
           GHQ_ROOT = "${dataHome}/ghq";
           WASMER_DIR = "${dataHome}/wasmer";
           OPAMROOT = "${dataHome}/opam";
+          IPYTHONDIR = "${configHome}/jupyter";
+          JUPYTER_CONFIG_DIR = "${configHome}/jupyter";
           # https://doc.rust-lang.org/cargo/reference/environment-variables.html
           CARGO_HOME = "${dataHome}/cargo";
           RUSTUP_HOME = "${dataHome}/rustup";
