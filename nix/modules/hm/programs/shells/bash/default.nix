@@ -5,7 +5,7 @@
   ...
 } @ args: let
   systemConfig = args.systemConfig or null;
-  shellAliases = import ../common/aliases.nix {inherit lib systemConfig;};
+  shellAliases = import ../common/aliases.nix {inherit config lib systemConfig;};
 in {
   programs.bash = {
     inherit shellAliases;
