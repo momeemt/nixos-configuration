@@ -142,6 +142,7 @@ in {
           JUPYTER_CONFIG_DIR = "${configHome}/jupyter";
           JULIA_DEPOT_PATH = "${dataHome}/julua:$JULIA_DEPOT_PATH";
           ELM_HOME = "${configHome}/elm";
+          CODEX_HOME = "${configHome}/codex";
           # https://doc.rust-lang.org/cargo/reference/environment-variables.html
           CARGO_HOME = "${dataHome}/cargo";
           RUSTUP_HOME = "${dataHome}/rustup";
