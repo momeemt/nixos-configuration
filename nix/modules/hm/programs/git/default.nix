@@ -1,8 +1,14 @@
 {
+  pkgs,
+  lib,
+  ...
+}: {
   programs.git = {
     enable = true;
+
     userName = "Mutsuha Asada";
     userEmail = "me@momee.mt";
+
     aliases = {
       st = "status";
       d = "diff";
@@ -16,15 +22,30 @@
       remset = "remote set-url origin";
       stp = "stash pop";
     };
+
     ignores = [
       ".DS_Store"
       ".direnv"
       ".envrc"
       ".momeemt"
     ];
+
     difftastic = {
       enable = true;
       background = "light";
     };
+
+    lfs = {
+      enable = true;
+    };
+
+    extraConfig =
+      {
+        http.postBuffer = 524288000;
+        init.defaultBranch = "main";
+      }
+      // lib.optionalAttrs pkgs.stdenv.isDarwin {
+        credential.helper = "osxkeychain";
+      };
   };
 }
