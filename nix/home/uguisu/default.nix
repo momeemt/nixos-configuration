@@ -14,6 +14,7 @@
     ../../modules/hm/homebrew
     ../../modules/hm/nix
     ../../modules/hm/programs
+    ../../modules/hm/programs/ssh
     ../../modules/hm/programs/tmux
     ../../modules/hm/sops
     ../../modules/site/home
