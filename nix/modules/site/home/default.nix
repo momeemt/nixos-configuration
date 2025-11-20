@@ -129,6 +129,7 @@ in {
           PYTHONHISTFILE = "${stateHome}/python/history";
           PYTHONSTARTUP = "${configHome}/python/pythonstartup";
           AZURE_CONFIG_DIR = "${configHome}/azure";
+          NODE_REPL_HISTORY = "${dataHome}/node_repl_history";
           NPM_CONFIG_USERCONFIG = "${configHome}/npm/npmrc";
           GHQ_ROOT = "${dataHome}/ghq";
           # https://doc.rust-lang.org/cargo/reference/environment-variables.html
