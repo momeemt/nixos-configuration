@@ -45,104 +45,113 @@ in {
     };
   };
 
-  config.home = let
-    basePackages = with pkgs;
-      [
-        neofetch
-        gh
-        ghq
-        eza
-        bat
-        bottom
-        nixpkgs-review
-        gnupg
-        gnumake
-        yazi
-        jq
-        yq
-        sops
-        age
-        cloudflared
-        todoist
-        usbutils
-        nim
-        python314
-        myPackages.ncp
-        docker-client
-        cloc
-      ]
-      ++ lib.optionals pkgs.stdenv.isDarwin [
-        myPackages.quitapp
-        myPackages.ok
-        myPackages.ng
-        myPackages.subscribe
+  config = {
+    home = let
+      basePackages = with pkgs;
+        [
+          neofetch
+          gh
+          ghq
+          eza
+          bat
+          bottom
+          nixpkgs-review
+          gnupg
+          gnumake
+          yazi
+          jq
+          yq
+          sops
+          age
+          cloudflared
+          todoist
+          usbutils
+          nim
+          python314
+          myPackages.ncp
+          docker-client
+          cloc
+          nodejs_24
+        ]
+        ++ lib.optionals pkgs.stdenv.isDarwin [
+          myPackages.quitapp
+          myPackages.ok
+          myPackages.ng
+          myPackages.subscribe
+        ];
+
+      linuxDesktopPackages = with pkgs; [
+        google-chrome
+        spotify
+        teams-for-linux # lab
+        discord
+        vesktop
+        wl-clipboard
+        gnome-screenshot
+        todoist-electron
+        mpv
       ];
 
-    linuxDesktopPackages = with pkgs; [
-      google-chrome
-      spotify
-      teams-for-linux # lab
-      discord
-      vesktop
-      wl-clipboard
-      gnome-screenshot
-      todoist-electron
-      mpv
-    ];
+      darwinCasks = import ./casks.nix {inherit pkgs lib;};
 
-    darwinCasks = import ./casks.nix {inherit pkgs lib;};
+      combined =
+        basePackages
+        ++ (lib.optionals cfg.groups.linuxDesktop linuxDesktopPackages)
+        ++ (lib.optionals cfg.groups.darwinCasks darwinCasks)
+        ++ darwinCasks
+        ++ cfg.extraPackages
+        ++ cfg.extraDarwinCasks;
 
-    combined =
-      basePackages
-      ++ (lib.optionals cfg.groups.linuxDesktop linuxDesktopPackages)
-      ++ (lib.optionals cfg.groups.darwinCasks darwinCasks)
-      ++ darwinCasks
-      ++ cfg.extraPackages
-      ++ cfg.extraDarwinCasks;
+      final = lib.unique combined;
+    in {
+      enableNixpkgsReleaseCheck = true;
+      homeDirectory =
+        if pkgs.stdenv.isLinux
+        then "/home/${cfg.username}"
+        else "/Users/${cfg.username}";
+      inherit (cfg) username;
+      preferXdgDirectories = true;
 
-    final = lib.unique combined;
-  in {
-    enableNixpkgsReleaseCheck = true;
-    homeDirectory =
-      if pkgs.stdenv.isLinux
-      then "/home/${cfg.username}"
-      else "/Users/${cfg.username}";
-    inherit (cfg) username;
-    preferXdgDirectories = true;
+      sessionVariables =
+        {
+          EDITOR = "nvim";
+          VISUAL = "nvim";
+          LANG = "ja_JP.UTF-8";
+          PAGER = "less";
+          MANPAGER = "less";
+          LESS = "-R";
+          XDG_CONFIG_HOME = "${h}/.config";
+          XDG_CACHE_HOME = "${h}/.cache";
+          XDG_DATA_HOME = "${h}/.local/share";
+          XDG_STATE_HOME = "${h}/.local/state";
+          SATYROGRAPHOS_EXPERIMENTAL = "1";
+          PYTHONHISTFILE = "${stateHome}/python/history";
+          PYTHONSTARTUP = "${configHome}/python/pythonstartup";
+          AZURE_CONFIG_DIR = "${configHome}/azure";
+          NPM_CONFIG_USERCONFIG = "${configHome}/npm/npmrc";
+          # https://doc.rust-lang.org/cargo/reference/environment-variables.html
+          CARGO_HOME = "${dataHome}/cargo";
+          RUSTUP_HOME = "${dataHome}/rustup";
+        }
+        // cfg.extraSessionVariables;
 
-    sessionVariables =
-      {
-        EDITOR = "nvim";
-        VISUAL = "nvim";
-        LANG = "ja_JP.UTF-8";
-        PAGER = "less";
-        MANPAGER = "less";
-        LESS = "-R";
-        XDG_CONFIG_HOME = "${h}/.config";
-        XDG_CACHE_HOME = "${h}/.cache";
-        XDG_DATA_HOME = "${h}/.local/share";
-        XDG_STATE_HOME = "${h}/.local/state";
-        SATYROGRAPHOS_EXPERIMENTAL = "1";
-        PYTHONHISTFILE = "${stateHome}/python/history";
-        PYTHONSTARTUP = "${./python-startup.py}";
-        AZURE_CONFIG_DIR = "${configHome}/azure";
-        # https://doc.rust-lang.org/cargo/reference/environment-variables.html
-        CARGO_HOME = "${dataHome}/cargo";
-        RUSTUP_HOME = "${dataHome}/rustup";
-      }
-      // cfg.extraSessionVariables;
+      sessionPath =
+        [
+          "${h}/.local/bin"
+          "${dataHome}/cargo/bin"
+          "${configHome}/nimble/bin"
+          "${h}/go/bin"
+        ]
+        ++ cfg.extraSessionPath;
 
-    sessionPath =
-      [
-        "${h}/.local/bin"
-        "${dataHome}/cargo/bin"
-        "${configHome}/nimble/bin"
-        "${h}/go/bin"
-      ]
-      ++ cfg.extraSessionPath;
+      packages = final;
+      shell.enableShellIntegration = true;
+      stateVersion = "25.05";
+    };
 
-    packages = final;
-    shell.enableShellIntegration = true;
-    stateVersion = "25.05";
+    xdg.configFile = {
+      "npm/npmrc".source = ./npmrc;
+      "python/pythonstartup".source = ./python-startup.py;
+    };
   };
 }

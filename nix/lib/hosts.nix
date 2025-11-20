@@ -21,7 +21,7 @@ in {
           hostPath
           (_: {nixpkgs.overlays = overlays ++ localOverlays;})
           inputs.home-manager.nixosModules.home-manager
-          (hmUsers {inherit users;})
+          (hmUsers {inherit users siteLib;})
           inputs.sops-nix.nixosModules.sops
         ]
         ++ extraModules;
@@ -43,7 +43,7 @@ in {
           hostPath
           (_: {nixpkgs.overlays = overlays ++ localOverlays;})
           inputs.home-manager.darwinModules.home-manager
-          (hmUsers {inherit users;})
+          (hmUsers {inherit users siteLib;})
           inputs.sops-nix.darwinModules.sops
           inputs.mac-app-util.darwinModules.default
         ]
