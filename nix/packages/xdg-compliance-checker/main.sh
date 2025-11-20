@@ -88,7 +88,6 @@ if [ -f "$GREENLIST_FILE" ]; then
 fi
 
 GRAY_LIST=(
-  ".bashrc"
   ".DS_Store"
   ".ssh"
 )
@@ -127,6 +126,17 @@ for path in "${entries[@]}"; do
   fi
   SEEN_NAMES+=("$name")
   total_count=$((total_count + 1))
+
+  if [ -L "$path" ]; then
+    target="$(readlink "$path")"
+    case "$target" in
+    /nix/store/*)
+      printf '%b[SKIP]     %s -> %s%b\n' "$C_GRAY" "$name" "$target" "$C_RESET"
+      gray_count=$((gray_count + 1))
+      continue
+      ;;
+    esac
+  fi
 
   if contains "$name" "${GREEN_LIST[@]}"; then
     printf '%b[OK]       %s%b\n' "$C_GREEN" "$name" "$C_RESET"
