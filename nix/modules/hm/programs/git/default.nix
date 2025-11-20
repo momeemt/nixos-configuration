@@ -10,6 +10,11 @@
       aa = "add --all";
       cm = "commit -m";
       pom = "push origin main";
+      poh = "push origin head";
+      pocur = "!git push origin $(git branch --contains | cut -d \" \" -f 2)";
+      remget = "remote get-url origin";
+      remset = "remote set-url origin";
+      stp = "stash pop";
     };
     ignores = [
       ".DS_Store"
