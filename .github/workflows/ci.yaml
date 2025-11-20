@@ -10,6 +10,6 @@ jobs:
   check:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: DeterminateSystems/determinate-nix-action@v3
       - run: nix flake check --all-systems
