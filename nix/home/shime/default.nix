@@ -13,5 +13,4 @@
   ];
 
   site.home.username = "momeemt";
-  programs.home-manager.enable = true;
 }

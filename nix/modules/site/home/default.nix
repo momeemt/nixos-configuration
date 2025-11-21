@@ -2,12 +2,15 @@
   config,
   lib,
   pkgs,
+  inputs,
+  system,
   ...
 }: let
   inherit (lib) mkEnableOption mkOption types;
   cfg = config.site.home;
   h = config.home.homeDirectory;
-  inherit (config.xdg) dataHome stateHome configHome;
+  inherit (config.xdg) dataHome stateHome configHome cacheHome;
+  pkgs-master = import inputs.nixpkgs-master {inherit system;};
 in {
   options.site.home = {
     username = mkOption {
@@ -67,11 +70,13 @@ in {
           todoist
           usbutils
           nim
-          python314
+          (lib.meta.hiPrio python314)
           myPackages.ncp
           docker-client
           cloc
           nodejs_24
+          pkgs-master.codex
+          pkgs-master.jupyter-all
         ]
         ++ lib.optionals pkgs.stdenv.isDarwin [
           myPackages.quitapp
@@ -132,6 +137,33 @@ in {
           NPM_CONFIG_USERCONFIG = "${configHome}/npm/npmrc";
           GHQ_ROOT = "${dataHome}/ghq";
           WASMER_DIR = "${dataHome}/wasmer";
+          OPAMROOT = "${dataHome}/opam";
+          IPYTHONDIR = "${configHome}/jupyter";
+          JUPYTER_CONFIG_DIR = "${configHome}/jupyter";
+          JULIA_DEPOT_PATH = "${dataHome}/julia:$JULIA_DEPOT_PATH";
+          ELM_HOME = "${configHome}/elm";
+          CODEX_HOME = "${configHome}/codex";
+          NUGET_PACKAGES = "${cacheHome}/NuGetPackages";
+          GEM_HOME = "${dataHome}/gem";
+          GEM_SPEC_CACHE = "${cacheHome}/gem";
+          GRADLE_USER_HOME = "${dataHome}/gradle";
+          EM_CONFIG = "${configHome}/emscripten/config";
+          EM_CACHE = "${cacheHome}/emscripten/cache";
+          EM_PORTS = "${dataHome}/emscripten/cache";
+          BUNDLE_USER_CONFIG = "${configHome}/bundle";
+          BUNDLE_USER_CACHE = "${cacheHome}/bundle";
+          BUNDLE_USER_PLUGIN = "${dataHome}/bundle";
+          CONDARC = "${configHome}/conda/condarc";
+          MC_CONFIG_DIR = "${configHome}/mc";
+          BUN_INSTALL = "${dataHome}/bun";
+          BUN_CONFIG_DIR = "${configHome}/bun";
+          GOPATH = "${dataHome}/go";
+          GOMODCACHE = "${cacheHome}/go/mod";
+          GOCACHE = "${cacheHome}/go/build";
+          VSCODE_PORTABLE = "${dataHome}/vscode";
+          STACK_ROOT = "${dataHome}/stack";
+          # https://matplotlib.org/stable/api/matplotlib_configuration_api.html#matplotlib.get_configdir
+          MPLCONFIGDIR = "${configHome}/matplotlib";
           # https://doc.rust-lang.org/cargo/reference/environment-variables.html
           CARGO_HOME = "${dataHome}/cargo";
           RUSTUP_HOME = "${dataHome}/rustup";

@@ -23,6 +23,4 @@
       quartus-prime-lite
     ];
   };
-
-  programs.home-manager.enable = true;
 }

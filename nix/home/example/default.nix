@@ -15,5 +15,4 @@
 
   nix.package = pkgs.nix;
   site.home.username = "example";
-  programs.home-manager.enable = true;
 }

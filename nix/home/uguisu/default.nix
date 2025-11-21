@@ -61,8 +61,6 @@
         };
       };
     };
-
-    home-manager.enable = true;
     lieer.enable = true;
     notmuch.enable = true;
     khal.enable = true;

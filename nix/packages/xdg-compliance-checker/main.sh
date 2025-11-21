@@ -63,7 +63,6 @@ GREEN_LIST=(
   ".config"
   ".cache"
   ".local"
-  ".Trash"
   "Applications"
   "Desktop"
   "Documents"
@@ -105,6 +104,15 @@ fi
 GRAY_LIST=(
   ".DS_Store"
   ".ssh"
+  ".Trash"
+  ".CFUserTextEncoding"
+  ".IdentityService"
+  "nix"
+  ".nix-defexpr"
+  ".nix-profile"
+  ".bash_sessions"
+  # https://github.com/apple/cups
+  ".cups"
 )
 
 if [ -f "$GRAYLIST_FILE" ]; then

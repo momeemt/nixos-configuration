@@ -16,6 +16,4 @@
     username = "momeemt";
     groups.linuxDesktop = true;
   };
-
-  programs.home-manager.enable = true;
 }
