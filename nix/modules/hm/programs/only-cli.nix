@@ -11,6 +11,7 @@
     ./home-manager
     ./jq
     ./less
+    ./man
     ./nix-index
     ./ripgrep
     ./shells
