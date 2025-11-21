@@ -161,6 +161,7 @@ in {
           GOMODCACHE = "${cacheHome}/go/mod";
           GOCACHE = "${cacheHome}/go/build";
           VSCODE_PORTABLE = "${dataHome}/vscode";
+          STACK_ROOT = "${dataHome}/stack";
           # https://matplotlib.org/stable/api/matplotlib_configuration_api.html#matplotlib.get_configdir
           MPLCONFIGDIR = "${configHome}/matplotlib";
           # https://doc.rust-lang.org/cargo/reference/environment-variables.html
