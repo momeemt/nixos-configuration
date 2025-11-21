@@ -1,5 +1,6 @@
 {
   imports = [
+    ./command-not-found
     ./direnv
     ./docker-cli
     ./git
