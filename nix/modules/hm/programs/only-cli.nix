@@ -1,6 +1,7 @@
 {
   imports = [
     ./bat
+    ./bottom
     ./direnv
     ./docker-cli
     ./eza

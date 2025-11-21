@@ -54,7 +54,6 @@ in {
         [
           neofetch
           ghq
-          bottom
           nixpkgs-review
           gnumake
           yazi
