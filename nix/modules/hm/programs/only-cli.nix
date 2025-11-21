@@ -5,6 +5,7 @@
     ./git
     ./gpg
     ./home-manager
+    ./nix-index
     ./ripgrep
     ./shells
     ./starship
