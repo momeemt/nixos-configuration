@@ -10,6 +10,7 @@
     ./gpg
     ./home-manager
     ./jq
+    ./less
     ./nix-index
     ./ripgrep
     ./shells

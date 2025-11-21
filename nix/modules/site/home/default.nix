@@ -118,7 +118,6 @@ in {
           LANG = "ja_JP.UTF-8";
           PAGER = "less";
           MANPAGER = "less";
-          LESS = "-R";
           XDG_CONFIG_HOME = "${h}/.config";
           XDG_CACHE_HOME = "${h}/.cache";
           XDG_DATA_HOME = "${h}/.local/share";
