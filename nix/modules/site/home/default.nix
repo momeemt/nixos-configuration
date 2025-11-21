@@ -153,6 +153,7 @@ in {
           BUNDLE_USER_CONFIG = "${configHome}/bundle";
           BUNDLE_USER_CACHE = "${cacheHome}/bundle";
           BUNDLE_USER_PLUGIN = "${dataHome}/bundle";
+          CONDARC = "${configHome}/conda/condarc";
           # https://matplotlib.org/stable/api/matplotlib_configuration_api.html#matplotlib.get_configdir
           MPLCONFIGDIR = "${configHome}/matplotlib";
           # https://doc.rust-lang.org/cargo/reference/environment-variables.html
