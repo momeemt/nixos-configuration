@@ -1,6 +1,10 @@
-{config, ...}: {
+{
+  config,
+  lib,
+  ...
+}: {
   programs.home-manager = {
     enable = true;
-    path = "${config.xdg.configHome}/nixpkgs/home-manager";
+    path = lib.mkForce "${config.xdg.configHome}/nixpkgs/home-manager";
   };
 }
