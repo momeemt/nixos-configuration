@@ -144,6 +144,8 @@ in {
           ELM_HOME = "${configHome}/elm";
           CODEX_HOME = "${configHome}/codex";
           NUGET_PACKAGES = "${cacheHome}/NuGetPackages";
+          GEM_HOME = "${dataHome}/gem";
+          GEM_SPEC_CACHE = "${cacheHome}/gem";
           # https://doc.rust-lang.org/cargo/reference/environment-variables.html
           CARGO_HOME = "${dataHome}/cargo";
           RUSTUP_HOME = "${dataHome}/rustup";
