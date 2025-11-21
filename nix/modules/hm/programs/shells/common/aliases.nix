@@ -14,6 +14,14 @@ in
     bashrc = "source ${h}/.bashrc";
     zshrc = "source ${configHome}/zsh/.zshrc";
     back = "cd $OLDPWD";
+    cd = "z";
+    cat = "bat";
+    diff = "batdiff";
+    rg = "batgrep";
+    # it destroys command_not_found_*
+    # grep = "batgrep";
+    man = "batman";
+    watch = "batwatch";
   }
   // lib.optionalAttrs (systemConfig != null) {
     bash = "${nix-bin}/bash";

@@ -1,10 +1,15 @@
 {
   imports = [
+    ./bat
+    ./bottom
     ./direnv
     ./docker-cli
+    ./eza
+    ./gh
     ./git
     ./gpg
     ./home-manager
+    ./jq
     ./nix-index
     ./ripgrep
     ./shells

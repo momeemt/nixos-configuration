@@ -53,16 +53,10 @@ in {
       basePackages = with pkgs;
         [
           neofetch
-          gh
           ghq
-          eza
-          bat
-          bottom
           nixpkgs-review
-          gnupg
           gnumake
           yazi
-          jq
           yq
           sops
           age
