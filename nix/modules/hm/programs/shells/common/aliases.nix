@@ -15,6 +15,12 @@ in
     zshrc = "source ${configHome}/zsh/.zshrc";
     back = "cd $OLDPWD";
     cd = "z";
+    cat = "bat";
+    diff = "batdiff";
+    rg = "batgrep";
+    grep = "batgrep";
+    man = "batman";
+    watch = "batwatch";
   }
   // lib.optionalAttrs (systemConfig != null) {
     bash = "${nix-bin}/bash";

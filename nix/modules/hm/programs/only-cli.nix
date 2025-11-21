@@ -1,5 +1,6 @@
 {
   imports = [
+    ./bat
     ./direnv
     ./docker-cli
     ./gh
