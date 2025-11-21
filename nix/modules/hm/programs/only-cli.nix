@@ -3,6 +3,7 @@
     ./bat
     ./direnv
     ./docker-cli
+    ./eza
     ./gh
     ./git
     ./gpg

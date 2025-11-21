@@ -54,10 +54,8 @@ in {
         [
           neofetch
           ghq
-          eza
           bottom
           nixpkgs-review
-          gnupg
           gnumake
           yazi
           jq
