@@ -2,6 +2,7 @@
   imports = [
     ./direnv
     ./docker-cli
+    ./gh
     ./git
     ./gpg
     ./home-manager
