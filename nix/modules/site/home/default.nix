@@ -155,6 +155,11 @@ in {
           BUNDLE_USER_PLUGIN = "${dataHome}/bundle";
           CONDARC = "${configHome}/conda/condarc";
           MC_CONFIG_DIR = "${configHome}/mc";
+          BUN_INSTALL = "${dataHome}/bun";
+          BUN_CONFIG_DIR = "${configHome}/bun";
+          GOPATH = "${dataHome}/go";
+          GOMODCACHE = "${cacheHome}/go/mod";
+          GOCACHE = "${cacheHome}/go/build";
           # https://matplotlib.org/stable/api/matplotlib_configuration_api.html#matplotlib.get_configdir
           MPLCONFIGDIR = "${configHome}/matplotlib";
           # https://doc.rust-lang.org/cargo/reference/environment-variables.html
