@@ -22,6 +22,7 @@ in
     # grep = "batgrep";
     man = "batman";
     watch = "batwatch";
+    nix-collect-garbage = "nh clean all";
   }
   // lib.optionalAttrs (systemConfig != null) {
     bash = "${nix-bin}/bash";

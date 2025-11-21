@@ -12,6 +12,7 @@
     ./jq
     ./less
     ./man
+    ./nh
     ./nix-index
     ./ripgrep
     ./shells
