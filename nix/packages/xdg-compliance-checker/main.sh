@@ -110,6 +110,9 @@ GRAY_LIST=(
   "nix"
   ".nix-defexpr"
   ".nix-profile"
+  ".bash_sessions"
+  # https://github.com/apple/cups
+  ".cups"
 )
 
 if [ -f "$GRAYLIST_FILE" ]; then
