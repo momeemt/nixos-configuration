@@ -14,6 +14,7 @@ in
     bashrc = "source ${h}/.bashrc";
     zshrc = "source ${configHome}/zsh/.zshrc";
     back = "cd $OLDPWD";
+    cd = "z";
   }
   // lib.optionalAttrs (systemConfig != null) {
     bash = "${nix-bin}/bash";
