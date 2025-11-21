@@ -18,7 +18,8 @@ in
     cat = "bat";
     diff = "batdiff";
     rg = "batgrep";
-    grep = "batgrep";
+    # it destroys command_not_found_*
+    # grep = "batgrep";
     man = "batman";
     watch = "batwatch";
   }
