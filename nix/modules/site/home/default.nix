@@ -9,7 +9,7 @@
   inherit (lib) mkEnableOption mkOption types;
   cfg = config.site.home;
   h = config.home.homeDirectory;
-  inherit (config.xdg) dataHome stateHome configHome;
+  inherit (config.xdg) dataHome stateHome configHome cacheHome;
   pkgs-master = import inputs.nixpkgs-master {inherit system;};
 in {
   options.site.home = {
@@ -143,6 +143,7 @@ in {
           JULIA_DEPOT_PATH = "${dataHome}/julia:$JULIA_DEPOT_PATH";
           ELM_HOME = "${configHome}/elm";
           CODEX_HOME = "${configHome}/codex";
+          NUGET_PACKAGES = "${cacheHome}/NuGetPackages";
           # https://doc.rust-lang.org/cargo/reference/environment-variables.html
           CARGO_HOME = "${dataHome}/cargo";
           RUSTUP_HOME = "${dataHome}/rustup";
