@@ -8,6 +8,7 @@
     ./git
     ./gpg
     ./home-manager
+    ./jq
     ./nix-index
     ./ripgrep
     ./shells

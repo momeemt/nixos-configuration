@@ -58,7 +58,6 @@ in {
           nixpkgs-review
           gnumake
           yazi
-          jq
           yq
           sops
           age
