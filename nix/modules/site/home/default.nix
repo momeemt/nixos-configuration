@@ -147,6 +147,9 @@ in {
           GEM_HOME = "${dataHome}/gem";
           GEM_SPEC_CACHE = "${cacheHome}/gem";
           GRADLE_USER_HOME = "${dataHome}/gradle";
+          EM_CONFIG = "${configHome}/emscripten/config";
+          EM_CACHE = "${cacheHome}/emscripten/cache";
+          EM_PORTS = "${dataHome}/emscripten/cache";
           # https://matplotlib.org/stable/api/matplotlib_configuration_api.html#matplotlib.get_configdir
           MPLCONFIGDIR = "${configHome}/matplotlib";
           # https://doc.rust-lang.org/cargo/reference/environment-variables.html
