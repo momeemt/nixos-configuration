@@ -1,6 +1,7 @@
 {
   imports = [
     ./dropbox
-    ./flameshot
+    # ./flameshot
+    ./gpg-agent
   ];
 }

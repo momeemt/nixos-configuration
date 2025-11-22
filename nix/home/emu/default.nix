@@ -13,6 +13,7 @@
     ../../modules/hm/editorconfig
     ../../modules/hm/programs
     ../../modules/hm/programs/ssh
+    ../../modules/hm/services
     ../../modules/hm/sops
     ../../modules/hm/wakatime
     ../../modules/site/home
@@ -24,5 +25,13 @@
     extraPackages = with pkgs; [
       quartus-prime-lite
     ];
+  };
+
+  programs.git = {
+    signing = {
+      # `gpg --list-secret-keys --keyid-format LONG`
+      key = "86F8F50B69A94DE2";
+      signByDefault = true;
+    };
   };
 }
