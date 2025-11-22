@@ -174,27 +174,6 @@ in {
     });
   '';
 
-  environment.gnome.excludePackages =
-    (with pkgs; [
-      gnome-photos
-      gnome-tour
-    ])
-    ++ (with pkgs; [
-      cheese
-      gnome-music
-      gnome-terminal
-      gedit
-      epiphany
-      geary
-      evince
-      gnome-characters
-      totem
-      tali
-      iagno
-      hitori
-      atomix
-    ]);
-
   virtualisation = {
     docker.enable = true;
 

@@ -16,6 +16,7 @@
     ../../modules/hm/services
     ../../modules/hm/sops
     ../../modules/hm/wakatime
+    ../../modules/hm/wayland/windowManager/sway
     ../../modules/site/home
   ];
 

@@ -3,7 +3,7 @@
     enable = true;
     package = pkgs.xrdp;
     port = 3389;
-    defaultWindowManager = "${pkgs.gnome-session}/bin/gnome-session";
+    defaultWindowManager = "${pkgs.sway}/bin/sway";
     openFirewall = true;
   };
 }
