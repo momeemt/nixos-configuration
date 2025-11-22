@@ -168,12 +168,11 @@ in {
           "${h}/.local/bin"
           "${dataHome}/cargo/bin"
           "${configHome}/nimble/bin"
-          "${h}/go/bin"
+          "${dataHome}/go/bin"
         ]
         ++ cfg.extraSessionPath;
 
       packages = final;
-      shell.enableShellIntegration = true;
       stateVersion = "25.05";
     };
 

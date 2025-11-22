@@ -5,11 +5,8 @@
   ...
 } @ args: let
   systemConfig = args.systemConfig or null;
-  shellAliases = import ../common/aliases.nix {inherit config lib systemConfig;};
 in {
   programs.bash = {
-    inherit shellAliases;
-
     enable = true;
     enableCompletion = true;
     # VTE integration not needed for Alacritty

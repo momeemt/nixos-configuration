@@ -1,14 +1,5 @@
-{
-  config,
-  lib,
-  ...
-} @ args: let
-  systemConfig = args.systemConfig or null;
-  shellAliases = import ../common/aliases.nix {inherit config lib systemConfig;};
-in {
+{config, ...}: {
   programs.zsh = {
-    inherit shellAliases;
-
     enable = true;
     autosuggestion.enable = true;
     enableCompletion = true;
