@@ -1,4 +1,4 @@
-#!/bin/bash
+# shellcheck disable=SC2148
 
 set -euo pipefail
 
@@ -12,7 +12,9 @@ fi
 if [ -n "${DEV:-}" ]; then
   NIX_FLAGS+=(--override-input tmux-nix path:./nix/flakes/tmux-nix)
 fi
-NIX_FLAGS+=(--experimental-features "nix-command flakes")
+if [ "$HOST_NAME" = "uguisu" ]; then
+  NIX_FLAGS+=(--experimental-features "nix-command flakes")
+fi
 
 echo "[apply.sh] NIX_FLAGS: ${NIX_FLAGS[*]}"
 

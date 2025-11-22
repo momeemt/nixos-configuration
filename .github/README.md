@@ -53,7 +53,6 @@ ghq get momeemt/config
 ```
 
 Next, run the following script to apply the configuration.
-Note that it depends on `/bin/bash`, which is available on typical Unix systems.
 
 ```sh
 ./assets/scripts/apply.sh

@@ -53,7 +53,6 @@ ghq get momeemt/config
 ```
 
 次に、以下のスクリプトを実行して設定を反映させてください。
-ただし、一般的な Unix システムに存在する`/bin/bash`に依存します。
 
 ```sh
 ./assets/scripts/apply.sh
