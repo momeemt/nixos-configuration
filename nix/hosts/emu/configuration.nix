@@ -18,6 +18,7 @@ in {
     ../../modules/hosts/fonts
     ../../modules/comin
     ../../modules/hosts/services/xrdp
+    ../../modules/hosts/services/xserver
     (siteLib.mkK8sMaster {
       inherit pkgs lib config nixvirtLib sshKeys apiAdvertiseAddress gateway;
       name = "kube-master";
@@ -155,20 +156,6 @@ in {
           default = "http_status:404";
         };
       };
-    };
-
-    xserver = {
-      enable = true;
-      displayManager.gdm = {
-        enable = true;
-      };
-      desktopManager.gnome.enable = true;
-    };
-
-    xrdp = {
-      enable = true;
-      defaultWindowManager = "${pkgs.gnome-session}/bin/gnome-session";
-      openFirewall = true;
     };
 
     udev.packages = [pkgs.usb-blaster-udev-rules];
