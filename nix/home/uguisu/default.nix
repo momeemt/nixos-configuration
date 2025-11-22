@@ -17,6 +17,7 @@
     ../../modules/hm/programs
     ../../modules/hm/programs/ssh
     ../../modules/hm/programs/tmux
+    ../../modules/hm/services
     ../../modules/hm/sops
     ../../modules/hm/wakatime
     ../../modules/site/home
