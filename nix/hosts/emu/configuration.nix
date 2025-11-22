@@ -17,6 +17,7 @@ in {
     ../../modules/sops
     ../../modules/hosts/fonts
     ../../modules/comin
+    ../../modules/hosts/services/xrdp
     (siteLib.mkK8sMaster {
       inherit pkgs lib config nixvirtLib sshKeys apiAdvertiseAddress gateway;
       name = "kube-master";
