@@ -19,4 +19,8 @@ in {
 
   isLinux = lib.hasInfix "linux" system;
   isDarwin = lib.hasInfix "darwin" system;
+  githubRepository = {
+    url = "github.com/momeemt/config";
+    defaultBranch = "develop";
+  };
 }

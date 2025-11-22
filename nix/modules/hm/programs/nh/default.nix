@@ -1,6 +1,7 @@
 {
   pkgs,
   config,
+  siteLib,
   ...
 }: {
   programs.nh = {
@@ -13,6 +14,6 @@
       extraArgs = "--keep 5 --keep-since 3d";
     };
 
-    flake = "${config.xdg.dataHome}/ghq/github.com/momeemt/config";
+    flake = "${config.xdg.dataHome}/ghq/${siteLib.githubRepository.url}";
   };
 }
