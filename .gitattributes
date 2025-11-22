@@ -1,14 +1,15 @@
-*.md linguist-detectable=true
 *.yml linguist-detectable=true
 *.yaml linguist-detectable=true
 *.json linguist-detectable=true
 *.toml linguist-detectable=true
 *.sql linguist-detectable=true
 
-nix/modules/hm/programs/zsh/{completions,functions}/* linguist-language=Shell
+nix/modules/hm/programs/shells/zsh/{completions,functions}/* linguist-language=Shell
 *.zsh linguist-language=Shell
 
-hosts/*/hardware-configuration.nix linguist-generated=true
-flake.lock linguist-generated=true
-secrets/* linguist-generated=true
-
+hosts/*/hardware-configuration.nix linguist-vendored=true
+flake.lock linguist-vendored=true
+secrets/* linguist-vendored=true
+terraform/.terraform.lock.hcl linguist-vendored=true
+docs/* linguist-documentation
+AGENTS.md linguist-documentation
