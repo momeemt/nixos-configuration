@@ -11,11 +11,13 @@
     ../../modules/hm/accounts/calendar
     ../../modules/hm/accounts/contact
     ../../modules/hm/accounts/email
+    ../../modules/hm/editorconfig
     ../../modules/hm/homebrew
     ../../modules/hm/nix
     ../../modules/hm/programs
     ../../modules/hm/programs/ssh
     ../../modules/hm/programs/tmux
+    ../../modules/hm/services
     ../../modules/hm/sops
     ../../modules/hm/wakatime
     ../../modules/site/home

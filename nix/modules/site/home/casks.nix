@@ -42,6 +42,14 @@
       hash = "sha256-sj1ZdeVk/p5ZQfR75HMDVYnmAPzcyYIAFaRYXQPZK2s=";
     };
   });
+  windows-app = pkgs.brewCasks.windows-app.overrideAttrs (oldAttrs: {
+    unpackPhase = ''
+      set -euo pipefail
+      xar -xf "$src" com.microsoft.rdc.macos.pkg/Payload
+      gzip -d < com.microsoft.rdc.macos.pkg/Payload | cpio -idm
+    '';
+    nativeBuildInputs = with pkgs; (oldAttrs.nativeBuildInputs or []) ++ [cpio gzip];
+  });
 in
   with pkgs.brewCasks;
     lib.optionals pkgs.stdenv.isDarwin [
@@ -99,6 +107,6 @@ in
       todoist-app
       # unity
       unity-hub
-      # windows-app
+      windows-app
       zoom
     ]

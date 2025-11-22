@@ -7,4 +7,5 @@ data "sops_file" "secrets" {
 locals {
   cloudflare_api_token = data.sops_file.secrets.data["cloudflare_api_token"]
   cloudflare_zone_id   = data.sops_file.secrets.data["cloudflare_zone_id"]
+  github_token         = data.sops_file.secrets.data["github_token"]
 }

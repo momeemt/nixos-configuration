@@ -81,6 +81,11 @@ in {
           user = "momeemt";
           identityFile = "${sshHome}/nixos-configurations";
         };
+        "github.com" = sshMatchBlock {
+          hostname = "github.com";
+          user = "git";
+          identityFile = "${sshHome}/git";
+        };
       }
       // builtins.listToAttrs (
         map (name: {

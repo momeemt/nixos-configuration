@@ -23,13 +23,12 @@
         config.just-flake.outputs.devShell
         config.pre-commit.devShell
       ];
-      buildInputs = with pkgs; [
-        sops
-        pkgs-master.terraform
-        pkgs-master.terraform-providers.cloudflare_cloudflare
-        pkgs-master.terraform-providers.carlpett_sops
-        nodejs_24
-      ];
+      buildInputs = with pkgs;
+        [
+          sops
+          nodejs_24
+        ]
+        ++ (import ../../terraform/terraform.nix {pkgs = pkgs-master;});
     };
 
     packages = {

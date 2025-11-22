@@ -1,6 +1,7 @@
 {
   imports = [
     ./bash
+    ./common
     ./zsh
   ];
 }

@@ -17,6 +17,8 @@ in {
     ../../modules/sops
     ../../modules/hosts/fonts
     ../../modules/comin
+    ../../modules/hosts/services/xrdp
+    ../../modules/hosts/services/xserver
     (siteLib.mkK8sMaster {
       inherit pkgs lib config nixvirtLib sshKeys apiAdvertiseAddress gateway;
       name = "kube-master";
@@ -156,20 +158,6 @@ in {
       };
     };
 
-    xserver = {
-      enable = true;
-      displayManager.gdm = {
-        enable = true;
-      };
-      desktopManager.gnome.enable = true;
-    };
-
-    xrdp = {
-      enable = true;
-      defaultWindowManager = "${pkgs.gnome-session}/bin/gnome-session";
-      openFirewall = true;
-    };
-
     udev.packages = [pkgs.usb-blaster-udev-rules];
   };
 
@@ -185,27 +173,6 @@ in {
         }
     });
   '';
-
-  environment.gnome.excludePackages =
-    (with pkgs; [
-      gnome-photos
-      gnome-tour
-    ])
-    ++ (with pkgs; [
-      cheese
-      gnome-music
-      gnome-terminal
-      gedit
-      epiphany
-      geary
-      evince
-      gnome-characters
-      totem
-      tali
-      iagno
-      hitori
-      atomix
-    ]);
 
   virtualisation = {
     docker.enable = true;
