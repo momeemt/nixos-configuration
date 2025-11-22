@@ -11,6 +11,7 @@
     ../../modules/hm/accounts/calendar
     ../../modules/hm/accounts/contact
     ../../modules/hm/accounts/email
+    ../../modules/hm/editorconfig
     ../../modules/hm/homebrew
     ../../modules/hm/nix
     ../../modules/hm/programs

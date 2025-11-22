@@ -9,6 +9,7 @@
     inputs.tmux-nix.homeModules.tmux-nix
     ../../modules/tmux-nix
     ../../modules/hm/nix
+    ../../modules/hm/editorconfig
     ../../modules/hm/programs/only-cli.nix
     ../../modules/site/home
   ];

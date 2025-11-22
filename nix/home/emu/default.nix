@@ -10,6 +10,7 @@
     inputs.tmux-nix.homeModules.tmux-nix
     ../../modules/tmux-nix
     ../../modules/hm/nix
+    ../../modules/hm/editorconfig
     ../../modules/hm/programs
     ../../modules/hm/sops
     ../../modules/hm/wakatime
