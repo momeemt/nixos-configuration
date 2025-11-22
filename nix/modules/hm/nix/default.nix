@@ -9,8 +9,9 @@ _: {
       sandbox = true;
     };
     checkConfig = true;
-    gc = {
-      automatic = true;
-    };
+    # NOTE: nh.clean.enable = true
+    # gc = {
+    #   automatic = true;
+    # };
   };
 }
