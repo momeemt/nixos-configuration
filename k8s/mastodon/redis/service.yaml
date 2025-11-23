@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mastodon-redis
+  namespace: mastodon
+spec:
+  selector:
+    app: mastodon-redis
+  ports:
+    - port: 6379
+      targetPort: 6379
+  type: ClusterIP

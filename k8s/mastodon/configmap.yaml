@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mastodon-config
+  namespace: mastodon
+data:
+  LOCAL_DOMAIN: "mastodon.local"
+  WEB_DOMAIN: "mastodon.local"
+  S3_ENABLED: "false"
+  PAPERCLIP_ROOT_PATH: "/opt/mastodon/public/system"
+  TZ: "Asia/Tokyo"

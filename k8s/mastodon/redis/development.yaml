@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Development
+metadata:
+  name: mastodon-redis
+  namespace: mastodon
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mastodon-redis
+  template:
+    metadata:
+      labels:
+        app: mastodon-redis
+    spec:
+      containers:
+        - name: redis
+          image: redis:7
+          args:
+            - redis-server
+            - --appendonly
+            - "yes"
+          ports:
+            - containerPort: 6379

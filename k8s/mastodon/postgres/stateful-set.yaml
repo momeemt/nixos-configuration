@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mastodon-postgres
+  namespace: mastodon
+spec:
+  serviceName: mastodon-postgres
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mastodon-postgres
+  template:
+    metadata:
+      labels:
+        app: mastodon-postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:15
+          env:
+            - name: POSTGRES_DB
+              value: mastodon
+            - name: POSTGRES_USER
+              value: mastodon
+            - name: POSTGRES_PASSWORD
+              value: mastodon
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/postgresql/data
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 10Gi
