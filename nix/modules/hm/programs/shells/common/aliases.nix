@@ -1,9 +1,9 @@
 {
   config,
   lib,
-  systemConfig,
   ...
-}: let
+} @ args: let
+  systemConfig = args.systemConfig or null;
   nix-bin = "/run/current-system/sw/bin";
   h = config.home.homeDirectory;
   inherit (config.xdg) configHome;
