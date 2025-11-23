@@ -5,6 +5,7 @@
 }: {
   imports = [
     ../../modules/hosts/fonts
+    ../../modules/hosts/services/openssh
     ../../modules/comin
   ];
 
@@ -100,11 +101,6 @@
     tailscale = {
       enable = true;
       openFirewall = true;
-    };
-
-    openssh = {
-      enable = true;
-      settings.PasswordAuthentication = false;
     };
 
     vscode-server = {

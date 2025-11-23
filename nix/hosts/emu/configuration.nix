@@ -17,6 +17,7 @@ in {
     ../../modules/sops
     ../../modules/hosts/fonts
     ../../modules/comin
+    ../../modules/hosts/services/openssh
     ../../modules/hosts/services/xrdp
     ../../modules/hosts/services/xserver
     (siteLib.mkK8sMaster {
@@ -115,14 +116,6 @@ in {
   };
 
   services = {
-    openssh = {
-      enable = true;
-      openFirewall = true;
-      settings = {
-        PasswordAuthentication = false;
-      };
-    };
-
     resolved = {
       enable = true;
       dnssec = "true";

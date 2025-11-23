@@ -16,6 +16,7 @@ in {
   imports = [
     ../../modules/sops
     ../../modules/hosts/fonts
+    ../../modules/hosts/services/openssh
     ../../modules/comin
     (siteLib.mkK8sWorker {
       inherit pkgs lib config nixvirtLib sshKeys apiAdvertiseAddress caHash gateway;
@@ -98,11 +99,6 @@ in {
     tailscale = {
       enable = true;
       openFirewall = true;
-    };
-
-    openssh = {
-      enable = true;
-      settings.PasswordAuthentication = false;
     };
 
     vscode-server = {
