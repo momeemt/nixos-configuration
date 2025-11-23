@@ -4,6 +4,24 @@ on:
     branches:
       - develop
       - main
+    paths-ignore:
+      - .devcontainer
+      - .github/CODEOWNERS
+      - .github/dependabot.yml
+      - .github/FUNDING.yml
+      - .github/README.md
+      - .github/README_JA.md
+      - docs/*
+      - k8s/*
+      - terraform/*
+      - .clocignore
+      - .gitattributes
+      - .gitignore
+      - .gitmodules
+      - AGENTS.md
+      - Justfile
+      - LICENSE
+      - VERSION
   workflow_dispatch:
 env:
   REGISTRY: ghcr.io
