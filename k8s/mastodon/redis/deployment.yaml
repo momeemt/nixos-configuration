@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Development
+kind: Deployment
 metadata:
   name: mastodon-redis
   namespace: mastodon
