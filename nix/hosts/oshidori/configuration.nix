@@ -6,6 +6,7 @@
   imports = [
     ../../modules/hosts/fonts
     ../../modules/hosts/services/openssh
+    ../../modules/hosts/services/resolved
     ../../modules/comin
   ];
 
@@ -70,14 +71,6 @@
   };
 
   services = {
-    resolved = {
-      enable = true;
-      dnssec = "true";
-      domains = ["~."];
-      fallbackDns = ["1.1.1.1" "8.8.8.8" "8.8.4.4"];
-      dnsovertls = "true";
-    };
-
     xserver = {
       enable = true;
       displayManager.gdm = {

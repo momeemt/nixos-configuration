@@ -18,6 +18,7 @@ in {
     ../../modules/hosts/fonts
     ../../modules/comin
     ../../modules/hosts/services/openssh
+    ../../modules/hosts/services/resolved
     ../../modules/hosts/services/xrdp
     ../../modules/hosts/services/xserver
     (siteLib.mkK8sMaster {
@@ -116,14 +117,6 @@ in {
   };
 
   services = {
-    resolved = {
-      enable = true;
-      dnssec = "true";
-      domains = ["~."];
-      fallbackDns = ["1.1.1.1" "8.8.8.8" "8.8.4.4"];
-      dnsovertls = "true";
-    };
-
     cloudflared = {
       enable = true;
       tunnels = {
