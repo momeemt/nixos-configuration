@@ -27,6 +27,7 @@
         [
           sops
           nodejs_24
+          kubectl
         ]
         ++ (import ../../terraform/terraform.nix {pkgs = pkgs-master;});
     };

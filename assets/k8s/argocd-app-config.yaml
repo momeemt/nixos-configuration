@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: nixos-configuration-k8s
+  name: config-k8s
   namespace: argocd
 spec:
   project: default
