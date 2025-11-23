@@ -33,7 +33,7 @@
   spotify = pkgs.brewCasks.spotify.overrideAttrs (oldAttrs: {
     src = pkgs.fetchurl {
       url = lib.lists.head oldAttrs.src.urls;
-      hash = "sha256-lei5QA9LHPPTcGrOeTV6rR161HsVJQpW24EMJcDdvHg=";
+      hash = "sha256-gMPLn/QMbbwrlorPRyH9GACqi4jmunfnnMc4AEvyIMU=";
     };
   });
   unity-hub = pkgs.brewCasks.unity-hub.overrideAttrs (oldAttrs: {
