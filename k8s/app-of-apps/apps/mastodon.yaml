@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mastodon
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/momeemt/config
+    targetRevision: develop
+    path: k8s/mastodon
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: mastodon
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

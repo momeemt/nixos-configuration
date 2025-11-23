@@ -1,17 +1,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: config-k8s
+  name: app-of-apps
   namespace: argocd
 spec:
   project: default
   source:
-    repoURL: https://github.com/momeemt/config.git
+    repoURL: https://github.com/momeemt/config
     targetRevision: develop
-    path: k8s
+    path: k8s/app-of-apps/apps
   destination:
     server: https://kubernetes.default.svc
-    namespace: default
+    namespace: argocd
   syncPolicy:
     automated:
       prune: true

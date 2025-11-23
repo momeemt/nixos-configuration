@@ -190,7 +190,7 @@ in {
           dir="${seedDir}"
           mkdir -p "$dir"
 
-          install -m644 ${../../../assets/k8s/argocd-app-nixos-configuration.yaml} "$dir/argocd-app-nixos-configuration.yaml"
+          install -m644 ${../../../k8s/app-of-apps/application.yaml} "$dir/application.yaml"
           install -m644 ${../../../assets/k8s/ca.crt} "$dir/ca.crt"
           install -m600 ${config.sops.secrets."k8s/ca.key".path} "$dir/ca.key"
           install -m600 ${config.sops.secrets.k8s-bootstrap-token.path} "$dir/token"
@@ -209,7 +209,7 @@ in {
             -o "${seedDir}/payload.iso" \
             "$dir/ca.crt" "$dir/ca.key" "$dir/token" \
             "$dir/k8s-master-bootstrap.sh" \
-            "$dir/argocd-app-nixos-configuration.yaml"
+            "$dir/application.yaml"
         '';
       };
 
