@@ -6,12 +6,9 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://charts.bitnami.com/bitnami
-    chart: nginx
-    targetRevision: 22.3.2
-    helm:
-      valueFiles:
-        - ../../helm/nginx/values.yaml
+    repoURL: https://github.com/momeemt/config
+    targetRevision: develop
+    path: k8s/nginx
   destination:
     server: https://kubernetes.default.svc
     namespace: nginx
