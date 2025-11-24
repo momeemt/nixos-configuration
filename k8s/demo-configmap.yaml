@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: demo-argocd
-  namespace: default
-data:
-  hello: "world-$(date +%s)"
