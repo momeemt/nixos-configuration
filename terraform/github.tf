@@ -1,5 +1,5 @@
 provider "github" {
-  token = local.github_token
+  token = local.github.token
 }
 
 resource "github_user_ssh_key" "ssh_momeemt_emu_git" {

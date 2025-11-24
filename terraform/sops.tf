@@ -5,7 +5,15 @@ data "sops_file" "secrets" {
 }
 
 locals {
-  cloudflare_api_token = data.sops_file.secrets.data["cloudflare_api_token"]
-  cloudflare_zone_id   = data.sops_file.secrets.data["cloudflare_zone_id"]
-  github_token         = data.sops_file.secrets.data["github_token"]
+  secrets = yamldecode(data.sops_file.secrets.raw)
+
+  cloudflare = {
+    api_token  = local.secrets.cloudflare.api_token
+    zone_id    = local.secrets.cloudflare.zone_id
+    account_id = local.secrets.cloudflare.account_id
+  }
+
+  github = {
+    token = local.secrets.github.token
+  }
 }
