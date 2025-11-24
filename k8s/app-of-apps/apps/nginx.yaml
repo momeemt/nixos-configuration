@@ -11,7 +11,7 @@ spec:
     path: k8s/nginx
   destination:
     server: https://kubernetes.default.svc
-    namespace: nginx
+    namespace: nginx-test
   syncPolicy:
     automated:
       prune: true
