@@ -28,6 +28,7 @@
           sops
           nodejs_24
           kubectl
+          kubernetes-helm
         ]
         ++ (import ../../terraform/terraform.nix {pkgs = pkgs-master;});
     };
