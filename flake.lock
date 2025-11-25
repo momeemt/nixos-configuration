@@ -574,6 +574,26 @@
         "type": "github"
       }
     },
+    "nur-packages": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1764085952,
+        "narHash": "sha256-8fyayFm0GW0/y8swy6jsDwk+0i6za3hRz5Kijv06DdQ=",
+        "owner": "momeemt",
+        "repo": "nur-packages",
+        "rev": "fb3791c6e95f9aea4b2aca7b2de615b28bd8b882",
+        "type": "github"
+      },
+      "original": {
+        "owner": "momeemt",
+        "repo": "nur-packages",
+        "type": "github"
+      }
+    },
     "nuschtosSearch": {
       "inputs": {
         "flake-utils": "flake-utils_2",
@@ -614,6 +634,7 @@
         "nixpkgs-darwin": "nixpkgs-darwin",
         "nixpkgs-master": "nixpkgs-master",
         "nixvim": "nixvim",
+        "nur-packages": "nur-packages",
         "sops-nix": "sops-nix",
         "systems": "systems_4",
         "tmux-nix": "tmux-nix",

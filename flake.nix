@@ -78,5 +78,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     just-flake.url = "github:juspay/just-flake";
+    nur-packages = {
+      url = "github:momeemt/nur-packages";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 }

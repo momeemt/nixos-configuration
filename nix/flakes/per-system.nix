@@ -29,6 +29,7 @@
           nodejs_24
           kubectl
           kubernetes-helm
+          inputs.nur-packages.legacyPackages.${system}.aicommit
         ]
         ++ (import ../../terraform/terraform.nix {pkgs = pkgs-master;});
     };
