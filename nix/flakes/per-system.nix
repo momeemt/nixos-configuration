@@ -1,38 +1,26 @@
 {inputs, ...}: {
+  imports = [
+    ./devShells.nix
+  ];
+
   perSystem = {
     pkgs,
     config,
     system,
     ...
-  }: let
-    pkgs-master = import inputs.nixpkgs-master {
-      inherit system;
-      config.allowUnfree = true;
-    };
-  in {
-    _module.args.pkgs = import inputs.nixpkgs {
-      inherit system;
-      config.allowUnfree = true;
+  }: {
+    _module.args = {
+      pkgs = import inputs.nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+      };
+      pkgs-master = import inputs.nixpkgs-master {
+        inherit system;
+        config.allowUnfree = true;
+      };
     };
 
     formatter = pkgs.alejandra;
-
-    devShells.default = pkgs.mkShell {
-      inputsFrom = [
-        config.treefmt.build.devShell
-        config.just-flake.outputs.devShell
-        config.pre-commit.devShell
-      ];
-      buildInputs = with pkgs;
-        [
-          sops
-          nodejs_24
-          kubectl
-          kubernetes-helm
-          inputs.nur-packages.legacyPackages.${system}.aicommit
-        ]
-        ++ (import ../../terraform/terraform.nix {pkgs = pkgs-master;});
-    };
 
     packages = {
       encrypt-secrets = pkgs.callPackage ../packages/encrypt-secrets {};
