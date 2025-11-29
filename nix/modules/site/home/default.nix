@@ -71,6 +71,7 @@ in {
           nodejs_24
           pkgs-master.codex
           pkgs-master.jupyter-all
+          obsidian
         ]
         ++ lib.optionals pkgs.stdenv.isDarwin [
           myPackages.quitapp

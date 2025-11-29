@@ -97,7 +97,6 @@ in
       notchnook
       notion
       obs
-      obsidian
       ollama-app
       readdle-spark
       slack
