@@ -22,11 +22,11 @@
     "brew-api": {
       "flake": false,
       "locked": {
-        "lastModified": 1764092958,
-        "narHash": "sha256-7IxRLv+hBRKuQLk2cI75F7YZrUikcudpgi7sRClt9Ug=",
+        "lastModified": 1764341349,
+        "narHash": "sha256-1PpkkrpmZ+TKn4gN4tBu0ktoiHE+r1aqux/oV06uuUk=",
         "owner": "BatteredBunny",
         "repo": "brew-api",
-        "rev": "b079d51a3f2433ebc84ca533c3597ff78ad06516",
+        "rev": "42754ed70ed09c942cf9de27c6d1022eab39a732",
         "type": "github"
       },
       "original": {
@@ -105,11 +105,11 @@
       },
       "locked": {
         "dir": "pkgs/firefox-addons",
-        "lastModified": 1764043459,
-        "narHash": "sha256-T46lJlIdk4kWVsTNF8uojhcJIFayOQiEhsi1qF7qMdM=",
+        "lastModified": 1764332086,
+        "narHash": "sha256-sQTS3T4nNU/he+X62q5aflqSLx2zs4A8/cx3QsLc0Vw=",
         "owner": "rycee",
         "repo": "nur-expressions",
-        "rev": "33cbc158defc7698f4c1b80173e0c968539da627",
+        "rev": "fdc5a0a8a7cf1eb4d134ee42f62c56f293781a0e",
         "type": "gitlab"
       },
       "original": {
@@ -459,11 +459,11 @@
     },
     "nixpkgs-darwin": {
       "locked": {
-        "lastModified": 1764018730,
-        "narHash": "sha256-ytszH039PHJ9HhUiH2i17ewZ+s8io9IdEBh9mtnTNQ0=",
+        "lastModified": 1764253187,
+        "narHash": "sha256-FW4pYiUOv148aN8y9lV/Lpa+pAIxpfW7I6BP3IjZzp8=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "48ac51dd5d116984766707fd5c5661477a053b00",
+        "rev": "111dabcd22bcfb2fcb34de647014f85ec5428a39",
         "type": "github"
       },
       "original": {
@@ -490,11 +490,11 @@
     },
     "nixpkgs-master": {
       "locked": {
-        "lastModified": 1764094006,
-        "narHash": "sha256-mWMyOs/wQQRZBGCp1K2XzCRfKmLAV4xlLm2a7N8QaSM=",
+        "lastModified": 1764342182,
+        "narHash": "sha256-lZcKlG3KzFLcEJuhvIZ5keA7K5vTc73ApQxVl83Ec0w=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "3abdb62fda3c23b1d4aa0214b40eb7ca213ad19a",
+        "rev": "69bc4bf3151b8baa5e1e2aa00725065b703c280d",
         "type": "github"
       },
       "original": {
@@ -581,11 +581,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1764094394,
-        "narHash": "sha256-Bvt4KrrhELGl7wejV8hZBg9Heqs5z7Q6tt9Ie6YltZI=",
+        "lastModified": 1764234168,
+        "narHash": "sha256-m7mS/g3EEhVvddcGeh6ygHukuyOcj71OgxkCOTvLr+k=",
         "owner": "momeemt",
         "repo": "nur-packages",
-        "rev": "87342aec6bf2532f14f50d89220564ef106787e6",
+        "rev": "3cee6a746719addc4064fac175305ebc68b0f2ff",
         "type": "github"
       },
       "original": {
