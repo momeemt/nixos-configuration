@@ -116,7 +116,7 @@ in {
           inputs.home-manager.lib.homeManagerConfiguration {
             inherit pkgs;
             modules = [
-              (_: {nixpkgs.overlays = [(import ../packages/overlay.nix)];})
+              (_: {nixpkgs.overlays = import ../overlays;})
               ../home/example
             ];
             extraSpecialArgs = {inherit inputs siteLib system;};
