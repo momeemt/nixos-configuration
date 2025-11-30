@@ -4,7 +4,6 @@
   ...
 }: {
   imports = [
-    inputs.nixvim.homeManagerModules.nixvim
     ../../profiles/nixvim
     inputs.tmux-nix.homeModules.tmux-nix
     ../../profiles/tmux-nix

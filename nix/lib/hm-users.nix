@@ -18,8 +18,11 @@ in {
     };
     backupFileExtension = "hm-bak";
     users = hmUsers;
-    sharedModules = [
-      inputs.mac-app-util.homeManagerModules.default
+    sharedModules = with inputs; [
+      mac-app-util.homeManagerModules.default
+      nixvim.homeManagerModules.nixvim
+      sops-nix.homeManagerModules.sops
+      ../modules
     ];
   };
 }

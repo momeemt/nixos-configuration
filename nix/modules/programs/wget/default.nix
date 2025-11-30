@@ -4,10 +4,10 @@
   pkgs,
   ...
 }: let
-  cfg = config.site.programs.wget;
+  cfg = config.programs.wget;
   inherit (lib) mkOption mkEnableOption mkIf types;
 in {
-  options.site.programs.wget = {
+  options.programs.wget = {
     enable = mkEnableOption "Enable wget and configure it with XDG-aware defaults.";
 
     package = mkOption {

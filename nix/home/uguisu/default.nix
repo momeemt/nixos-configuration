@@ -1,12 +1,9 @@
 {
   pkgs,
-  inputs,
   config,
   ...
 }: {
   imports = [
-    inputs.nixvim.homeManagerModules.nixvim
-    inputs.sops-nix.homeManagerModules.sops
     ../../profiles/nixvim
     ../../profiles/hm/accounts/calendar
     ../../profiles/hm/accounts/contact
@@ -22,7 +19,6 @@
     ../../profiles/hm/wakatime
     ../../profiles/site/home
     ../../profiles/site/programs/nimble
-    ../../profiles/site/programs/wget
   ];
 
   site = {
@@ -42,7 +38,6 @@
         enable = true;
         nimbleDir = "${config.xdg.configHome}/nimble/";
       };
-      wget.enable = true;
     };
   };
 
@@ -53,6 +48,8 @@
         signByDefault = true;
       };
     };
+
+    wget.enable = true;
 
     aerc = {
       enable = true;
