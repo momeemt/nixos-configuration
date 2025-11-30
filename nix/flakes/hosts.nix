@@ -3,7 +3,7 @@
   withSystem,
   ...
 }: let
-  Hosts = import ../lib/hosts.nix {inherit inputs;};
+  Hosts = import ./lib/hosts.nix {inherit inputs;};
   vscodeOverlay = _final: prev: let
     masterPkgs = import inputs.nixpkgs-master {
       inherit (prev) system config;
@@ -115,10 +115,12 @@ in {
         in
           inputs.home-manager.lib.homeManagerConfiguration {
             inherit pkgs;
-            modules = [
-              (_: {nixpkgs.overlays = import ../overlays;})
-              ../home/example
-            ];
+            modules =
+              [
+                (_: {nixpkgs.overlays = import ../overlays;})
+                ../home/example
+              ]
+              ++ (import ./lib/shared-modules.nix {inherit inputs;});
             extraSpecialArgs = {inherit inputs siteLib system;};
           });
     };

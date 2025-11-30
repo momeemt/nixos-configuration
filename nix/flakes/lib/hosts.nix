@@ -4,7 +4,7 @@
     [
       firefox-addons.overlays.default
     ]
-    ++ (import ../overlays);
+    ++ (import ../../overlays);
 in {
   mkNixos = {
     system,
