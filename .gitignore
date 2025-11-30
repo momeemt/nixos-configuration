@@ -4,3 +4,4 @@
 result
 just-flake.just
 .pre-commit-config.yaml
+.claude
