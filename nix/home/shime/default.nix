@@ -2,15 +2,15 @@
   imports = [
     inputs.nixvim.homeManagerModules.nixvim
     inputs.sops-nix.homeManagerModules.sops
-    ../../modules/nixvim
+    ../../profiles/nixvim
     inputs.tmux-nix.homeModules.tmux-nix
-    ../../modules/tmux-nix
-    ../../modules/hm/nix
-    ../../modules/hm/editorconfig
-    ../../modules/hm/programs/only-cli.nix
-    ../../modules/hm/sops
-    ../../modules/hm/wakatime
-    ../../modules/site/home
+    ../../profiles/tmux-nix
+    ../../profiles/hm/nix
+    ../../profiles/hm/editorconfig
+    ../../profiles/hm/programs/only-cli.nix
+    ../../profiles/hm/sops
+    ../../profiles/hm/wakatime
+    ../../profiles/site/home
   ];
 
   site.home.username = "momeemt";

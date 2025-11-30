@@ -5,13 +5,13 @@
   ...
 }: {
   imports = [
-    ../../modules/sops
-    ../../modules/hosts/fonts
-    ../../modules/comin
-    ../../modules/hosts/services/openssh
-    ../../modules/hosts/services/resolved
-    ../../modules/hosts/services/xrdp
-    ../../modules/hosts/services/xserver
+    ../../profiles/sops
+    ../../profiles/hosts/fonts
+    ../../profiles/comin
+    ../../profiles/hosts/services/openssh
+    ../../profiles/hosts/services/resolved
+    ../../profiles/hosts/services/xrdp
+    ../../profiles/hosts/services/xserver
     ./k8s
   ];
 

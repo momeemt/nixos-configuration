@@ -5,13 +5,13 @@
 }: {
   imports = [
     inputs.nixvim.homeManagerModules.nixvim
-    ../../modules/nixvim
+    ../../profiles/nixvim
     inputs.tmux-nix.homeModules.tmux-nix
-    ../../modules/tmux-nix
-    ../../modules/hm/nix
-    ../../modules/hm/editorconfig
-    ../../modules/hm/programs/only-cli.nix
-    ../../modules/site/home
+    ../../profiles/tmux-nix
+    ../../profiles/hm/nix
+    ../../profiles/hm/editorconfig
+    ../../profiles/hm/programs/only-cli.nix
+    ../../profiles/site/home
   ];
 
   nix.package = pkgs.nix;

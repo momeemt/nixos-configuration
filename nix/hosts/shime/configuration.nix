@@ -4,10 +4,10 @@
   ...
 }: {
   imports = [
-    ../../modules/sops
-    ../../modules/hosts/fonts
-    ../../modules/hosts/services/openssh
-    ../../modules/comin
+    ../../profiles/sops
+    ../../profiles/hosts/fonts
+    ../../profiles/hosts/services/openssh
+    ../../profiles/comin
     ./k8s
   ];
 

@@ -3,11 +3,11 @@
     ./dock.nix
     ./networking.nix
     ./wallpapers.nix
-    ../../modules/sops
-    ../../modules/hosts/fonts
-    ../../modules/hosts/services/aerospace
-    ../../modules/hosts/system/defaults
-    ../../modules/site/services/set-wallpapers
+    ../../profiles/sops
+    ../../profiles/hosts/fonts
+    ../../profiles/hosts/services/aerospace
+    ../../profiles/hosts/system/defaults
+    ../../profiles/site/services/set-wallpapers
   ];
 
   environment = {

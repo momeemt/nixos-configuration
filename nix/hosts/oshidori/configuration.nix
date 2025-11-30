@@ -4,10 +4,10 @@
   ...
 }: {
   imports = [
-    ../../modules/hosts/fonts
-    ../../modules/hosts/services/openssh
-    ../../modules/hosts/services/resolved
-    ../../modules/comin
+    ../../profiles/hosts/fonts
+    ../../profiles/hosts/services/openssh
+    ../../profiles/hosts/services/resolved
+    ../../profiles/comin
   ];
 
   nix = {

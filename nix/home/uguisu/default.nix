@@ -7,22 +7,22 @@
   imports = [
     inputs.nixvim.homeManagerModules.nixvim
     inputs.sops-nix.homeManagerModules.sops
-    ../../modules/nixvim
-    ../../modules/hm/accounts/calendar
-    ../../modules/hm/accounts/contact
-    ../../modules/hm/accounts/email
-    ../../modules/hm/editorconfig
-    ../../modules/hm/homebrew
-    ../../modules/hm/nix
-    ../../modules/hm/programs
-    ../../modules/hm/programs/ssh
-    ../../modules/hm/programs/tmux
-    ../../modules/hm/services
-    ../../modules/hm/sops
-    ../../modules/hm/wakatime
-    ../../modules/site/home
-    ../../modules/site/programs/nimble
-    ../../modules/site/programs/wget
+    ../../profiles/nixvim
+    ../../profiles/hm/accounts/calendar
+    ../../profiles/hm/accounts/contact
+    ../../profiles/hm/accounts/email
+    ../../profiles/hm/editorconfig
+    ../../profiles/hm/homebrew
+    ../../profiles/hm/nix
+    ../../profiles/hm/programs
+    ../../profiles/hm/programs/ssh
+    ../../profiles/hm/programs/tmux
+    ../../profiles/hm/services
+    ../../profiles/hm/sops
+    ../../profiles/hm/wakatime
+    ../../profiles/site/home
+    ../../profiles/site/programs/nimble
+    ../../profiles/site/programs/wget
   ];
 
   site = {

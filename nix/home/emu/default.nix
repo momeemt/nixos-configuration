@@ -6,18 +6,18 @@
   imports = [
     inputs.nixvim.homeManagerModules.nixvim
     inputs.sops-nix.homeManagerModules.sops
-    ../../modules/nixvim
+    ../../profiles/nixvim
     inputs.tmux-nix.homeModules.tmux-nix
-    ../../modules/tmux-nix
-    ../../modules/hm/nix
-    ../../modules/hm/editorconfig
-    ../../modules/hm/programs
-    ../../modules/hm/programs/ssh
-    ../../modules/hm/services
-    ../../modules/hm/sops
-    ../../modules/hm/wakatime
-    ../../modules/hm/wayland/windowManager/sway
-    ../../modules/site/home
+    ../../profiles/tmux-nix
+    ../../profiles/hm/nix
+    ../../profiles/hm/editorconfig
+    ../../profiles/hm/programs
+    ../../profiles/hm/programs/ssh
+    ../../profiles/hm/services
+    ../../profiles/hm/sops
+    ../../profiles/hm/wakatime
+    ../../profiles/hm/wayland/windowManager/sway
+    ../../profiles/site/home
   ];
 
   site.home = {
