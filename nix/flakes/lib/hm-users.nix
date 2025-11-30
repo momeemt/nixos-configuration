@@ -2,6 +2,7 @@
   users,
   siteLib,
   system,
+  extraSharedModules ? [],
 }: {config, ...}: let
   normalize = spec:
     if builtins.isPath spec || builtins.isString spec
@@ -18,6 +19,6 @@ in {
     };
     backupFileExtension = "hm-bak";
     users = hmUsers;
-    sharedModules = import ./shared-modules.nix {inherit inputs;};
+    sharedModules = (import ./shared-modules.nix {inherit inputs;}) ++ extraSharedModules;
   };
 }

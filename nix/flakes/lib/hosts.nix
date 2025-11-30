@@ -38,13 +38,20 @@ in {
   }:
     inputs.nix-darwin.lib.darwinSystem {
       inherit system;
-      specialArgs = {inherit inputs siteLib system;};
+      specialArgs = {
+        inherit inputs siteLib system;
+      };
       modules =
         [
           hostPath
           (_: {nixpkgs.overlays = overlays ++ localOverlays;})
           inputs.home-manager.darwinModules.home-manager
-          (hmUsers {inherit users siteLib system;})
+          (hmUsers {
+            inherit users siteLib system;
+            extraSharedModules = with inputs; [
+              mac-app-util.homeManagerModules.default
+            ];
+          })
           inputs.sops-nix.darwinModules.sops
           inputs.mac-app-util.darwinModules.default
         ]
