@@ -65,20 +65,20 @@ in {
           usbutils
           nim
           (lib.meta.hiPrio python314)
-          myPackages.ncp
           docker-client
           cloc
           nodejs_24
           pkgs-master.codex
           pkgs-master.jupyter-all
           obsidian
+          ncp
         ]
         ++ lib.optionals pkgs.stdenv.isDarwin [
-          myPackages.quitapp
-          myPackages.ok
-          myPackages.ng
-          myPackages.subscribe
-          myPackages.xdg-compliance-checker
+          quitapp
+          ok
+          ng
+          subscribe
+          xdg-compliance-checker
         ];
 
       linuxDesktopPackages = with pkgs; [

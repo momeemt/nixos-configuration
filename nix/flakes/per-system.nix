@@ -13,6 +13,7 @@
       pkgs = import inputs.nixpkgs {
         inherit system;
         config.allowUnfree = true;
+        overlays = import ../overlays;
       };
       pkgs-master = import inputs.nixpkgs-master {
         inherit system;
@@ -23,10 +24,6 @@
     formatter = pkgs.alejandra;
 
     packages = {
-      encrypt-secrets = pkgs.callPackage ../packages/encrypt-secrets {};
-      updatekeys-secrets = pkgs.callPackage ../packages/updatekeys-secrets {};
-      destroy-all-vm = pkgs.callPackage ../packages/destroy-all-vm {};
-      switch-config-branch = pkgs.callPackage ../packages/switch-config-branch {};
       treefmt = config.treefmt.build.wrapper;
     };
 

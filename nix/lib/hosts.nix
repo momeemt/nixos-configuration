@@ -1,9 +1,10 @@
 {inputs}: let
   hmUsers = import ./hm-users.nix {inherit inputs;};
-  localOverlays = with inputs; [
-    firefox-addons.overlays.default
-    (import ../packages/overlay.nix)
-  ];
+  localOverlays = with inputs;
+    [
+      firefox-addons.overlays.default
+    ]
+    ++ (import ../overlays);
 in {
   mkNixos = {
     system,

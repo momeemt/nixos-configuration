@@ -20,6 +20,10 @@
           kubectl
           kubernetes-helm
           inputs.nur-packages.legacyPackages.${system}.aicommit
+          encrypt-secrets
+          updatekeys-secrets
+          destroy-all-vm
+          switch-config-branch
         ]
         ++ (import ../../terraform/terraform.nix {pkgs = pkgs-master;});
     };
