@@ -10,7 +10,6 @@
     ../../profiles/hm/nix
     ../../profiles/hm/editorconfig
     ../../profiles/hm/programs/only-cli.nix
-    ../../profiles/site/home
   ];
 
   nix.package = pkgs.nix;

@@ -24,6 +24,7 @@ in {
           inputs.home-manager.nixosModules.home-manager
           (hmUsers {inherit users siteLib system;})
           inputs.sops-nix.nixosModules.sops
+          ../../modules/host
         ]
         ++ extraModules;
     };
@@ -54,6 +55,7 @@ in {
           })
           inputs.sops-nix.darwinModules.sops
           inputs.mac-app-util.darwinModules.default
+          ../../modules/host
         ]
         ++ extraModules;
     };

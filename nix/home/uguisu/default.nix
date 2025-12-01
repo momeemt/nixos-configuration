@@ -17,8 +17,6 @@
     ../../profiles/hm/services
     ../../profiles/hm/sops
     ../../profiles/hm/wakatime
-    ../../profiles/site/home
-    ../../profiles/site/programs/nimble
   ];
 
   site = {
@@ -38,6 +36,7 @@
         enable = true;
         nimbleDir = "${config.xdg.configHome}/nimble/";
       };
+      wget.enable = true;
     };
   };
 
@@ -48,9 +47,6 @@
         signByDefault = true;
       };
     };
-
-    wget.enable = true;
-
     aerc = {
       enable = true;
       extraConfig = {

@@ -15,7 +15,6 @@
     ../../profiles/hm/sops
     ../../profiles/hm/wakatime
     ../../profiles/hm/wayland/windowManager/sway
-    ../../profiles/site/home
   ];
 
   site.home = {

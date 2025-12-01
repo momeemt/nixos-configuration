@@ -8,7 +8,6 @@
     ../../profiles/hm/programs/only-cli.nix
     ../../profiles/hm/sops
     ../../profiles/hm/wakatime
-    ../../profiles/site/home
   ];
 
   site.home.username = "momeemt";

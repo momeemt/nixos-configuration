@@ -4,7 +4,6 @@
     ../../profiles/sops
     ../../profiles/hosts
     ../../profiles/hosts/services/aerospace
-    ../../profiles/site/services/set-wallpapers
   ];
 
   # Using DetermineSystems/nix-installer to install Nix

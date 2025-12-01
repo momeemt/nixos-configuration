@@ -1,0 +1,5 @@
+{
+  imports = [
+    ./set-wallpapers
+  ];
+}
