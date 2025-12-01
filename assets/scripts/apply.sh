@@ -21,7 +21,7 @@ echo "[apply.sh] NIX_FLAGS: ${NIX_FLAGS[*]}"
 case $HOST_NAME in
 uguisu)
   # see https://github.com/nix-community/home-manager/issues/8174
-  sudo rm -r "$HOME/Applications/Home Manager Apps/"
+  sudo rm -rf "$HOME/Applications/Home Manager Apps/"
   nix build \
     "$FLAKE_ROOT#darwinConfigurations.$HOST_NAME.system" \
     "${NIX_FLAGS[@]}"
