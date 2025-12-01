@@ -38,6 +38,12 @@
       };
       wget.enable = true;
     };
+
+    languages = {
+      python = {
+        enable = true;
+      };
+    };
   };
 
   programs = {

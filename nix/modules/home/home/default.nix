@@ -10,7 +10,7 @@
   inherit (lib) mkEnableOption mkOption types;
   cfg = config.site.home;
   h = config.home.homeDirectory;
-  inherit (config.xdg) dataHome stateHome configHome cacheHome;
+  inherit (config.xdg) dataHome configHome cacheHome;
   pkgs-master = import inputs.nixpkgs-master {inherit system;};
 in {
   options.site.home = {
@@ -65,7 +65,6 @@ in {
           todoist
           usbutils
           nim
-          (lib.meta.hiPrio python314)
           docker-client
           cloc
           nodejs_24
@@ -125,8 +124,6 @@ in {
           XDG_DATA_HOME = "${h}/.local/share";
           XDG_STATE_HOME = "${h}/.local/state";
           SATYROGRAPHOS_EXPERIMENTAL = "1";
-          PYTHONHISTFILE = "${stateHome}/python/history";
-          PYTHONSTARTUP = "${configHome}/python/pythonstartup";
           AZURE_CONFIG_DIR = "${configHome}/azure";
           NODE_REPL_HISTORY = "${dataHome}/node_repl_history";
           NPM_CONFIG_USERCONFIG = "${configHome}/npm/npmrc";
@@ -158,8 +155,6 @@ in {
           VSCODE_PORTABLE = "${dataHome}/vscode";
           STACK_ROOT = "${dataHome}/stack";
           GNUPGHOME = "${dataHome}/gnupg";
-          # https://matplotlib.org/stable/api/matplotlib_configuration_api.html#matplotlib.get_configdir
-          MPLCONFIGDIR = "${configHome}/matplotlib";
           # https://doc.rust-lang.org/cargo/reference/environment-variables.html
           CARGO_HOME = "${dataHome}/cargo";
           RUSTUP_HOME = "${dataHome}/rustup";
@@ -181,7 +176,6 @@ in {
 
     xdg.configFile = {
       "npm/npmrc".source = ./npmrc;
-      "python/pythonstartup".source = ./python-startup.py;
     };
   };
 }

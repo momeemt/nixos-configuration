@@ -1,6 +1,7 @@
 {
   imports = [
     ./home
+    ./languages
     ./programs
   ];
 }
