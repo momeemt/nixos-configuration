@@ -1,0 +1,39 @@
+{pkgs, ...}: {
+  system.defaults.dock = {
+    enable-spring-load-actions-on-all-items = false;
+    appswitcher-all-displays = true;
+    autohide = true;
+    autohide-delay = 0.0;
+    autohide-time-modifier = 1.0;
+    launchanim = true;
+    magnification = true;
+    largesize = 16;
+    mineffect = "genie";
+    minimize-to-application = false;
+    mouse-over-hilite-stack = false;
+    scroll-to-open = false;
+    slow-motion-allowed = false;
+    static-only = false;
+    tilesize = 48;
+    expose-animation-duration = 1.0;
+    expose-group-apps = false;
+    mru-spaces = true;
+    orientation = "bottom";
+    show-process-indicators = true;
+    show-recents = false;
+    showhidden = true;
+    showAppExposeGestureEnabled = false;
+    showDesktopGestureEnabled = false;
+    showLaunchpadGestureEnabled = false;
+    showMissionControlGestureEnabled = false;
+    persistent-apps = [
+      {app = "${pkgs.alacritty}/Applications/Alacritty.app";}
+    ];
+    persistent-others = [];
+    # disable wvous
+    wvous-bl-corner = 1;
+    wvous-br-corner = 1;
+    wvous-tl-corner = 1;
+    wvous-tr-corner = 1;
+  };
+}

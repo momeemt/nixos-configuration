@@ -1,4 +1,8 @@
 {
+  imports = [
+    ./dock
+  ];
+
   system.defaults = {
     ".GlobalPreferences" = {
       # Sets the mouse tracking speed.
