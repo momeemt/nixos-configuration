@@ -8,6 +8,7 @@
     ../../profiles/hosts/fonts
     ../../profiles/hosts/services/openssh
     ../../profiles/comin
+    ../../profiles/hosts/system
     ./k8s
   ];
 
@@ -107,6 +108,4 @@
     enable = true;
     extraPackages = [pkgs.mesa];
   };
-
-  system.stateVersion = "25.05";
 }

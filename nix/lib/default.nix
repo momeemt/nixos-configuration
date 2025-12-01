@@ -28,4 +28,5 @@ in {
     url = "github.com/momeemt/config";
     defaultBranch = "develop";
   };
+  stateVersion = "25.05";
 }

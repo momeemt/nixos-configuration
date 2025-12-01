@@ -12,6 +12,7 @@
     ../../profiles/hosts/services/resolved
     ../../profiles/hosts/services/xrdp
     ../../profiles/hosts/services/xserver
+    ../../profiles/hosts/system
     ./k8s
   ];
 
@@ -135,6 +136,4 @@
       connections."qemu:///system".pools = null;
     };
   };
-
-  system.stateVersion = "25.05";
 }

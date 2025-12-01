@@ -4,6 +4,7 @@
   pkgs,
   inputs,
   system,
+  siteLib,
   ...
 }: let
   inherit (lib) mkEnableOption mkOption types;
@@ -175,7 +176,7 @@ in {
         ++ cfg.extraSessionPath;
 
       packages = final;
-      stateVersion = "25.05";
+      inherit (siteLib) stateVersion;
     };
 
     xdg.configFile = {

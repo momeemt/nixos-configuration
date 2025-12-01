@@ -8,6 +8,7 @@
     ../../profiles/hosts/services/openssh
     ../../profiles/hosts/services/resolved
     ../../profiles/comin
+    ../../profiles/hosts/system
   ];
 
   nix = {
@@ -162,6 +163,4 @@
       pkgs.xdg-desktop-portal-gtk
     ];
   };
-
-  system.stateVersion = "25.05";
 }

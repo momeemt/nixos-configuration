@@ -8,6 +8,7 @@
     ../../profiles/hosts/services/aerospace
     ../../profiles/hosts/system/defaults
     ../../profiles/site/services/set-wallpapers
+    ../../profiles/hosts/system
   ];
 
   environment = {
@@ -47,7 +48,6 @@
   };
 
   system = {
-    stateVersion = 6;
     primaryUser = "momeemt";
     defaults = {
       NSGlobalDomain = {
