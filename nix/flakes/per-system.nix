@@ -1,8 +1,4 @@
 {inputs, ...}: {
-  imports = [
-    ./devShells.nix
-  ];
-
   perSystem = {
     pkgs,
     config,

@@ -1,17 +1,13 @@
 {
   outputs = {flake-parts, ...} @ inputs:
-    flake-parts.lib.mkFlake {inherit inputs;} ({...}: {
+    flake-parts.lib.mkFlake {inherit inputs;} {
       imports = with inputs; [
         treefmt-nix.flakeModule
         git-hooks-nix.flakeModule
         just-flake.flakeModule
-        ./nix/flakes/hosts.nix
-        ./nix/flakes/per-system.nix
-        ./nix/flakes/templates.nix
+        ./nix/flakes
       ];
-
-      systems = import inputs.systems;
-    });
+    };
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
