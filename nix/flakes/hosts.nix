@@ -6,7 +6,8 @@
   Hosts = import ./lib/hosts.nix {inherit inputs;};
   vscodeOverlay = _final: prev: let
     masterPkgs = import inputs.nixpkgs-master {
-      inherit (prev) system config;
+      inherit (prev) config;
+      inherit (prev.stdenv.hostPlatform) system;
     };
   in {
     inherit (masterPkgs) vscode vscode-with-extensions;
