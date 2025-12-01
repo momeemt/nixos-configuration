@@ -4,9 +4,14 @@
   siteLib,
   ...
 }: {
-  imports = lib.optionals siteLib.isDarwin [
-    ./defaults
-  ];
+  imports =
+    [
+      ./tools
+    ]
+    ++ lib.optionals siteLib.isDarwin [
+      ./defaults
+      ./startup
+    ];
 
   system = {
     stateVersion =
