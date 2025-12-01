@@ -2,6 +2,7 @@
   imports = [
     ./dock
     ./finder
+    ./loginwindow
   ];
 
   system.defaults = {
