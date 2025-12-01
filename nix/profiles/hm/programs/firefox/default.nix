@@ -18,9 +18,7 @@
       };
     };
 
-    profiles.momeemt = let
-      duck-duck-go-id = "ddg";
-    in {
+    profiles.momeemt = {
       id = 0;
       isDefault = true;
 
@@ -45,12 +43,14 @@
         # };
       };
 
-      search = {
+      search = let
+        google = "google";
+      in {
         force = true;
-        default = duck-duck-go-id;
-        privateDefault = duck-duck-go-id;
+        default = google;
+        privateDefault = google;
         order = [
-          duck-duck-go-id
+          google
           "nixpkgs-packages"
           "nixos-wiki"
           "github"
