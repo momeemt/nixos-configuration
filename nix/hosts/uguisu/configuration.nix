@@ -6,6 +6,8 @@
     ../../profiles/hosts/services/aerospace
   ];
 
+  system.primaryUser = "momeemt";
+
   # Using DetermineSystems/nix-installer to install Nix
   nix.enable = false;
 
