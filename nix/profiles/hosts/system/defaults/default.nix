@@ -1,6 +1,7 @@
 {
   imports = [
     ./dock
+    ./finder
   ];
 
   system.defaults = {
