@@ -3,6 +3,7 @@
     ./dock
     ./finder
     ./loginwindow
+    ./NSGlobalDomain
   ];
 
   system.defaults = {

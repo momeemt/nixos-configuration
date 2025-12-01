@@ -28,13 +28,6 @@
 
   system = {
     primaryUser = "momeemt";
-    defaults = {
-      NSGlobalDomain = {
-        AppleShowAllExtensions = true;
-        AppleShowAllFiles = true;
-        AppleTemperatureUnit = "Celsius";
-      };
-    };
   };
 
   networking = {
