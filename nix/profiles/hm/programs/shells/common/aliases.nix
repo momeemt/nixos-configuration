@@ -19,9 +19,6 @@ in {
       cd = "z";
       cat = "bat";
       diff = "batdiff";
-      rg = "batgrep";
-      # it destroys command_not_found_*
-      # grep = "batgrep";
       man = "batman";
       watch = "batwatch";
       nix-collect-garbage = "nh clean all";
