@@ -4,5 +4,6 @@
     ./fonts
     ./networking
     ./system
+    ./time
   ];
 }

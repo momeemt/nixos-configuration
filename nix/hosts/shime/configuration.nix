@@ -30,8 +30,6 @@
     useXkbConfig = true;
   };
 
-  time.timeZone = "Asia/Tokyo";
-
   networking = {
     hostName = "shime";
     useNetworkd = true;

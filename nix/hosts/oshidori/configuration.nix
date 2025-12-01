@@ -27,8 +27,6 @@
     };
   };
 
-  time.timeZone = "Asia/Tokyo";
-
   networking = {
     hostName = "oshidori";
     networkmanager.enable = false;
