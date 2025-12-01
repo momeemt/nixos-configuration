@@ -26,10 +26,6 @@
     shell = pkgs.zsh;
   };
 
-  system = {
-    primaryUser = "momeemt";
-  };
-
   networking = {
     computerName = "uguisu";
     hostName = "uguisu";
