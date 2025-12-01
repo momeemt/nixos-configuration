@@ -43,15 +43,7 @@
   networking = {
     hostName = "shime";
     useNetworkd = true;
-    firewall = {
-      enable = true;
-      trustedInterfaces = ["tailscale0"];
-    };
-    nameservers = [
-      "1.1.1.1"
-      "8.8.8.8"
-      "8.8.4.4"
-    ];
+    firewall.trustedInterfaces = ["tailscale0"];
     interfaces = {
       enp4s0.useDHCP = false;
       br0.useDHCP = true;

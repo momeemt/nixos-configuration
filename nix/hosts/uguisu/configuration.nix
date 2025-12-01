@@ -1,6 +1,5 @@
 {pkgs, ...}: {
   imports = [
-    ./networking.nix
     ./wallpapers.nix
     ../../profiles/sops
     ../../profiles/hosts/fonts
@@ -54,5 +53,11 @@
         AppleTemperatureUnit = "Celsius";
       };
     };
+  };
+
+  networking = {
+    computerName = "uguisu";
+    hostName = "uguisu";
+    localHostName = "uguisu";
   };
 }

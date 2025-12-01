@@ -41,17 +41,7 @@
     hostName = "oshidori";
     networkmanager.enable = false;
     wireless.enable = true;
-
-    firewall = {
-      enable = true;
-      trustedInterfaces = ["tailscale0"];
-    };
-
-    nameservers = [
-      "1.1.1.1"
-      "8.8.8.8"
-      "8.8.4.4"
-    ];
+    firewall.trustedInterfaces = ["tailscale0"];
   };
 
   nixpkgs.config.allowUnfree = true;

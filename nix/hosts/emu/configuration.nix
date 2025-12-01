@@ -49,18 +49,6 @@
       address = siteLib.ip.defaultGateway;
       interface = "br0";
     };
-
-    firewall = {
-      enable = true;
-      allowedTCPPorts = [3389];
-      allowedUDPPorts = [3389];
-    };
-
-    nameservers = [
-      "1.1.1.1"
-      "8.8.8.8"
-      "8.8.4.4"
-    ];
   };
 
   nixpkgs.config.allowUnfree = true;
