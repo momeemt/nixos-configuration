@@ -2,6 +2,7 @@
   imports = [
     ./bat
     ./bottom
+    ./difftastic
     ./direnv
     ./docker-cli
     ./eza

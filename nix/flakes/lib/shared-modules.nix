@@ -1,6 +1,6 @@
 {inputs}:
 with inputs; [
-  nixvim.homeManagerModules.nixvim
+  nixvim.homeModules.nixvim
   sops-nix.homeManagerModules.sops
   ../../modules
 ]

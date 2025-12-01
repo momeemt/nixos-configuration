@@ -3,30 +3,32 @@
     nvim-tree = {
       enable = true;
       openOnSetup = true;
-      onAttach = {
-        __raw = ''
-          function(bufnr)
-            local api = require("nvim-tree.api")
-            api.config.mappings.default_on_attach(bufnr)
-            vim.keymap.set("n", "l", api.node.open.edit, {
-              desc = "nvim-tree: Edit or Open",
-              buffer = bufnr,
-              noremap = true,
-              silent = true,
-              nowait = true,
-            })
-          end
-        '';
-      };
-      git = {
-        ignore = false;
-      };
-      filters = {
-        custom = [
-          "^\\.git$"
-          "^node_modules"
-          "^.direnv"
-        ];
+      settings = {
+        git = {
+          ignore = false;
+        };
+        onAttach = {
+          __raw = ''
+            function(bufnr)
+              local api = require("nvim-tree.api")
+              api.config.mappings.default_on_attach(bufnr)
+              vim.keymap.set("n", "l", api.node.open.edit, {
+                desc = "nvim-tree: Edit or Open",
+                buffer = bufnr,
+                noremap = true,
+                silent = true,
+                nowait = true,
+              })
+            end
+          '';
+        };
+        filters = {
+          custom = [
+            "^\\.git$"
+            "^node_modules"
+            "^.direnv"
+          ];
+        };
       };
     };
   };

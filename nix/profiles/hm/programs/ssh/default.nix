@@ -22,7 +22,7 @@
 in {
   programs.ssh = {
     enable = true;
-    # enableDefaultConfig = true;
+    enableDefaultConfig = false;
 
     includes = [
       config.sops.secrets."ssh/masason.ssh".path
@@ -30,6 +30,18 @@ in {
 
     matchBlocks =
       {
+        "*" = {
+          forwardAgent = false;
+          serverAliveInterval = 0;
+          serverAliveCountMax = 3;
+          compression = false;
+          addKeysToAgent = "no";
+          hashKnownHosts = false;
+          userKnownHostsFile = "${sshHome}/known_hosts";
+          controlMaster = "no";
+          controlPath = "${sshHome}/master-%r@%n:%p";
+          controlPersist = "no";
+        };
         emu-cloudflared = sshMatchBlock {
           hostname = "emu.momee.mt";
           identityFile = "${sshHome}/nixos-configurations";
