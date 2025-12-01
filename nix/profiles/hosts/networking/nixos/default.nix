@@ -1,5 +1,5 @@
 let
-  networkingLib = import ../lib.nix {};
+  networkingLib = import ../lib.nix;
 in {
   networking = {
     inherit (networkingLib) nameservers;

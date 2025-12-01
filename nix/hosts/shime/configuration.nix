@@ -5,10 +5,9 @@
 }: {
   imports = [
     ../../profiles/sops
-    ../../profiles/hosts/fonts
+    ../../profiles/hosts
     ../../profiles/hosts/services/openssh
     ../../profiles/comin
-    ../../profiles/hosts/system
     ./k8s
   ];
 
@@ -19,13 +18,6 @@
         "flakes"
       ];
     };
-  };
-
-  environment = {
-    # https://nix-community.github.io/home-manager/options.xhtml#opt-programs.bash.enableCompletion
-    pathsToLink = [
-      "/share/bash-completion"
-    ];
   };
 
   boot.loader = {

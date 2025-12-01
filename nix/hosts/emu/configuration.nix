@@ -6,26 +6,18 @@
 }: {
   imports = [
     ../../profiles/sops
-    ../../profiles/hosts/fonts
     ../../profiles/comin
     ../../profiles/hosts/services/openssh
     ../../profiles/hosts/services/resolved
     ../../profiles/hosts/services/xrdp
     ../../profiles/hosts/services/xserver
-    ../../profiles/hosts/system
+    ../../profiles/hosts
     ./k8s
   ];
 
   boot.loader = {
     systemd-boot.enable = true;
     efi.canTouchEfiVariables = true;
-  };
-
-  environment = {
-    # https://nix-community.github.io/home-manager/options.xhtml#opt-programs.bash.enableCompletion
-    pathsToLink = [
-      "/share/bash-completion"
-    ];
   };
 
   networking = {
