@@ -7,7 +7,7 @@
         git = {
           ignore = false;
         };
-        onAttach = {
+        on_attach = {
           __raw = ''
             function(bufnr)
               local api = require("nvim-tree.api")
