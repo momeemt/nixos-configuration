@@ -36,7 +36,7 @@
 また、以下のOSに対する反映をサポートしています。
 
 - [macOS Tahoe](https://www.apple.com/jp/os/macos/)
-- [NixOS 25.05](https://nixos.org/download/)
+- [NixOS 25.11](https://nixos.org/download/)
 
 ### 初回の反映
 

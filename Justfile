@@ -11,3 +11,8 @@ apply:
 [doc("Generate .envrc for direnv")]
 env:
 	./assets/scripts/env.sh
+
+[doc("Update Nix/NixOS version")]
+update before after:
+  command rg -l --glob '!flake.lock' '{{before}}' | xargs sed -i -e 's/{{before}}/{{after}}/g'
+

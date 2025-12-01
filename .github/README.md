@@ -36,7 +36,7 @@ Please install Nix using one of the following methods:
 The following operating systems are supported:
 
 - [macOS Tahoe](https://www.apple.com/jp/os/macos/)
-- [NixOS 25.05](https://nixos.org/download/)
+- [NixOS 25.11](https://nixos.org/download/)
 
 ### First-time setup
 
