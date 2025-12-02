@@ -21,7 +21,6 @@
       "Notify for Spotify" = 1517312650;
       LINE = 539883307;
       Canva = 897446215;
-      XCode = 497799835;
     };
   };
 
