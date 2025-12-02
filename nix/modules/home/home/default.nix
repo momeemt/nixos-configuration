@@ -79,6 +79,7 @@ in {
           ng
           subscribe
           xdg-compliance-checker
+          mas
         ];
 
       linuxDesktopPackages = with pkgs; [
