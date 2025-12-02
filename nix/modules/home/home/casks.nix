@@ -9,7 +9,6 @@ with pkgs.brewCasks;
     angry-ip-scanner
     bitwarden
     brave-browser
-    canva
     chatgpt
     chatgpt-atlas
     discord

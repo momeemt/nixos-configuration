@@ -8,6 +8,20 @@
 
   system.primaryUser = "momeemt";
 
+  homebrew.masApps = {
+    Pages = 409201541;
+    Numbers = 409203825;
+    Keynote = 409183694;
+    Goodnotes = 1444383602;
+    Habitify = 1111447047;
+    Sorted = 1306893526;
+    Tailscale = 1475387142;
+    "Notify for Spotify" = 1517312650;
+    LINE = 539883307;
+    Canva = 897446215;
+    XCode = 497799835;
+  };
+
   # Using DetermineSystems/nix-installer to install Nix
   nix.enable = false;
 
