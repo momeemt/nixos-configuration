@@ -5,7 +5,6 @@
 }:
 with pkgs.brewCasks;
   lib.optionals pkgs.stdenv.isDarwin [
-    # adobe-creative-cloud
     angry-ip-scanner
     bitwarden
     brave-browser
@@ -53,7 +52,6 @@ with pkgs.brewCasks;
     slack
     spotify
     # synology-drive
-    # tailscale-app
     todoist-app
     # unity
     unity-hub
