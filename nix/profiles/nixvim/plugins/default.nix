@@ -8,5 +8,6 @@
     ./toggleterm
     ./treesitter
     ./wakatime
+    ./web-devicons
   ];
 }
