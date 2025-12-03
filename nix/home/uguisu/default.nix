@@ -19,6 +19,9 @@
     ../../profiles/hm/wakatime
   ];
 
+  # see https://github.com/nix-community/home-manager/issues/8174
+  targets.darwin.copyApps.enableChecks = false;
+
   site = {
     home = {
       username = "momeemt";
