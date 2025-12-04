@@ -20,13 +20,13 @@ echo "[apply.sh] NIX_FLAGS: ${NIX_FLAGS[*]}"
 
 case $HOST_NAME in
 uguisu)
-  # see https://github.com/nix-community/home-manager/issues/8174
-  # sudo rm -rf "$HOME/Applications/Home Manager Apps/"
-  nix build \
-    "$FLAKE_ROOT#darwinConfigurations.$HOST_NAME.system" \
-    "${NIX_FLAGS[@]}"
-  sudo ./result/sw/bin/darwin-rebuild switch \
-    --flake "$FLAKE_ROOT#${HOST_NAME}"
+  if command -v darwin-rebuild >/dev/null 2>&1; then
+    sudo darwin-rebuild switch --flake "$FLAKE_ROOT#$HOST_NAME"
+  else
+    sudo nix run "nix-darwin/master#darwin-rebuild" -- \
+      switch --flake "$FLAKE_ROOT#$HOST_NAME" \
+      "${NIX_FLAGS[@]}"
+  fi
   ;;
 emu | oshidori | shime)
   sudo nixos-rebuild switch \
