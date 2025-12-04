@@ -6,6 +6,7 @@
     ./lsp
     ./lualine
     ./nvim-autopairs
+    ./nvim-surround
     ./telescope
     ./toggleterm
     ./treesitter
