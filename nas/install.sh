@@ -1,3 +1,3 @@
 #!/bin/sh
 
-ln -sf "$(pwd)/ssh/config" "$HOME/.ssh/config"
+ln -sf "$HOME/config/nas/ssh/config" "$HOME/.ssh/config"
