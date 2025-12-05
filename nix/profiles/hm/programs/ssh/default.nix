@@ -98,6 +98,11 @@ in {
           user = "git";
           identityFile = "${sshHome}/git";
         };
+        kitsutsuki = sshMatchBlock {
+          hostname = siteLib.ip.kitsutsuki;
+          user = "momeemt";
+          identityFile = "${sshHome}/keys/kitsutsuki";
+        };
       }
       // builtins.listToAttrs (
         map (name: {
