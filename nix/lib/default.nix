@@ -14,13 +14,13 @@
   images = import ./images.nix {inherit pkgs;};
   publicKeys = import ./publicKeys.nix;
   ip = import ./ip.nix;
-  genCaHash = path:
-    import ./genCaHash.nix {
-      inherit pkgs;
-      caCertPath = path;
-    };
+  # genCaHash = path:
+  #   import ./genCaHash.nix {
+  #     inherit pkgs;
+  #     caCertPath = path;
+  #   };
 in {
-  inherit mkK8sMaster mkK8sWorker images publicKeys ip genCaHash;
+  inherit mkK8sMaster mkK8sWorker images publicKeys ip;
 
   isLinux = lib.hasInfix "linux" system;
   isDarwin = lib.hasInfix "darwin" system;
@@ -29,4 +29,5 @@ in {
     defaultBranch = "develop";
   };
   stateVersion = "25.11";
+  k8sCaCertHash = "32b10d3c2eee5440d1d0a884aedc15345daf44047f5e1e94cc0a80c23351b5bf";
 }

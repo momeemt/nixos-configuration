@@ -1,7 +1,8 @@
 {inputs, ...}: {
   perSystem = {
-    config,
     system,
+    config,
+    lib,
     ...
   }: {
     _module.args = {
@@ -16,10 +17,6 @@
       };
     };
 
-    packages = {
-      treefmt = config.treefmt.build.wrapper;
-    };
-
     just-flake.features = {
       treefmt.enable = true;
     };
@@ -27,8 +24,12 @@
     pre-commit = {
       check.enable = true;
       settings = {
+        src = ./.;
         hooks = {
-          treefmt.enable = true;
+          treefmt = {
+            enable = true;
+            entry = lib.getExe config.treefmt.build.wrapper;
+          };
         };
       };
     };

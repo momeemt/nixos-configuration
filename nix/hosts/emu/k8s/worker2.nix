@@ -21,5 +21,5 @@ in
     sshKeys = siteLib.publicKeys;
     apiAdvertiseAddress = siteLib.ip.kube-master;
     gateway = siteLib.ip.defaultGateway;
-    caHash = siteLib.genCaHash ../../../../assets/k8s/ca.crt;
+    caHash = siteLib.k8sCaCertHash;
   }

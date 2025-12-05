@@ -7,6 +7,7 @@
   imports = [
     ../../profiles/sops
     ../../profiles/comin
+    ../../profiles/hosts/services/displayManager
     ../../profiles/hosts/services/openssh
     ../../profiles/hosts/services/resolved
     ../../profiles/hosts/services/xrdp
