@@ -1,0 +1,7 @@
+Host github.com
+	Port 22
+	IdentitiesOnly yes
+	User git
+	HostName github.com
+	IdentityFile ~/.ssh/keys/git
+	PasswordAuthentication no
