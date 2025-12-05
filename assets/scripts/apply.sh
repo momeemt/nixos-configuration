@@ -20,6 +20,7 @@ echo "[apply.sh] NIX_FLAGS: ${NIX_FLAGS[*]}"
 
 case $HOST_NAME in
 uguisu)
+  sudo rm -rf "$HOME/Applications/Home Manager Apps/"
   if command -v darwin-rebuild >/dev/null 2>&1; then
     sudo darwin-rebuild switch --flake "$FLAKE_ROOT#$HOST_NAME"
   else
