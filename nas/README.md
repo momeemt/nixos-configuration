@@ -15,10 +15,14 @@
 - Quickconnect を長らく使っていたが、外からのアクセススピードが悪すぎるため基本使わない
 - Tailscale をインストールして、Photos Mobile から写真や動画をアップロードできるかどうかを確認する
 
+## Synology Photos のインストール
+
+WebUI からインストールした
+
 ### Tailscale のインストール
 
 ```
-
+./install-tailscale.sh
 ```
 
 ### Git のインストール
