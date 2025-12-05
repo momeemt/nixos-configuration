@@ -1,6 +1,5 @@
 {inputs, ...}: {
   perSystem = {
-    pkgs,
     config,
     system,
     ...
@@ -17,14 +16,8 @@
       };
     };
 
-    formatter = pkgs.alejandra;
-
     packages = {
       treefmt = config.treefmt.build.wrapper;
-    };
-
-    checks = {
-      formatting = config.treefmt.build.check config.treefmt.projectRoot;
     };
 
     just-flake.features = {
@@ -38,39 +31,6 @@
           treefmt.enable = true;
         };
       };
-    };
-
-    treefmt = {
-      projectRootFile = "flake.nix";
-      programs = {
-        actionlint.enable = true;
-        alejandra.enable = true;
-        deadnix.enable = true;
-        mdformat.enable = true;
-        ruff-check.enable = true;
-        ruff-format.enable = true;
-        shellcheck.enable = true;
-        shfmt = {
-          enable = true;
-          includes = [
-            "*.sh"
-            "*.bash"
-          ];
-        };
-        statix.enable = true;
-        stylua.enable = true;
-        terraform.enable = true;
-        yamlfmt.enable = true;
-      };
-      settings.global.excludes = [
-        "LICENSE-*"
-        "secrets/*"
-        ".github/CODEOWNERS"
-        ".gitattributes"
-        "modules/tmux/tmux.conf"
-        "*.vim"
-        "Makefile"
-      ];
     };
   };
 }

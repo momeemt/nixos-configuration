@@ -5,5 +5,6 @@ _: {
     ./per-system.nix
     ./systems.nix
     ./templates.nix
+    ./treefmt.nix
   ];
 }
