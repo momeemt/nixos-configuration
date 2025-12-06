@@ -104,6 +104,34 @@ _: {
         yamlfmt = {
           enable = true;
           package = pkgs.yamlfmt;
+          settings = {
+            line_ending = "lf";
+            doublestar = true;
+            continue_on_error = false;
+            exclude = [
+              "secrets/**"
+            ];
+            gitignore_excludes = true;
+            formatter = {
+              type = "basic";
+              indent = 2;
+              include_document_start = true;
+              line_ending = "lf";
+              retain_line_breaks = false;
+              retain_line_breaks_single = false;
+              disallow_anchors = false;
+              max_line_length = 120;
+              scan_folded_as_literal = false;
+              indentless_arrays = false;
+              drop_merge_tag = true;
+              pad_line_comments = 1;
+              trim_trailing_whitespace = true;
+              eof_newline = true;
+              indent_root_array = false;
+              disable_alias_key_correction = false;
+              force_array_style = "block";
+            };
+          };
         };
 
         # Dockerfile
