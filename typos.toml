@@ -1,1 +1,7 @@
+[files]
+extend-exclude = [
+  "secrets/**",
+]
+
 [default.extend-words]
+
