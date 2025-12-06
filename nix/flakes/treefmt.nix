@@ -145,6 +145,35 @@ _: {
           package = pkgs.dockerfmt;
         };
 
+        # TOML
+        taplo = {
+          enable = true;
+          package = pkgs.taplo;
+          settings = {
+            formatting = {
+              align_entries = true;
+              align_comments = true;
+              array_trailing_comma = true;
+              array_auto_expand = true;
+              array_auto_collapse = true;
+              compact_arrays = false;
+              compact_inline_tables = false;
+              inline_table_expand = true;
+              compact_entries = false;
+              column_width = 80;
+              indent_tables = true;
+              indent_entries = true;
+              indent_string = "  ";
+              trailing_newline = true;
+              reorder_keys = true;
+              reorder_arrays = true;
+              reorder_inline_tables = true;
+              allowed_blank_lines = 2;
+              crlf = false;
+            };
+          };
+        };
+
         # Text
         autocorrect = {
           enable = true;

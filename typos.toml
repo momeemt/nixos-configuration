@@ -1,7 +1,4 @@
 [files]
-extend-exclude = [
-  "secrets/**",
-]
+  extend-exclude = [ "secrets/**" ]
 
 [default.extend-words]
-
