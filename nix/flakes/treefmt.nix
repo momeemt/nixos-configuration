@@ -13,6 +13,13 @@ _: {
           enable = true;
           package = pkgs.actionlint;
         };
+        pinact = {
+          enable = true;
+          package = pkgs.pinact;
+          priority = 0;
+          update = true;
+          verify = true;
+        };
 
         # Nix
         alejandra = {
