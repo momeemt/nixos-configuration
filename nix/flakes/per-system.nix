@@ -1,10 +1,5 @@
 {inputs, ...}: {
-  perSystem = {
-    system,
-    config,
-    lib,
-    ...
-  }: {
+  perSystem = {system, ...}: {
     _module.args = {
       pkgs = import inputs.nixpkgs {
         inherit system;
@@ -19,19 +14,6 @@
 
     just-flake.features = {
       treefmt.enable = true;
-    };
-
-    pre-commit = {
-      check.enable = true;
-      settings = {
-        src = ./.;
-        hooks = {
-          treefmt = {
-            enable = true;
-            entry = lib.getExe config.treefmt.build.wrapper;
-          };
-        };
-      };
     };
   };
 }
