@@ -35,6 +35,17 @@ _: {
         mdformat = {
           enable = true;
           package = pkgs.mdformat;
+          plugins = ps:
+            with ps; [
+              mdformat-footnote
+              mdformat-gfm
+              mdformat-gfm-alerts
+            ];
+          settings = {
+            end-of-line = "lf";
+            number = true;
+            wrap = 80;
+          };
         };
 
         # Python
