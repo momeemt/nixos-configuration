@@ -21,6 +21,10 @@ _: {
         #   update = true;
         #   verify = true;
         # };
+        zizmor = {
+          enable = true;
+          package = pkgs.zizmor;
+        };
 
         # Nix
         alejandra = {
