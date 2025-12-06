@@ -1,3 +1,4 @@
+---
 name: Image
 on:
   push:
@@ -124,7 +125,7 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - run: |
+      - run: |-
           set -euo pipefail
           echo "${IMAGE_TAGS}" | while IFS= read -r tag; do
             [ -z "$tag" ] && continue
