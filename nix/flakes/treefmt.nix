@@ -22,6 +22,9 @@ _: {
         deadnix = {
           enable = true;
           package = pkgs.deadnix;
+          no-lambda-arg = false;
+          no-lambda-pattern-names = false;
+          no-underscore = false;
         };
         statix = {
           enable = true;
