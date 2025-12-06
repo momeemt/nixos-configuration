@@ -138,6 +138,25 @@ _: {
             # textRules = {};
           };
         };
+        typos = {
+          enable = true;
+          package = pkgs.typos;
+          binary = false;
+          configFile = "typos.toml";
+          hidden = true;
+          isolated = true;
+          locale = "en";
+          noCheckFilenames = false;
+          noCheckFiles = false;
+          noIgnore = false;
+          noIgnoreDot = false;
+          noIgnoreGlobal = false;
+          noIgnoreParent = false;
+          noIgnoreVCS = false;
+          noUnicode = false;
+          sort = true;
+          threads = 0; # auto
+        };
       };
     };
   };
