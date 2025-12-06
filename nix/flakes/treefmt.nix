@@ -13,13 +13,14 @@ _: {
           enable = true;
           package = pkgs.actionlint;
         };
-        pinact = {
-          enable = true;
-          package = pkgs.pinact;
-          priority = 0;
-          update = true;
-          verify = true;
-        };
+        # FIXME: considering countermeasures for rate limiting on GitHub API
+        # pinact = {
+        #   enable = true;
+        #   package = pkgs.pinact;
+        #   priority = 0;
+        #   update = true;
+        #   verify = true;
+        # };
 
         # Nix
         alejandra = {
