@@ -11,9 +11,5 @@
         config.allowUnfree = true;
       };
     };
-
-    just-flake.features = {
-      treefmt.enable = true;
-    };
   };
 }

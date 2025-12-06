@@ -1,8 +1,9 @@
 _: {
   imports = [
+    ./context.nix
     ./devShells.nix
     ./hosts.nix
-    ./per-system.nix
+    ./just.nix
     ./pre-commit.nix
     ./systems.nix
     ./templates.nix
