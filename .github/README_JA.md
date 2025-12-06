@@ -2,7 +2,7 @@
 
 # ❄️ config
 
-<a href="./README.md">English</a>　|　日本語
+<a href="./README.md">English</a> | 日本語
 <br />
 <br />
 <img src="../assets/screenshot.png" style="width: 400" />
@@ -23,24 +23,24 @@
 ## 設定の反映
 
 > [!WARNING]
-> このconfigを試したい場合には、[使ってみる](#%E4%BD%BF%E3%81%A3%E3%81%A6%E3%81%BF%E3%82%8B)セクションで説明されている通り、Dockerコンテナで利用することをおすすめします。
+> この config を試したい場合には、[使ってみる](#%E4%BD%BF%E3%81%A3%E3%81%A6%E3%81%BF%E3%82%8B)セクションで説明されている通り、Docker コンテナで利用することをおすすめします。
 > これらの設定はユーザ名やパス、[クレデンシャル](../secrets)など[作者](https://github.com/momeemt)個人の情報に大きく依存しており、あなたの環境にそのまま適用することはできません。
-> ただし、ツールやシステムの設定はモジュールとして切り出されているため、十分にNixの知識がある場合にはこのリポジトリをフォークして、不要なファイルを削除して、設定項目を更新してから、自己責任で設定を反映することもできます。
+> ただし、ツールやシステムの設定はモジュールとして切り出されているため、十分に Nix の知識がある場合にはこのリポジトリをフォークして、不要なファイルを削除して、設定項目を更新してから、自己責任で設定を反映することもできます。
 
 設定の反映には、[Nix](https://github.com/NixOS/nix) が必要です。
-以下のいずれかの方法でNixをインストールしてください。
+以下のいずれかの方法で Nix をインストールしてください。
 
 - [nix-installer](https://github.com/DeterminateSystems/nix-installer) (推奨)
 - [Nix Download](https://nixos.org/download/)
 
-また、以下のOSに対する反映をサポートしています。
+また、以下の OS に対する反映をサポートしています。
 
 - [macOS Tahoe](https://www.apple.com/jp/os/macos/)
 - [NixOS 25.11](https://nixos.org/download/)
 
 ### 初回の反映
 
-まずこのリポジトリをcloneしてください。
+まずこのリポジトリを clone してください。
 
 ```sh
 git clone https://github.com/momeemt/config
@@ -58,10 +58,10 @@ ghq get momeemt/config
 ./assets/scripts/apply.sh
 ```
 
-### 2回目以降の反映
+### 2 回目以降の反映
 
 devShell に入ると、タスクランナーツールである [just](https://github.com/casey/just) が利用できるようになります。
-2回目以降は以下のコマンドを発行して設定を反映させてください。
+2 回目以降は以下のコマンドを発行して設定を反映させてください。
 
 ```sh
 just apply
@@ -70,23 +70,23 @@ just apply
 ## なぜ Nix/NixOS を選ぶのか
 
 ビルドシステムに対して同じ入力（ソースコード、ビルドマニフェスト）を与えた時、任意の環境でビルドを実行してもビット単位で同一の成果物が得られるようなビルドを、[再現性のあるビルド](https://reproducible-builds.org/)と言います。
-[Nix](https://nixos.org/) は再現性のあるビルドを実現するビルドシステムの1つです。
+[Nix](https://nixos.org/) は再現性のあるビルドを実現するビルドシステムの 1 つです。
 
 したがって、適切に固定された Nix の設定は、時間が経っても高い再現性で再構築できます。
 また、Nix で書かれたこのリポジトリの設定や他のユーザの設定を共有することも容易です。
 
-[home-manager](https://github.com/nix-community/home-manager) を利用すればユーザ空間の設定を、[NixOS](https://nixos.org/download) や [nix-darwin](https://github.com/nix-darwin/nix-darwin) を利用すれば、システム空間の設定をNixで記述して反映させることができます。
+[home-manager](https://github.com/nix-community/home-manager) を利用すればユーザ空間の設定を、[NixOS](https://nixos.org/download) や [nix-darwin](https://github.com/nix-darwin/nix-darwin) を利用すれば、システム空間の設定を Nix で記述して反映させることができます。
 
 ![Repository size/freshness map](https://repology.org/graph/map_repo_size_fresh.svg)
 
-Nix が提供する公式のパッケージリポジトリ [nixpkgs](https://github.com/NixOS/nixpkgs) からは、2025年11月現在は[12万件以上のパッケージ](https://search.nixos.org/packages)を利用することができます。
+Nix が提供する公式のパッケージリポジトリ [nixpkgs](https://github.com/NixOS/nixpkgs) からは、2025 年 11 月現在は[12 万件以上のパッケージ](https://search.nixos.org/packages)を利用することができます。
 システムの設定には利用せず、便利なパッケージマネージャとして利用するのも一つの手です。
 もし興味があれば以下のリソースを参照してください。
 
 - [Nix Tutorials](https://nix.dev/tutorials/) (英語)
 - [Nix Reference Manual](https://nix.dev/manual/nix/2.24/) (英語)
-- [Nix入門](https://zenn.dev/asa1984/books/nix-introduction) (日本語)
-- [Nix入門: ハンズオン編](https://zenn.dev/asa1984/books/nix-hands-on) (日本語)
+- [Nix 入門](https://zenn.dev/asa1984/books/nix-introduction) (日本語)
+- [Nix 入門: ハンズオン編](https://zenn.dev/asa1984/books/nix-hands-on) (日本語)
 
 ## 使ってみる
 
@@ -174,7 +174,7 @@ nix flake init --template "github:momeemt/config#rust"
 
 ## 参考文献
 
-私の設定は、以下のユーザのdotfilesや設定ファイルを参考に実装しました。
+私の設定は、以下のユーザの dotfiles や設定ファイルを参考に実装しました。
 
 - Nix configurations
   - [ryota-ka/dotfiles](https://github.com/ryota-ka/dotfiles)

@@ -81,6 +81,33 @@ _: {
           enable = true;
           package = pkgs.yamlfmt;
         };
+
+        # Text
+        autocorrect = {
+          enable = true;
+          package = pkgs.autocorrect;
+          threads = 0; # auto
+          settings = {
+            context = {
+              codeblock = "error";
+            };
+            rules = {
+              fullwidth = "off";
+              halfwidth-punctuation = "error";
+              halfwidth-word = "error";
+              no-space-fullwidth = "error";
+              space-backticks = "error";
+              space-bracket = "error";
+              space-dash = "error";
+              space-dollar = "error";
+              space-punctuation = "error";
+              space-word = "error";
+              spellcheck = "warning";
+            };
+            # spellcheck.words = [];
+            # textRules = {};
+          };
+        };
       };
     };
   };
