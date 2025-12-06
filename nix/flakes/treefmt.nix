@@ -63,6 +63,7 @@ _: {
         ruff-format = {
           enable = true;
           package = pkgs.ruff;
+          lineLength = 88;
         };
 
         # sh/bash
