@@ -74,6 +74,8 @@ _: {
         shfmt = {
           enable = true;
           package = pkgs.shfmt;
+          indent_size = 2;
+          simplify = false;
         };
 
         # Lua
