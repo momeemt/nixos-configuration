@@ -143,6 +143,9 @@ _: {
           package = pkgs.typos;
           binary = false;
           configFile = "typos.toml";
+          excludes = [
+            "secrets/**"
+          ];
           hidden = true;
           isolated = true;
           locale = "en";
