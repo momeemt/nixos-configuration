@@ -85,6 +85,12 @@ _: {
           package = pkgs.yamlfmt;
         };
 
+        # Dockerfile
+        dockerfmt = {
+          enable = true;
+          package = pkgs.dockerfmt;
+        };
+
         # Text
         autocorrect = {
           enable = true;
