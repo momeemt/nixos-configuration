@@ -82,5 +82,6 @@
     };
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     files.url = "github:mightyiam/files";
+    mcp-servers-nix.url = "github:natsukium/mcp-servers-nix";
   };
 }
