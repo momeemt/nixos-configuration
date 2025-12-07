@@ -1,5 +1,5 @@
 ---
-name: "flake.lock: update Nix dependencies"
+name: "Update Nix dependencies"
 on:
   workflow_dispatch:
   schedule:

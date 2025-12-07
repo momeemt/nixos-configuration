@@ -1,28 +1,36 @@
 ---
-name: Image
+name: "Build container images"
 on:
   push:
     branches:
       - develop
       - main
     paths-ignore:
-      - '.devcontainer/**'
+      - '.devcontainer/devcontainer.json'
       - '.github/CODEOWNERS'
       - '.github/dependabot.yml'
       - '.github/FUNDING.yml'
       - '.github/README.md'
       - '.github/README_JA.md'
+      - '.github/workflows/ci.yaml'
+      - '.github/workflows/update-flake-lock.yaml'
+      - 'assets/**'
       - 'docs/**'
       - 'k8s/**'
+      - 'nas/**'
+      - 'secrets/**'
       - 'terraform/**'
-      - '.clocignore'
       - '.gitattributes'
       - '.gitignore'
-      - '.gitmodules'
+      - '.sops.yaml'
       - 'AGENTS.md'
       - 'Justfile'
       - 'LICENSE'
       - 'VERSION'
+      - 'typos.toml'
+      - 'nix/hosts/**'
+      - 'nix/templates/**'
+      - 'nix/README*'
   workflow_dispatch:
 env:
   REGISTRY: ghcr.io
