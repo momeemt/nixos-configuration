@@ -5,6 +5,7 @@
         treefmt-nix.flakeModule
         git-hooks-nix.flakeModule
         just-flake.flakeModule
+        files.flakeModules.default
         ./nix/flakes
       ];
     };
@@ -80,5 +81,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+    files.url = "github:mightyiam/files";
   };
 }

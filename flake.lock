@@ -97,6 +97,21 @@
         "type": "github"
       }
     },
+    "files": {
+      "locked": {
+        "lastModified": 1762767848,
+        "narHash": "sha256-trF2WXzH57uSkA1zeI8FTz8tU6vPYrklkTjh/7DZy/M=",
+        "owner": "mightyiam",
+        "repo": "files",
+        "rev": "2d9d4937e94006ad8f165dfab9dff87cfab7eb2b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mightyiam",
+        "repo": "files",
+        "type": "github"
+      }
+    },
     "firefox-addons": {
       "inputs": {
         "nixpkgs": [
@@ -712,6 +727,7 @@
         "brew-api": "brew-api",
         "brew-nix": "brew-nix",
         "comin": "comin",
+        "files": "files",
         "firefox-addons": "firefox-addons",
         "flake-parts": "flake-parts",
         "git-hooks-nix": "git-hooks-nix",
