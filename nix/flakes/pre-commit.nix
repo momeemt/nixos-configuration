@@ -19,6 +19,10 @@ _: {
             enable = true;
             package = pkgs.action-validator;
           };
+          flake-checker = {
+            enable = true;
+            package = pkgs.flake-checker;
+          };
           treefmt = {
             enable = true;
             packageOverrides = {
