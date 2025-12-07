@@ -2,6 +2,7 @@
   perSystem = {
     pkgs,
     pkgs-master,
+    pkgs-25_05,
     config,
     system,
     ...
@@ -24,7 +25,10 @@
           switch-config-branch
         ];
       };
-      growth = import ../../assets/growth/devShell.nix {inherit pkgs inputsFrom;};
+      growth = import ../../assets/growth/devShell.nix {
+        pkgs = pkgs-25_05;
+        inherit inputsFrom;
+      };
       terraform = import ../../terraform/devShell.nix {
         pkgs = pkgs-master;
         inherit inputsFrom;
