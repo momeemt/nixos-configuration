@@ -5,27 +5,31 @@
     config,
     system,
     ...
-  }: {
-    devShells.default = pkgs.mkShell {
-      inputsFrom = with config; [
-        treefmt.build.devShell
-        just-flake.outputs.devShell
-        pre-commit.devShell
-      ];
-
-      buildInputs = with pkgs;
-        [
+  }: let
+    inputsFrom = with config; [
+      treefmt.build.devShell
+      just-flake.outputs.devShell
+      pre-commit.devShell
+    ];
+  in {
+    devShells = {
+      default = pkgs.mkShell {
+        inherit inputsFrom;
+        buildInputs = with pkgs; [
           sops
-          nodejs_24
-          kubectl
-          kubernetes-helm
           inputs.nur-packages.legacyPackages.${system}.aicommit
           encrypt-secrets
           updatekeys-secrets
           destroy-all-vm
           switch-config-branch
-        ]
-        ++ (import ../../terraform/terraform.nix {pkgs = pkgs-master;});
+        ];
+      };
+      growth = import ../../assets/growth/devShell.nix {inherit pkgs inputsFrom;};
+      terraform = import ../../terraform/devShell.nix {
+        pkgs = pkgs-master;
+        inherit inputsFrom;
+      };
+      k8s = import ../../k8s/devShell.nix {inherit pkgs inputsFrom;};
     };
   };
 }
