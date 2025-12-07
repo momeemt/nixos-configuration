@@ -2,6 +2,7 @@ _: {
   perSystem = {
     config,
     pkgs,
+    pkgs-master,
     lib,
     ...
   }: {
@@ -21,7 +22,7 @@ _: {
           };
           flake-checker = {
             enable = true;
-            package = pkgs.flake-checker;
+            package = pkgs-master.flake-checker;
           };
           treefmt = {
             enable = true;
