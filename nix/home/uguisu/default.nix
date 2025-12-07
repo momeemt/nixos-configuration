@@ -40,6 +40,21 @@
         nimbleDir = "${config.xdg.configHome}/nimble/";
       };
       wget.enable = true;
+      # karabiner-elements = {
+      #   enable = true;
+      #   settings.profiles = [
+      #     {
+      #       name = "Default";
+      #       selected = true;
+      #       simple_modifications = [
+      #         {
+      #           from = {key_code = "q";};
+      #           to = [{key_code = "p";}];
+      #         }
+      #       ];
+      #     }
+      #   ];
+      # };
     };
 
     languages = {

@@ -4,6 +4,7 @@
     ../../profiles/sops
     ../../profiles/hosts
     ../../profiles/hosts/services/aerospace
+    ../../profiles/hosts/services/karabiner-elements
   ];
 
   system.primaryUser = "momeemt";

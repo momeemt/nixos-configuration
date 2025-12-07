@@ -15,11 +15,12 @@ in {
       description = "Enable Karabiner-Elements (Darwin only) and manager its configuration.";
     };
 
-    package = mkOption {
-      type = types.package;
-      default = pkgs.karabiner-elements;
-      description = "Karabiner-Elements package to install (Darwin only).";
-    };
+    # package = mkOption {
+    #   type = types.package;
+    #   # see https://github.com/nix-darwin/nix-darwin/issues/1041
+    #   default = pkgs.karabiner-elements_14-13-0;
+    #   description = "Karabiner-Elements package to install (Darwin only).";
+    # };
 
     settings = mkOption {
       type = types.attrs;
@@ -32,7 +33,7 @@ in {
   };
 
   config = mkIf (cfg.enable && isDarwin) {
-    home.packages = [cfg.package];
+    # home.packages = [cfg.package];
     xdg.configFile."karabiner/karabiner.json".text = builtins.toJSON cfg.settings;
   };
 }

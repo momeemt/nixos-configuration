@@ -10,4 +10,5 @@ in {
   updatekeys-secrets = import ../packages/updatekeys-secrets {inherit pkgs;};
   xdg-compliance-checker = import ../packages/xdg-compliance-checker {inherit pkgs;};
   inherit (subscribePackages) ok ng subscribe;
+  karabiner-elements_14-13-0 = import ../packages/karabiner-elements_14-13-0 {inherit pkgs;};
 }
