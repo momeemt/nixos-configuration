@@ -2,18 +2,17 @@
   imports = [
     ./bat
     ./bottom
-    ./claude-code
     ./difftastic
     ./direnv
     ./docker-cli
     ./eza
-    ./gemini-cli
     ./gh
     ./git
     ./gpg
     ./home-manager
     ./jq
     ./less
+    ./llm
     ./man
     ./nh
     ./nix-index
