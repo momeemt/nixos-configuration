@@ -10,6 +10,7 @@ with pkgs.brewCasks;
     brave-browser
     chatgpt
     chatgpt-atlas
+    (lib.meta.lowPrio claude)
     discord
     docker-desktop
     element
