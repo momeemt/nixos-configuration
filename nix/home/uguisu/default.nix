@@ -10,7 +10,6 @@
     ../../profiles/hm/accounts/email
     ../../profiles/hm/editorconfig
     ../../profiles/hm/homebrew
-    ../../profiles/hm/nix
     ../../profiles/hm/programs
     ../../profiles/hm/programs/ssh
     ../../profiles/hm/programs/tmux

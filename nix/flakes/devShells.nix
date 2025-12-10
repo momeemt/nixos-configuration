@@ -1,7 +1,6 @@
 {inputs, ...}: {
   perSystem = {
     pkgs,
-    pkgs-master,
     pkgs-25_05,
     config,
     system,
@@ -30,10 +29,7 @@
         pkgs = pkgs-25_05;
         inherit inputsFrom;
       };
-      terraform = import ../../terraform/devShell.nix {
-        pkgs = pkgs-master;
-        inherit inputsFrom;
-      };
+      terraform = import ../../terraform/devShell.nix {inherit pkgs inputsFrom;};
       k8s = import ../../k8s/devShell.nix {inherit pkgs inputsFrom;};
     };
   };

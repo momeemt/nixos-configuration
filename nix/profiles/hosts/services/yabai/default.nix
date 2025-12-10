@@ -1,16 +1,10 @@
 # yabai module doesn't work now.
 # see https://github.com/koekeishiya/yabai/issues/2688
-{
-  inputs,
-  system,
-  ...
-}: let
-  pkgs-master = import inputs.nixpkgs-master {inherit system;};
-in {
+{pkgs, ...}: {
   services.yabai = {
     enable = true;
     enableScriptingAddition = false;
-    package = pkgs-master.yabai;
+    package = pkgs.yabai;
     config = {
       # TODO: reconsider these settings
       mouse_follows_focus = "off";

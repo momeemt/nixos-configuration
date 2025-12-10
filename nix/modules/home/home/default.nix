@@ -2,8 +2,6 @@
   config,
   lib,
   pkgs,
-  inputs,
-  system,
   siteLib,
   ...
 }: let
@@ -11,7 +9,6 @@
   cfg = config.site.home;
   h = config.home.homeDirectory;
   inherit (config.xdg) dataHome configHome cacheHome;
-  pkgs-master = import inputs.nixpkgs-master {inherit system;};
 in {
   options.site.home = {
     username = mkOption {
@@ -68,8 +65,7 @@ in {
           docker-client
           cloc
           nodejs_24
-          pkgs-master.codex
-          pkgs-master.jupyter-all
+          jupyter-all
           obsidian
           ncp
         ]
