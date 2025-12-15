@@ -36,6 +36,9 @@
           ];
           buildInputs = with pkgs; [
             typst
+            typstPackages.codelst
+            just
+            sops
           ];
         };
       };
