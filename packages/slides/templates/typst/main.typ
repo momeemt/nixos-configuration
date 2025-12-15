@@ -85,8 +85,7 @@
   drawBorder(width)
   body
   if page-number == true {
-    set align(right + bottom)
-    pad(bottom: 15mm, right: 15mm)[
+    place(right + bottom, dx: -15mm, dy: -15mm)[
       #text(size: 12pt, fill: master.colors.main)[
         #context counter(page).display() / #context counter(page).final().first()
       ]
@@ -103,7 +102,7 @@
   }
   let pad_width = 11mm
   slide(
-    pad(left: pad_width, right: pad_width, top: pad_width, bottom: pad_width)[
+    pad(left: pad_width, right: pad_width, top: pad_width)[
       #place(
         top + left,
         dx: 5mm,
@@ -114,7 +113,7 @@
           fill: master.colors.main,
         ),
       )
-      #pad(left: 15mm, top: 7.2mm)[
+      #pad(left: 15mm, top: 7.2mm, right: 20mm)[
         #heading(level: 2)[#title]
         #v(0mm)
         #text(size: 20pt, fill: master.colors.main)[
