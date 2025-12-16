@@ -9,4 +9,4 @@ fi
 
 local dir=$1
 command mkdir -p -- "$dir" || return $?
-command cd -- "$dir" || return $?
+builtin cd -- "$dir" || return $?

@@ -45,6 +45,12 @@ in {
       compinit -i
     '';
 
+    profileExtra = ''
+      if [ -x /opt/homebrew/bin/brew ]; then
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+      fi
+    '';
+
     initContent = ''
       typeset -U path
       bindkey -r "^[[A"
@@ -52,11 +58,7 @@ in {
       bindkey -r "^[[C"
       bindkey -r "^[[D"
 
-      autoload -Uz nr
-
-      if [ -x /opt/homebrew/bin/brew ]; then
-        eval "$(/opt/homebrew/bin/brew shellenv)"
-      fi
+      autoload -Uz nr mkcd
     '';
   };
 
