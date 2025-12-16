@@ -18,6 +18,7 @@
     # https://nix-community.github.io/home-manager/options.xhtml#opt-programs.bash.enableCompletion
     pathsToLink = [
       "/share/bash-completion"
+      "/share/zsh"
     ];
 
     shells = with pkgs; [

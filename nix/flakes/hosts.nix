@@ -1,12 +1,11 @@
 {
   inputs,
-  pkgs,
   withSystem,
   ...
 }: let
   Hosts = import ./lib/hosts.nix {inherit inputs;};
-  vscodeOverlay = _final: _prev: {
-    inherit (pkgs) vscode vscode-with-extensions;
+  vscodeOverlay = _final: prev: {
+    inherit (prev) vscode vscode-with-extensions;
   };
 in {
   flake = {
