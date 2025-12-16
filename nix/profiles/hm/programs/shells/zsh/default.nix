@@ -38,7 +38,7 @@
       fi
 
       unset __HM_SESS_VARS_SOURCED
-      source ${config.xdg.stateHome}/nix/profiles/home-manager/home-path/etc/profile.d/hm-session-vars.sh
+      source ${config.xdg.configHome}/zsh/.zshenv
     '';
   };
 }
