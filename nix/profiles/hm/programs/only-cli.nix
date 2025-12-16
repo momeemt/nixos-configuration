@@ -6,6 +6,7 @@
     ./direnv
     ./docker-cli
     ./eza
+    ./gcc
     ./gh
     ./git
     ./gpg
