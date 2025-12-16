@@ -1,20 +1,41 @@
-{config, ...}: {
+{
+  pkgs,
+  config,
+  lib,
+  ...
+} @ args: let
+  systemConfig = args.systemConfig or null;
+in {
+  imports = [
+    ./autosuggestion
+    ./history
+  ];
+
   programs.zsh = {
     enable = true;
-    autosuggestion.enable = true;
     enableCompletion = true;
-    syntaxHighlighting.enable = true;
+    enableVteIntegration = false;
+    package = pkgs.zsh;
+
+    # plugin managers
+    antidote.enable = false;
+    oh-my-zsh.enable = false;
+    prezto.enable = false;
+    zplug.enable = false;
+
+    autocd = false;
     defaultKeymap = "emacs";
     dotDir = "${config.xdg.configHome}/zsh";
+    syntaxHighlighting.enable = true;
 
-    history = {
-      expireDuplicatesFirst = true;
-      extended = true;
-      ignoreDups = true;
-      path = "${config.xdg.stateHome}/zsh/history";
-      save = 10000;
-      share = true;
-      size = 10000;
+    cdpath = [
+      "${config.xdg.dataHome}/ghq/github.com"
+      "${config.xdg.dataHome}/ghq/github.com/momeemt"
+    ];
+
+    dirHashes = {
+      github = "${config.xdg.dataHome}/ghq/github.com";
+      momeemt = "${config.xdg.dataHome}/ghq/github.com/momeemt";
     };
 
     completionInit = ''
@@ -36,9 +57,14 @@
       if [ -x /opt/homebrew/bin/brew ]; then
         eval "$(/opt/homebrew/bin/brew shellenv)"
       fi
+    '';
+  };
 
-      unset __HM_SESS_VARS_SOURCED
-      source ${config.xdg.configHome}/zsh/.zshenv
+  assertions = lib.optional (systemConfig != null) {
+    assertion = lib.elem "/share/zsh" (systemConfig.environment.pathsToLink or []);
+    message = ''
+      When `programs.zsh.enableCompletion = true`,
+      system `environment.pathsToLink` must include "/share/zsh".
     '';
   };
 }
