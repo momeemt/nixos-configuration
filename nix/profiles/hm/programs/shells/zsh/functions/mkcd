@@ -1,0 +1,12 @@
+#autoload
+emulate -L zsh
+setopt localoptions nounset pipefail err_return
+
+if (( $# != 1 )); then
+  print -u2 "usage: mkcd <dir>"
+  return 2
+fi
+
+local dir=$1
+command mkdir -p -- "$dir" || return $?
+command cd -- "$dir" || return $?
