@@ -3,7 +3,13 @@ _nr() {
   local -a apps
   local sys
   sys=$(nix eval --impure --raw --expr 'builtins.currentSystem' 2>/dev/null) || return
-  apps=(${(f)"$(nix flake show --json 2>/dev/null | jq -r ".packages[\"$sys\"] | keys[]?" 2>/dev/null)"})
+
+  if [[ -z ${_NR_CACHE_SYS-} || ${_NR_CACHE_SYS} != $sys || -z ${_NR_CACHE_APPS-} ]]; then
+    _NR_CACHE_SYS=$sys
+    _NR_CACHE_APPS="$(nix flake show --json 2>/dev/null | jq -r ".packages[\"$sys\"] | keys[]?" 2>/dev/null)"
+  fi
+
+  apps=(${(f)_NR_CACHE_APPS})
   _describe 'nix app' apps
 }
 
