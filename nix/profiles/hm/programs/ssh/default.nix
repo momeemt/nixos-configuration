@@ -88,7 +88,7 @@ in {
           user = "s2210897";
           identityFile = "${sshHome}/zengaku";
         };
-        oshidori = sshMatchBlock {
+        oshidori-tailscale = sshMatchBlock {
           hostname = "oshidori";
           user = "momeemt";
           identityFile = "${sshHome}/nixos-configurations";
@@ -100,6 +100,11 @@ in {
         };
         kitsutsuki = sshMatchBlock {
           hostname = siteLib.ip.kitsutsuki;
+          user = "momeemt";
+          identityFile = "${sshHome}/keys/kitsutsuki";
+        };
+        kitsutsuki-tailscale = sshMatchBlock {
+          hostname = "kitsutsuki";
           user = "momeemt";
           identityFile = "${sshHome}/keys/kitsutsuki";
         };
