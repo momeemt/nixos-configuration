@@ -12,10 +12,10 @@
   homebrew = {
     enable = true;
     masApps = {
-      Pages = 409201541;
-      Numbers = 409203825;
-      Keynote = 409183694;
-      Goodnotes = 1444383602;
+      # Pages = 409201541;
+      # Numbers = 409203825;
+      # Keynote = 409183694;
+      # Goodnotes = 1444383602;
       Habitify = 1111447047;
       Sorted = 1306893526;
       Tailscale = 1475387142;
