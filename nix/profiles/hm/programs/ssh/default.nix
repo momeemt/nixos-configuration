@@ -53,6 +53,11 @@ in {
           identityFile = "${sshHome}/nixos-configurations";
           user = "momeemt";
         };
+        emu-tailscale = sshMatchBlock {
+          hostname = "emu";
+          identityFile = "${sshHome}/nixos-configurations";
+          user = "momeemt";
+        };
         shime = sshMatchBlock {
           hostname = siteLib.ip.shime;
           identityFile = "${sshHome}/nixos-configurations";
