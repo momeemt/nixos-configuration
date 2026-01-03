@@ -13,7 +13,7 @@
     ../../profiles/hm/programs/ssh
     ../../profiles/hm/services
     ../../profiles/hm/sops
-    ../../profiles/hm/wakatime
+    # ../../profiles/hm/wakatime
     ../../profiles/hm/wayland/windowManager/sway
   ];
 
