@@ -10,6 +10,7 @@
     ../../profiles/hosts/services/displayManager
     ../../profiles/hosts/services/openssh
     ../../profiles/hosts/services/resolved
+    ../../profiles/hosts/services/tailscale
     ../../profiles/hosts/services/xrdp
     ../../profiles/hosts/services/xserver
     ../../profiles/hosts

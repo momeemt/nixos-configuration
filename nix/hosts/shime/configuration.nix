@@ -7,6 +7,7 @@
     ../../profiles/sops
     ../../profiles/hosts
     ../../profiles/hosts/services/openssh
+    ../../profiles/hosts/services/tailscale
     ../../profiles/comin
     ./k8s
   ];
@@ -33,7 +34,6 @@
   networking = {
     hostName = "shime";
     useNetworkd = true;
-    firewall.trustedInterfaces = ["tailscale0"];
     interfaces = {
       enp4s0.useDHCP = false;
       br0.useDHCP = true;
@@ -59,11 +59,6 @@
   };
 
   services = {
-    tailscale = {
-      enable = true;
-      openFirewall = true;
-    };
-
     vscode-server = {
       enable = true;
       enableFHS = true;

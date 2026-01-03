@@ -7,6 +7,7 @@
     ../../profiles/hosts
     ../../profiles/hosts/services/openssh
     ../../profiles/hosts/services/resolved
+    ../../profiles/hosts/services/tailscale
     ../../profiles/comin
   ];
 
@@ -31,7 +32,6 @@
     hostName = "oshidori";
     networkmanager.enable = false;
     wireless.enable = true;
-    firewall.trustedInterfaces = ["tailscale0"];
   };
 
   nixpkgs.config.allowUnfree = true;
@@ -66,11 +66,6 @@
       enable = true;
       pulse.enable = true;
       wireplumber.enable = true;
-    };
-
-    tailscale = {
-      enable = true;
-      openFirewall = true;
     };
 
     vscode-server = {
