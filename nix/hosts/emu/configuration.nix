@@ -46,7 +46,10 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  programs.zsh.enable = true;
+  programs = {
+    sway.enable = true;
+    zsh.enable = true;
+  };
 
   users.users.momeemt = {
     isNormalUser = true;
