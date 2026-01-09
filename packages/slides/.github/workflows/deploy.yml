@@ -1,0 +1,110 @@
+name: Build and Deploy Slides
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Typst
+        uses: typst-community/setup-typst@v4
+
+      - name: Build slides
+        run: |
+          mkdir -p dist
+          for dir in public/*/; do
+            if [ -f "${dir}main.typ" ]; then
+              name=$(basename "$dir")
+              echo "Building $name..."
+              typst compile "${dir}main.typ" "dist/${name}.pdf" --root .
+            fi
+          done
+
+      - name: Generate index page
+        run: |
+          cat > dist/index.html << 'EOF'
+          <!DOCTYPE html>
+          <html lang="ja">
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Slides</title>
+            <style>
+              * { box-sizing: border-box; }
+              body {
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 2rem;
+                background: #f5f5f5;
+              }
+              h1 { color: #333; }
+              .slides {
+                display: grid;
+                gap: 1rem;
+              }
+              .slide-card {
+                background: white;
+                padding: 1rem 1.5rem;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                text-decoration: none;
+                color: #333;
+                transition: transform 0.2s, box-shadow 0.2s;
+              }
+              .slide-card:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+              }
+              .slide-name { font-weight: 600; }
+            </style>
+          </head>
+          <body>
+            <h1>Slides</h1>
+            <div class="slides">
+          EOF
+
+          for pdf in dist/*.pdf; do
+            name=$(basename "$pdf" .pdf)
+            echo "    <a class=\"slide-card\" href=\"${name}.pdf\"><span class=\"slide-name\">${name}</span></a>" >> dist/index.html
+          done
+
+          cat >> dist/index.html << 'EOF'
+            </div>
+          </body>
+          </html>
+          EOF
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
