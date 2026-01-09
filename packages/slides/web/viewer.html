@@ -148,20 +148,19 @@
 
     let currentMode = null;
     let pageNum = 1;
-    let slideCanvas = null;
+
+    // Create slide canvas once
+    const slideCanvas = document.createElement('canvas');
+    const slideCtx = slideCanvas.getContext('2d');
 
     // Slide mode: single canvas, navigate with buttons
     async function renderSlidePage(num) {
-      if (!slideCanvas) {
-        slideCanvas = document.createElement('canvas');
-      }
-      const ctx = slideCanvas.getContext('2d');
       const page = await pdfDoc.getPage(num);
       const scale = 2;
       const viewport = page.getViewport({ scale });
       slideCanvas.height = viewport.height;
       slideCanvas.width = viewport.width;
-      await page.render({ canvasContext: ctx, viewport }).promise;
+      await page.render({ canvasContext: slideCtx, viewport }).promise;
       document.getElementById('page-num').textContent = num;
       document.getElementById('prev-btn').disabled = num <= 1;
       document.getElementById('next-btn').disabled = num >= pdfDoc.numPages;
@@ -181,10 +180,10 @@
         container.appendChild(canvas);
         page.render({ canvasContext: ctx, viewport });
       }
-      // Scroll to top
       window.scrollTo(0, 0);
     }
 
+    // Initialize slide mode
     async function initSlideMode() {
       container.innerHTML = '';
       container.appendChild(slideCanvas);
