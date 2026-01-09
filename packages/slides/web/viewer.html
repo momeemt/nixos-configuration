@@ -51,18 +51,42 @@
       font-size: 0.9rem;
     }
     .download-btn:hover { background: #5a8c5e; }
+
+    /* Slide mode (horizontal/desktop) */
     .viewer-container {
       flex: 1;
       overflow: auto;
       display: flex;
       justify-content: center;
+      align-items: center;
       padding: 1rem;
     }
-    #pdf-canvas {
+    .viewer-container canvas {
       max-width: 100%;
-      height: auto;
+      max-height: 100%;
       box-shadow: 0 4px 20px rgba(0,0,0,0.5);
     }
+
+    /* Scroll mode (vertical/mobile) */
+    body.scroll-mode .viewer-container {
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+    }
+    body.scroll-mode .viewer-container canvas {
+      max-height: none;
+      width: 100%;
+      max-width: 100%;
+    }
+    body.scroll-mode .nav-controls { display: none; }
+
+    .nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
     .loading {
       color: white;
       font-size: 1.2rem;
@@ -77,14 +101,15 @@
   <div class="toolbar">
     <a href="/">← Back to list</a>
     <div class="spacer"></div>
-    <button class="nav-btn" id="prev-btn">◀ Prev</button>
-    <span class="page-info"><span id="page-num">1</span> / <span id="page-count">-</span></span>
-    <button class="nav-btn" id="next-btn">Next ▶</button>
+    <div class="nav-controls">
+      <button class="nav-btn" id="prev-btn">◀ Prev</button>
+      <span class="page-info"><span id="page-num">1</span> / <span id="page-count">-</span></span>
+      <button class="nav-btn" id="next-btn">Next ▶</button>
+    </div>
     <div class="spacer"></div>
     <a class="download-btn" id="download-btn" download>Download PDF</a>
   </div>
-  <div class="viewer-container">
-    <canvas id="pdf-canvas"></canvas>
+  <div class="viewer-container" id="viewer-container">
   </div>
   <script type="module">
     const pdfjsLib = await import('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.0.379/pdf.min.mjs');
@@ -93,22 +118,43 @@
     const params = new URLSearchParams(location.search);
     const pdfFile = params.get('pdf');
     if (!pdfFile) {
-      document.querySelector('.viewer-container').innerHTML = '<div class="loading">No PDF specified</div>';
+      document.getElementById('viewer-container').innerHTML = '<div class="loading">No PDF specified</div>';
       throw new Error('No PDF');
     }
 
     document.title = pdfFile.replace('.pdf', '') + ' - Slide Viewer';
     document.getElementById('download-btn').href = '/' + pdfFile;
 
-    let pdfDoc = null, pageNum = 1, rendering = false, pageNumPending = null;
-    const canvas = document.getElementById('pdf-canvas');
-    const ctx = canvas.getContext('2d');
+    const pdfDoc = await pdfjsLib.getDocument({
+      url: '/' + pdfFile,
+      cMapUrl: 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.0.379/cmaps/',
+      cMapPacked: true,
+      standardFontDataUrl: 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.0.379/standard_fonts/',
+    }).promise;
 
-    async function renderPage(num) {
+    document.getElementById('page-count').textContent = pdfDoc.numPages;
+
+    const container = document.getElementById('viewer-container');
+    const isPortrait = () => window.innerHeight > window.innerWidth;
+
+    let currentMode = null;
+    let pageNum = 1;
+    let rendering = false;
+    let pageNumPending = null;
+
+    // Slide mode: single canvas, navigate with buttons
+    async function renderSlidePage(num) {
       rendering = true;
+      let canvas = container.querySelector('canvas');
+      if (!canvas) {
+        canvas = document.createElement('canvas');
+        container.innerHTML = '';
+        container.appendChild(canvas);
+      }
+      const ctx = canvas.getContext('2d');
       const page = await pdfDoc.getPage(num);
-      const baseScale = 2;
-      const viewport = page.getViewport({ scale: baseScale });
+      const scale = 2;
+      const viewport = page.getViewport({ scale });
       canvas.height = viewport.height;
       canvas.width = viewport.width;
       await page.render({ canvasContext: ctx, viewport }).promise;
@@ -117,31 +163,72 @@
       document.getElementById('prev-btn').disabled = num <= 1;
       document.getElementById('next-btn').disabled = num >= pdfDoc.numPages;
       if (pageNumPending !== null) {
-        renderPage(pageNumPending);
+        const pending = pageNumPending;
         pageNumPending = null;
+        renderSlidePage(pending);
       }
     }
 
     function queueRenderPage(num) {
       if (rendering) pageNumPending = num;
-      else renderPage(num);
+      else renderSlidePage(num);
     }
 
-    document.getElementById('prev-btn').onclick = () => { if (pageNum > 1) queueRenderPage(--pageNum); };
-    document.getElementById('next-btn').onclick = () => { if (pageNum < pdfDoc.numPages) queueRenderPage(++pageNum); };
+    // Scroll mode: render all pages vertically
+    async function renderScrollMode() {
+      container.innerHTML = '';
+      for (let i = 1; i <= pdfDoc.numPages; i++) {
+        const page = await pdfDoc.getPage(i);
+        const scale = 2;
+        const viewport = page.getViewport({ scale });
+        const canvas = document.createElement('canvas');
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+        const ctx = canvas.getContext('2d');
+        container.appendChild(canvas);
+        await page.render({ canvasContext: ctx, viewport }).promise;
+      }
+    }
+
+    async function updateMode() {
+      const newMode = isPortrait() ? 'scroll' : 'slide';
+      if (newMode === currentMode) return;
+      currentMode = newMode;
+
+      if (newMode === 'scroll') {
+        document.body.classList.add('scroll-mode');
+        await renderScrollMode();
+      } else {
+        document.body.classList.remove('scroll-mode');
+        await renderSlidePage(pageNum);
+      }
+    }
+
+    // Navigation
+    document.getElementById('prev-btn').onclick = () => {
+      if (pageNum > 1) { pageNum--; queueRenderPage(pageNum); }
+    };
+    document.getElementById('next-btn').onclick = () => {
+      if (pageNum < pdfDoc.numPages) { pageNum++; queueRenderPage(pageNum); }
+    };
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { if (pageNum > 1) queueRenderPage(--pageNum); }
-      else if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { if (pageNum < pdfDoc.numPages) queueRenderPage(++pageNum); }
+      if (currentMode !== 'slide') return;
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        if (pageNum > 1) { pageNum--; queueRenderPage(pageNum); }
+      } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+        if (pageNum < pdfDoc.numPages) { pageNum++; queueRenderPage(pageNum); }
+      }
     });
 
-    pdfDoc = await pdfjsLib.getDocument({
-      url: '/' + pdfFile,
-      cMapUrl: 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.0.379/cmaps/',
-      cMapPacked: true,
-      standardFontDataUrl: 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.0.379/standard_fonts/',
-    }).promise;
-    document.getElementById('page-count').textContent = pdfDoc.numPages;
-    renderPage(pageNum);
+    // Handle resize
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(updateMode, 150);
+    });
+
+    // Initial render
+    await updateMode();
   </script>
 </body>
 </html>

@@ -40,8 +40,8 @@ cat > "$DIST_DIR/index.html" << 'HEADER'
     .slide-thumbnail {
       width: 100%;
       aspect-ratio: 16 / 9;
-      object-fit: cover;
-      background: #e0e0e0;
+      object-fit: contain;
+      background: #2a2a2a;
       display: block;
     }
     .slide-info {
