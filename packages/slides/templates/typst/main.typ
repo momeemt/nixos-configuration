@@ -40,7 +40,7 @@
     )
 
     set text(
-      font: "Hiragino Kaku Gothic Pro",
+      font: ("Hiragino Kaku Gothic Pro", "Noto Sans CJK JP"),
       weight: 600,
       size: 24pt,
       lang: "ja",
