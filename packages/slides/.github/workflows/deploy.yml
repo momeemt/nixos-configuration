@@ -36,11 +36,8 @@ jobs:
             fi
           done
 
-      - name: Copy web assets
-        run: cp web/viewer.html dist/
-
-      - name: Generate index page
-        run: bash web/generate-index.sh dist
+      - name: Generate index and slide pages
+        run: python3 web/generate-index.py dist
 
       - name: Create CNAME for custom domain
         run: echo "slides.momee.mt" > dist/CNAME
