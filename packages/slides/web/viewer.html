@@ -149,18 +149,33 @@
     let currentMode = null;
     let pageNum = 1;
 
-    // Create slide canvas once
-    const slideCanvas = document.createElement('canvas');
-    const slideCtx = slideCanvas.getContext('2d');
+    // Double buffering: two canvases to avoid flicker
+    const canvasA = document.createElement('canvas');
+    const canvasB = document.createElement('canvas');
+    const ctxA = canvasA.getContext('2d');
+    const ctxB = canvasB.getContext('2d');
+    let activeCanvas = canvasA;
+    let backCanvas = canvasB;
+    let activeCtx = ctxA;
+    let backCtx = ctxB;
 
-    // Slide mode: single canvas, navigate with buttons
+    // Slide mode: render to back buffer, then swap
     async function renderSlidePage(num) {
       const page = await pdfDoc.getPage(num);
       const scale = 2;
       const viewport = page.getViewport({ scale });
-      slideCanvas.height = viewport.height;
-      slideCanvas.width = viewport.width;
-      await page.render({ canvasContext: slideCtx, viewport }).promise;
+      backCanvas.height = viewport.height;
+      backCanvas.width = viewport.width;
+      await page.render({ canvasContext: backCtx, viewport }).promise;
+
+      // Swap buffers
+      [activeCanvas, backCanvas] = [backCanvas, activeCanvas];
+      [activeCtx, backCtx] = [backCtx, activeCtx];
+
+      // Update DOM
+      container.innerHTML = '';
+      container.appendChild(activeCanvas);
+
       document.getElementById('page-num').textContent = num;
       document.getElementById('prev-btn').disabled = num <= 1;
       document.getElementById('next-btn').disabled = num >= pdfDoc.numPages;
@@ -185,8 +200,6 @@
 
     // Initialize slide mode
     async function initSlideMode() {
-      container.innerHTML = '';
-      container.appendChild(slideCanvas);
       await renderSlidePage(pageNum);
     }
 
