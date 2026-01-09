@@ -123,6 +123,7 @@
 
   let description-slide(
     title: none,
+    show-toc: true,
     description,
   ) = {
     if title == none {
@@ -142,7 +143,11 @@
           ),
         )
         #pad(left: 15mm, top: 7.2mm, right: 20mm)[
-          #heading(level: 2)[#title]
+          #if show-toc {
+            heading(level: 2)[#title]
+          } else {
+            text(size: 28pt, fill: master.colors.main)[#title]
+          }
           #v(0mm)
           #text(size: 20pt, fill: master.colors.main)[
             #description

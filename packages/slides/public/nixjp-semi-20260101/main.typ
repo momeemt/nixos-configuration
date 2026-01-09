@@ -6,19 +6,12 @@
 #show: t.styling
 
 #(t.title-slide)(
-//     title: text(tracking: 0pt,"Nixpkgs Reference Manual") +"
-// を読む①",
     title: "Nix日本語コミュニティゼミ
 の告知と発表募集",
     author: "Mutsuha Asada",
     affiliation: "@mutsuha_asada",
-    // date: "Nix日本語コミュニティ ゼミ 2026/01/04",
     date: "2026/01/01"
 )
-
-// #toc-slide()
-
-// #chapter-slide(title: "Nix日本語コミュニティゼミ")
 
 #(t.description-slide)(title: "勉強会をしたい")[
     - 過去に NixConf 輪読会という勉強会が Nix 日本語コミュニティで開催されていたが、現在は継続されていない
@@ -44,7 +37,7 @@
 
 #(t.description-slide)(title: "いつやるか")[
     - 一応、日曜日の21:00〜22:00を想定
-        - 初回は 2026/01/04 21:00〜22:0066
+        - 初回は 2026/01/04 21:00〜22:00
         - でも、終わった後に投票して最も人数が多い日に開催しても良いかも
     - 発表者募集中
         - しばらくは私は毎週資料を作って何かを話します
