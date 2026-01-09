@@ -175,7 +175,12 @@ jobs:
                 else if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { if (pageNum < pdfDoc.numPages) queueRenderPage(++pageNum); }
               });
 
-              pdfDoc = await pdfjsLib.getDocument(pdfFile).promise;
+              pdfDoc = await pdfjsLib.getDocument({
+                url: pdfFile,
+                cMapUrl: 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.0.379/cmaps/',
+                cMapPacked: true,
+                standardFontDataUrl: 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.0.379/standard_fonts/',
+              }).promise;
               document.getElementById('page-count').textContent = pdfDoc.numPages;
               renderPage(pageNum);
             </script>
