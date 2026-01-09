@@ -6,12 +6,13 @@
   <title>Slide Viewer</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { height: 100%; overflow: hidden; }
+    html, body { height: 100%; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background: #1a1a1a;
       display: flex;
       flex-direction: column;
+      overflow: hidden;
     }
     .toolbar {
       background: #2d2d2d;
@@ -55,7 +56,7 @@
     /* Slide mode (horizontal/desktop) */
     .viewer-container {
       flex: 1;
-      overflow: auto;
+      overflow: hidden;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -68,9 +69,15 @@
     }
 
     /* Scroll mode (vertical/mobile) */
+    body.scroll-mode {
+      overflow: auto;
+    }
     body.scroll-mode .viewer-container {
+      flex: none;
+      overflow: visible;
       flex-direction: column;
       align-items: center;
+      justify-content: flex-start;
       gap: 1rem;
       padding: 1rem;
     }
@@ -78,6 +85,7 @@
       max-height: none;
       width: 100%;
       max-width: 100%;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
     }
     body.scroll-mode .nav-controls { display: none; }
 
@@ -110,6 +118,7 @@
     <a class="download-btn" id="download-btn" download>Download PDF</a>
   </div>
   <div class="viewer-container" id="viewer-container">
+    <div class="loading">Loading...</div>
   </div>
   <script type="module">
     const pdfjsLib = await import('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.0.379/pdf.min.mjs');
@@ -139,39 +148,23 @@
 
     let currentMode = null;
     let pageNum = 1;
-    let rendering = false;
-    let pageNumPending = null;
+    let slideCanvas = null;
 
     // Slide mode: single canvas, navigate with buttons
     async function renderSlidePage(num) {
-      rendering = true;
-      let canvas = container.querySelector('canvas');
-      if (!canvas) {
-        canvas = document.createElement('canvas');
-        container.innerHTML = '';
-        container.appendChild(canvas);
+      if (!slideCanvas) {
+        slideCanvas = document.createElement('canvas');
       }
-      const ctx = canvas.getContext('2d');
+      const ctx = slideCanvas.getContext('2d');
       const page = await pdfDoc.getPage(num);
       const scale = 2;
       const viewport = page.getViewport({ scale });
-      canvas.height = viewport.height;
-      canvas.width = viewport.width;
+      slideCanvas.height = viewport.height;
+      slideCanvas.width = viewport.width;
       await page.render({ canvasContext: ctx, viewport }).promise;
-      rendering = false;
       document.getElementById('page-num').textContent = num;
       document.getElementById('prev-btn').disabled = num <= 1;
       document.getElementById('next-btn').disabled = num >= pdfDoc.numPages;
-      if (pageNumPending !== null) {
-        const pending = pageNumPending;
-        pageNumPending = null;
-        renderSlidePage(pending);
-      }
-    }
-
-    function queueRenderPage(num) {
-      if (rendering) pageNumPending = num;
-      else renderSlidePage(num);
     }
 
     // Scroll mode: render all pages vertically
@@ -186,8 +179,16 @@
         canvas.width = viewport.width;
         const ctx = canvas.getContext('2d');
         container.appendChild(canvas);
-        await page.render({ canvasContext: ctx, viewport }).promise;
+        page.render({ canvasContext: ctx, viewport });
       }
+      // Scroll to top
+      window.scrollTo(0, 0);
+    }
+
+    async function initSlideMode() {
+      container.innerHTML = '';
+      container.appendChild(slideCanvas);
+      await renderSlidePage(pageNum);
     }
 
     async function updateMode() {
@@ -200,23 +201,35 @@
         await renderScrollMode();
       } else {
         document.body.classList.remove('scroll-mode');
-        await renderSlidePage(pageNum);
+        await initSlideMode();
       }
     }
 
-    // Navigation
-    document.getElementById('prev-btn').onclick = () => {
-      if (pageNum > 1) { pageNum--; queueRenderPage(pageNum); }
-    };
-    document.getElementById('next-btn').onclick = () => {
-      if (pageNum < pdfDoc.numPages) { pageNum++; queueRenderPage(pageNum); }
-    };
+    // Navigation for slide mode
+    function prevPage() {
+      if (currentMode === 'slide' && pageNum > 1) {
+        pageNum--;
+        renderSlidePage(pageNum);
+      }
+    }
+
+    function nextPage() {
+      if (currentMode === 'slide' && pageNum < pdfDoc.numPages) {
+        pageNum++;
+        renderSlidePage(pageNum);
+      }
+    }
+
+    document.getElementById('prev-btn').addEventListener('click', prevPage);
+    document.getElementById('next-btn').addEventListener('click', nextPage);
+
     document.addEventListener('keydown', (e) => {
       if (currentMode !== 'slide') return;
       if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
-        if (pageNum > 1) { pageNum--; queueRenderPage(pageNum); }
+        prevPage();
       } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
-        if (pageNum < pdfDoc.numPages) { pageNum++; queueRenderPage(pageNum); }
+        e.preventDefault();
+        nextPage();
       }
     });
 
