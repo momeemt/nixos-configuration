@@ -48,10 +48,9 @@
 #(t.description-slide)(title: "今回紹介する関数", show-toc: false)[
   - `lib.attrsets.optionalAttrs`
   - `lib.attrsets.genAttrs`
-  - `lib.attrsets.mapAttrs` / `lib.attrsets.mapAttrs'`
-  - `lib.attrsets.recursiveUpdate` / `lib.attrsets.recursiveUpdateUntil`
-  - `lib.attrsets.getAttrFromPath` / `hasAttrByPath` / `setAttrByPath`
-  - `lib.attrsets.attrsToList` / `lib.attrsets.listToAttrs`
+  - `lib.attrsets.mapAttrs`
+  - `lib.attrsets.mapAttrs'`
+  - `lib.attrsets.recursiveUpdate`
 ]
 
 #(t.description-slide)(title: `lib.attrsets.optionalAttrs`)[
@@ -188,6 +187,7 @@ in
   - 今日紹介したのは以下の関数
     - `optionalAttrs`
     - `genAttrs`
-    - `mapAttrs` / `mapAttrs'`
+    - `mapAttrs`
+    - `mapAttrs'`
     - `recursiveUpdate`
 ]
