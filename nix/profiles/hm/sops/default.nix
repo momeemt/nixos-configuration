@@ -1,4 +1,9 @@
-{config, ...}: {
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
   sops = {
     age = {
       generateKey = true;
@@ -6,6 +11,12 @@
       sshKeyPaths = [];
     };
     defaultSopsFile = ../../../../secrets/secrets.enc.yml;
+
+    # macOS LaunchAgent needs PATH to find getconf and newfs_hfs
+    environment = lib.mkIf pkgs.stdenv.hostPlatform.isDarwin {
+      PATH = lib.mkForce "/usr/bin:/usr/sbin:/bin:/sbin";
+    };
+
     secrets = {
       google-me-momee-mt-client-id = {};
       google-me-momee-mt-client-secret = {};
