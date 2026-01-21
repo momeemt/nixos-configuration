@@ -115,6 +115,16 @@ in {
         };
       }
       // builtins.listToAttrs (
+        map (i: {
+          name = "syssec-build-server${i}";
+          value = sshMatchBlock {
+            hostname = "syssec-build-server${i}";
+            user = "momeemt";
+            identityFile = "${sshHome}/keys/syssec-build-server";
+          };
+        }) (map toString (builtins.genList (n: n + 1) 8))
+      )
+      // builtins.listToAttrs (
         map (name: {
           name = "coins-momeemt-${name}";
           value = coins-ce name;
