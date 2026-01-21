@@ -29,7 +29,7 @@ uguisu)
       "${NIX_FLAGS[@]}"
   fi
   ;;
-emu | oshidori | shime)
+emu | shime)
   sudo nixos-rebuild switch \
     --flake "$FLAKE_ROOT#$HOST_NAME" \
     "${NIX_FLAGS[@]}"

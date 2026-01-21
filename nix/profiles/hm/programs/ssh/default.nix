@@ -93,11 +93,6 @@ in {
           user = "s2210897";
           identityFile = "${sshHome}/zengaku";
         };
-        oshidori-tailscale = sshMatchBlock {
-          hostname = "oshidori";
-          user = "momeemt";
-          identityFile = "${sshHome}/nixos-configurations";
-        };
         "github.com" = sshMatchBlock {
           hostname = "github.com";
           user = "git";
