@@ -5,6 +5,7 @@
       keyFile = "/var/lib/sops-nix/key.txt";
       sshKeyPaths = [];
     };
+    gnupg.sshKeyPaths = [];
     defaultSopsFile = ../../../secrets/secrets.enc.yml;
     secrets = {
       momeemt-password = {
