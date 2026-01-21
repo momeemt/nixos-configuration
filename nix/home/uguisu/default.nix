@@ -1,6 +1,7 @@
 {
   pkgs,
   config,
+  lib,
   ...
 }: {
   imports = [
@@ -19,7 +20,8 @@
   ];
 
   # see https://github.com/nix-community/home-manager/issues/8174
-  targets.darwin.copyApps.enableChecks = false;
+  # Disable App Management checks to allow running in tmux (non-Aqua session)
+  targets.darwin.copyApps.enableChecks = lib.mkForce false;
 
   site = {
     home = {

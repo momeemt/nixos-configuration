@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  lib,
+  ...
+}: {
   imports = [
     ./wallpapers.nix
     ../../profiles/sops
@@ -6,6 +10,11 @@
     ../../profiles/hosts/services/aerospace
     ../../profiles/hosts/services/karabiner-elements
   ];
+
+  # Disable nix-darwin's app management check to avoid
+  # "permission denied when trying to update apps over SSH" error in tmux.
+  # The check fails because tmux sessions have launchctl managername = "Background" instead of "Aqua".
+  system.checks.text = lib.mkForce "";
 
   system.primaryUser = "momeemt";
 
