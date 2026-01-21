@@ -5,13 +5,13 @@ _final: prev: {
       google-chrome = prev.brewCasks.google-chrome.overrideAttrs (oldAttrs: {
         src = prev.fetchurl {
           url = prev.lib.lists.head oldAttrs.src.urls;
-          hash = "sha256-3tGFRcWoAu8EUMRpKWBfKRBsBuJtVl2mZurujkmiUcA=";
+          hash = "sha256-Kxt8MrW5ANGAID0L9B/dTA56iE1E+AFp3ym1wqKrqvE=";
         };
       });
       google-drive = prev.brewCasks.google-drive.overrideAttrs (oldAttrs: {
         src = prev.fetchurl {
           url = prev.lib.lists.head oldAttrs.src.urls;
-          hash = "sha256-zrFs+5BWqjSzvxrQFcR1NlGes8Mhp6OLdx6sjYFuZGY=";
+          hash = "sha256-fhEqR2cBPuTdbFxdeiIt96yJkVxpxLsuWpHCP9leF84=";
         };
         nativeBuildInputs = with prev; (oldAttrs.nativeBuildInputs or []) ++ [pbzx];
         unpackPhase = ''
