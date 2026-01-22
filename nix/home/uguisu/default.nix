@@ -9,6 +9,7 @@
     ../../profiles/hm/accounts/calendar
     ../../profiles/hm/accounts/contact
     ../../profiles/hm/accounts/email
+    ../../profiles/hm/claude-desktop
     ../../profiles/hm/editorconfig
     ../../profiles/hm/homebrew
     ../../profiles/hm/programs
