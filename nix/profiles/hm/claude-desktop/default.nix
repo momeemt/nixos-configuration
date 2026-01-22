@@ -19,11 +19,21 @@
 in {
   home.file."${claudeConfig}" = {
     source = inputs.mcp-servers-nix.lib.mkConfig pkgs {
+      programs = {
+        context7.enable = true;
+        time.enable = true;
+        memory.enable = true;
+        serena.enable = true;
+        github = {
+          enable = true;
+          envFile = config.sops.secrets."github/claude_desktop_token".path;
+        };
+        codex.enable = true;
+      };
       settings.servers = {
         mcp-obsidian = {
           command = "${mcpObsidianWrapper}";
           args = [];
-          env = {};
         };
       };
     };

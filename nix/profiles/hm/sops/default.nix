@@ -22,6 +22,7 @@
       google-me-momee-mt-client-secret = {};
       wakatime_api_key = {};
       "obsidian/api_key" = {};
+      "github/claude_desktop_token" = {};
 
       "ssh/masason.ssh" = {
         format = "binary";
