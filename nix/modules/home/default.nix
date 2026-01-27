@@ -3,5 +3,6 @@
     ./home
     ./languages
     ./programs
+    ./services
   ];
 }
