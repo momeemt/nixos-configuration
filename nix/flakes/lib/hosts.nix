@@ -3,6 +3,7 @@
   localOverlays = with inputs;
     [
       firefox-addons.overlays.default
+      llm-agents.overlays.default
     ]
     ++ (import ../../overlays);
 in {
