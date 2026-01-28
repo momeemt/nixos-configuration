@@ -51,6 +51,15 @@ jobs:
       - name: Fix /nix ownership
         if: runner.os == 'Linux'
         run: sudo chown root:root /nix
+      - name: Free disk space (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          sudo rm -rf /Applications/Xcode_14*.app
+          sudo rm -rf /Applications/Xcode_15*.app
+          sudo rm -rf ~/Library/Developer/CoreSimulator
+          sudo rm -rf /Library/Developer/CoreSimulator
+          sudo rm -rf ~/Library/Caches/Homebrew
+          df -h
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
           persist-credentials: false
