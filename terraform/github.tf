@@ -28,3 +28,9 @@ resource "github_user_gpg_key" "gpg_momeemt_uguisu" {
 resource "github_user_gpg_key" "gpg_momeemt_kitsutsuki" {
   armored_public_key = file("../assets/gpg/kitsutsuki/momeemt.asc")
 }
+
+resource "github_actions_secret" "sops_age_key" {
+  repository      = "config"
+  secret_name     = "SOPS_AGE_KEY"
+  plaintext_value = local.secrets.ci.sops_age_key
+}

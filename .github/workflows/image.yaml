@@ -1,36 +1,9 @@
 ---
-name: "Build container images"
+name: "Build and publish container images"
 on:
   push:
-    branches:
-      - develop
-      - main
-    paths-ignore:
-      - '.devcontainer/devcontainer.json'
-      - '.github/CODEOWNERS'
-      - '.github/dependabot.yml'
-      - '.github/FUNDING.yml'
-      - '.github/README.md'
-      - '.github/README_JA.md'
-      - '.github/workflows/ci.yaml'
-      - '.github/workflows/update-flake-lock.yaml'
-      - 'assets/**/*'
-      - 'docs/**/*'
-      - 'k8s/**/*'
-      - 'nas/**/*'
-      - 'secrets/**/*'
-      - 'terraform/**/*'
-      - '.gitattributes'
-      - '.gitignore'
-      - '.sops.yaml'
-      - 'AGENTS.md'
-      - 'Justfile'
-      - 'LICENSE'
-      - 'VERSION'
-      - 'typos.toml'
-      - 'nix/hosts/**/*'
-      - 'nix/templates/**/*'
-      - 'nix/README*'
+    tags:
+      - '[0-9][0-9].[0-9][0-9]'
   workflow_dispatch:
 env:
   REGISTRY: ghcr.io
@@ -43,13 +16,9 @@ jobs:
     outputs:
       IMAGE_TAGS: ${{ steps.tags.outputs.IMAGE_TAGS }}
     steps:
-      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
-        with:
-          persist-credentials: false
       - id: tags
         run: |
           set -euo pipefail
-          branch="${GITHUB_REF_NAME}"
 
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             TAG="_debug-${GITHUB_SHA}"
@@ -61,20 +30,11 @@ jobs:
             exit 0
           fi
 
-          if [ "$branch" = "main" ]; then
-            VERSION=$(cat VERSION)
-            {
-              echo "IMAGE_TAGS<<EOF"
-              echo "${REGISTRY}/${IMAGE_NAME}:${VERSION}"
-              echo "${REGISTRY}/${IMAGE_NAME}:latest"
-              echo "EOF"
-            } >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-
+          VERSION="${GITHUB_REF_NAME}"
           {
             echo "IMAGE_TAGS<<EOF"
-            echo "${REGISTRY}/${IMAGE_NAME}:unstable"
+            echo "${REGISTRY}/${IMAGE_NAME}:${VERSION}"
+            echo "${REGISTRY}/${IMAGE_NAME}:latest"
             echo "EOF"
           } >> "$GITHUB_OUTPUT"
   build-arch-images:

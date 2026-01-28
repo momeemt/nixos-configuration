@@ -1,0 +1,71 @@
+---
+name: "Create release PR"
+on:
+  schedule:
+    - cron: '0 0 28-31 * *'
+  workflow_dispatch:
+jobs:
+  create-release-pr:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Check if last day of month
+        id: check-date
+        if: github.event_name == 'schedule'
+        run: |
+          if [ "$(date -d tomorrow +%d)" != "01" ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        if: steps.check-date.outputs.skip != 'true'
+        with:
+          persist-credentials: false
+          ref: develop
+          fetch-depth: 0
+      - name: Check if already released
+        id: check-release
+        if: steps.check-date.outputs.skip != 'true'
+        run: |
+          set -euo pipefail
+          VERSION=$(date +%y.%m)
+          BRANCH="release/${VERSION}"
+          echo "VERSION=${VERSION}" >> "$GITHUB_OUTPUT"
+          echo "BRANCH=${BRANCH}" >> "$GITHUB_OUTPUT"
+
+          if git tag -l "${VERSION}" | grep -q .; then
+            echo "Tag ${VERSION} already exists, skipping"
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if git ls-remote --heads origin "${BRANCH}" | grep -q .; then
+            echo "Branch ${BRANCH} already exists, skipping"
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          PR_COUNT=$(gh pr list --head "${BRANCH}" --state all --json number --jq 'length')
+          if [ "${PR_COUNT}" -gt 0 ]; then
+            echo "PR from ${BRANCH} already exists, skipping"
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create release branch and PR
+        if: >-
+          steps.check-date.outputs.skip != 'true' && steps.check-release.outputs.skip != 'true'
+        run: |
+          set -euo pipefail
+          git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git checkout -b "${BRANCH}"
+          git push origin "${BRANCH}"
+          gh pr create \
+            --base main \
+            --head "${BRANCH}" \
+            --title "Release ${VERSION}" \
+            --body "Monthly release ${VERSION}"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: ${{ steps.check-release.outputs.BRANCH }}
+          VERSION: ${{ steps.check-release.outputs.VERSION }}
