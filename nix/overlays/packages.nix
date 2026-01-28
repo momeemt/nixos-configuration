@@ -11,4 +11,6 @@ in {
   xdg-compliance-checker = import ../packages/xdg-compliance-checker {inherit pkgs;};
   inherit (subscribePackages) ok ng subscribe;
   karabiner-elements_14-13-0 = import ../packages/karabiner-elements_14-13-0 {inherit pkgs;};
+  activitywatch-mcp-server = import ../packages/activitywatch-mcp-server {inherit pkgs;};
+  bluesky-mcp = import ../packages/bluesky-mcp {inherit pkgs;};
 }
