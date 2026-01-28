@@ -11,7 +11,7 @@ _final: prev: {
       google-drive = prev.brewCasks.google-drive.overrideAttrs (oldAttrs: {
         src = prev.fetchurl {
           url = prev.lib.lists.head oldAttrs.src.urls;
-          hash = "sha256-fhEqR2cBPuTdbFxdeiIt96yJkVxpxLsuWpHCP9leF84=";
+          hash = "sha256-D8thFrYtrRrmo3kcenKc3BFw1NstutT7cB76QbzQA1s=";
         };
         nativeBuildInputs = with prev; (oldAttrs.nativeBuildInputs or []) ++ [pbzx];
         unpackPhase = ''
