@@ -83,7 +83,7 @@ in {
 
     homeConfigurations = {
       example = let
-        system = builtins.currentSystem;
+        system = "x86_64-linux";
       in
         withSystem system ({pkgs, ...}: let
           siteLib = import ../lib {
