@@ -24,7 +24,7 @@ with pkgs.brewCasks;
     # }))
     httpie-desktop
     # karabiner-elements
-    keybase
+    # keybase # TODO: SSL certificate error in CI
     keycastr
     # (logitech-g-hub.overrideAttrs (oldAttrs: {
     #   src = pkgs.fetchurl {
