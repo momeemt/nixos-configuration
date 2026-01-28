@@ -58,7 +58,7 @@ in {
     };
 
     ciConfigurations.shime = inputs.self.nixosConfigurations.shime.extendModules {
-      modules = [{k8sWorkers.enable = false;}];
+      modules = [{k8sWorkers.enable = inputs.nixpkgs.lib.mkForce false;}];
     };
 
     darwinConfigurations = {
