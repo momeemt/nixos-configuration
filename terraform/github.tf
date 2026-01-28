@@ -33,12 +33,6 @@ data "github_repository" "config" {
   full_name = "momeemt/config"
 }
 
-resource "github_actions_secret" "sops_age_key" {
-  repository      = data.github_repository.config.name
-  secret_name     = "SOPS_AGE_KEY"
-  plaintext_value = local.secrets.ci.sops_age_key
-}
-
 resource "github_branch_protection" "config_develop" {
   repository_id = data.github_repository.config.node_id
   pattern       = "develop"
