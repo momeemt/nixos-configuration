@@ -47,6 +47,9 @@ jobs:
           remove-haskell: true
           remove-codeql: true
           remove-docker-images: true
+      - name: Fix /nix ownership
+        if: runner.os == 'Linux'
+        run: sudo chown root:root /nix
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
           persist-credentials: false
