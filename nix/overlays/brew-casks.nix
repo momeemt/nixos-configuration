@@ -5,7 +5,7 @@ _final: prev: {
       google-chrome = prev.brewCasks.google-chrome.overrideAttrs (oldAttrs: {
         src = prev.fetchurl {
           url = prev.lib.lists.head oldAttrs.src.urls;
-          hash = "sha256-Kxt8MrW5ANGAID0L9B/dTA56iE1E+AFp3ym1wqKrqvE=";
+          hash = "sha256-+1bfrMyoEnKTYUOpx19c20AAY/cOTN118wW9syu2IAE=";
         };
       });
       google-drive = prev.brewCasks.google-drive.overrideAttrs (oldAttrs: {
