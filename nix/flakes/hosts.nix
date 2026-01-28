@@ -57,8 +57,13 @@ in {
           });
     };
 
-    ciConfigurations.shime = inputs.self.nixosConfigurations.shime.extendModules {
-      modules = [{k8sWorkers.enable = inputs.nixpkgs.lib.mkForce false;}];
+    ciConfigurations = {
+      emu = inputs.self.nixosConfigurations.emu.extendModules {
+        modules = [{k8sVMs.enable = inputs.nixpkgs.lib.mkForce false;}];
+      };
+      shime = inputs.self.nixosConfigurations.shime.extendModules {
+        modules = [{k8sWorkers.enable = inputs.nixpkgs.lib.mkForce false;}];
+      };
     };
 
     darwinConfigurations = {
