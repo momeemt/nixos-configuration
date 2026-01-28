@@ -91,7 +91,7 @@ in {
             inherit pkgs;
             modules =
               [
-                (_: {nixpkgs.overlays = import ../overlays;})
+                (_: {nixpkgs.overlays = [inputs.llm-agents.overlays.default] ++ import ../overlays;})
                 ../home/example
               ]
               ++ (import ./lib/shared-modules.nix {inherit inputs;});
