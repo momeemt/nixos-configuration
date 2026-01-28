@@ -29,14 +29,18 @@ resource "github_user_gpg_key" "gpg_momeemt_kitsutsuki" {
   armored_public_key = file("../assets/gpg/kitsutsuki/momeemt.asc")
 }
 
+data "github_repository" "config" {
+  full_name = "momeemt/config"
+}
+
 resource "github_actions_secret" "sops_age_key" {
-  repository      = "config"
+  repository      = data.github_repository.config.name
   secret_name     = "SOPS_AGE_KEY"
   plaintext_value = local.secrets.ci.sops_age_key
 }
 
 resource "github_branch_protection" "config_develop" {
-  repository_id = "config"
+  repository_id = data.github_repository.config.node_id
   pattern       = "develop"
 
   required_pull_request_reviews {
@@ -48,7 +52,7 @@ resource "github_branch_protection" "config_develop" {
 }
 
 resource "github_branch_protection" "config_main" {
-  repository_id = "config"
+  repository_id = data.github_repository.config.node_id
   pattern       = "main"
 
   required_pull_request_reviews {
