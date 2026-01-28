@@ -57,6 +57,10 @@ in {
           });
     };
 
+    ciConfigurations.shime = inputs.self.nixosConfigurations.shime.extendModules {
+      modules = [{k8sWorkers.enable = false;}];
+    };
+
     darwinConfigurations = {
       uguisu = let
         system = "aarch64-darwin";

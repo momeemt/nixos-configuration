@@ -64,7 +64,7 @@ resource "github_branch_protection" "config_main" {
     contexts = [
       "flake-check",
       "nix-build (nixosConfigurations.emu.config.system.build.toplevel, ubuntu-24.04)",
-      "nix-build (nixosConfigurations.shime.config.system.build.toplevel, ubuntu-24.04)",
+      "nix-build (ciConfigurations.shime.config.system.build.toplevel, ubuntu-24.04)",
       "nix-build (darwinConfigurations.uguisu.system, macos-15)",
       "nix-build (homeConfigurations.example.activationPackage, ubuntu-24.04)",
       "container-build",
