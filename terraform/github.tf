@@ -34,3 +34,39 @@ resource "github_actions_secret" "sops_age_key" {
   secret_name     = "SOPS_AGE_KEY"
   plaintext_value = local.secrets.ci.sops_age_key
 }
+
+resource "github_branch_protection" "config_develop" {
+  repository_id = "config"
+  pattern       = "develop"
+
+  required_pull_request_reviews {
+    required_approving_review_count = 0
+  }
+
+  allows_force_pushes = false
+  allows_deletions    = false
+}
+
+resource "github_branch_protection" "config_main" {
+  repository_id = "config"
+  pattern       = "main"
+
+  required_pull_request_reviews {
+    required_approving_review_count = 0
+  }
+
+  required_status_checks {
+    strict = true
+    contexts = [
+      "flake-check",
+      "nix-build (nixosConfigurations.emu.config.system.build.toplevel, ubuntu-24.04)",
+      "nix-build (nixosConfigurations.shime.config.system.build.toplevel, ubuntu-24.04)",
+      "nix-build (darwinConfigurations.uguisu.system, macos-15)",
+      "nix-build (homeConfigurations.example.activationPackage, ubuntu-24.04)",
+      "container-build",
+    ]
+  }
+
+  allows_force_pushes = false
+  allows_deletions    = false
+}
