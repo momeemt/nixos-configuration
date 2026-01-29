@@ -57,5 +57,5 @@ with pkgs.brewCasks;
     # unity
     unity-hub
     windows-app
-    zoom
+    # zoom # TODO: Illegal byte sequence error in CI
   ]
