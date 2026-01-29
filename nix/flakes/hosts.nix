@@ -64,6 +64,9 @@ in {
       shime = inputs.self.nixosConfigurations.shime.extendModules {
         modules = [{k8sWorkers.enable = inputs.nixpkgs.lib.mkForce false;}];
       };
+      uguisu = inputs.self.darwinConfigurations.uguisu.extendModules {
+        modules = [{home-manager.users.momeemt.site.home.ciMode = inputs.nixpkgs.lib.mkForce true;}];
+      };
     };
 
     darwinConfigurations = {

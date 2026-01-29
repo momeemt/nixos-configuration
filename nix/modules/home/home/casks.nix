@@ -1,10 +1,17 @@
 {
   pkgs,
   lib,
+  ciMode ? false,
   ...
 }:
-with pkgs.brewCasks;
-  lib.optionals pkgs.stdenv.isDarwin [
+with pkgs.brewCasks; let
+  # Packages that have CI build issues (SSL errors, encoding issues, etc.)
+  ciProblematicPackages = [
+    keybase # SSL certificate error
+    zoom # Illegal byte sequence error
+  ];
+
+  allPackages = [
     angry-ip-scanner
     bitwarden
     brave-browser
@@ -24,7 +31,7 @@ with pkgs.brewCasks;
     # }))
     httpie-desktop
     # karabiner-elements
-    # keybase # TODO: SSL certificate error in CI
+    keybase
     keycastr
     # (logitech-g-hub.overrideAttrs (oldAttrs: {
     #   src = pkgs.fetchurl {
@@ -57,5 +64,11 @@ with pkgs.brewCasks;
     # unity
     unity-hub
     windows-app
-    # zoom # TODO: Illegal byte sequence error in CI
-  ]
+    zoom
+  ];
+in
+  lib.optionals pkgs.stdenv.isDarwin (
+    if ciMode
+    then lib.subtractLists ciProblematicPackages allPackages
+    else allPackages
+  )

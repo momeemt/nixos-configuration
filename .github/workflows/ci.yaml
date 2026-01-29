@@ -32,7 +32,7 @@ jobs:
             os: ubuntu-24.04
           - target: ciConfigurations.shime.config.system.build.toplevel
             os: ubuntu-24.04
-          - target: darwinConfigurations.uguisu.system
+          - target: ciConfigurations.uguisu.system
             os: macos-15
           - target: homeConfigurations.example.activationPackage
             os: ubuntu-24.04

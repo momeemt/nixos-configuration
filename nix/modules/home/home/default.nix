@@ -16,6 +16,8 @@ in {
       description = "The user's username";
     };
 
+    ciMode = mkEnableOption "CI mode (excludes packages with CI build issues)";
+
     extraSessionPath = mkOption {
       type = types.listOf types.str;
       default = [];
@@ -90,7 +92,10 @@ in {
         mpv
       ];
 
-      darwinCasks = import ./casks.nix {inherit pkgs lib;};
+      darwinCasks = import ./casks.nix {
+        inherit pkgs lib;
+        inherit (cfg) ciMode;
+      };
 
       combined =
         basePackages
