@@ -57,6 +57,18 @@ in {
           });
     };
 
+    ciConfigurations = {
+      emu = inputs.self.nixosConfigurations.emu.extendModules {
+        modules = [{k8sVMs.enable = inputs.nixpkgs.lib.mkForce false;}];
+      };
+      shime = inputs.self.nixosConfigurations.shime.extendModules {
+        modules = [{k8sWorkers.enable = inputs.nixpkgs.lib.mkForce false;}];
+      };
+      uguisu = inputs.self.darwinConfigurations.uguisu.extendModules {
+        modules = [{home-manager.users.momeemt.site.home.ciMode = inputs.nixpkgs.lib.mkForce true;}];
+      };
+    };
+
     darwinConfigurations = {
       uguisu = let
         system = "aarch64-darwin";
@@ -79,7 +91,7 @@ in {
 
     homeConfigurations = {
       example = let
-        system = builtins.currentSystem;
+        system = "x86_64-linux";
       in
         withSystem system ({pkgs, ...}: let
           siteLib = import ../lib {
@@ -91,7 +103,7 @@ in {
             inherit pkgs;
             modules =
               [
-                (_: {nixpkgs.overlays = import ../overlays;})
+                (_: {nixpkgs.overlays = [inputs.llm-agents.overlays.default] ++ import ../overlays;})
                 ../home/example
               ]
               ++ (import ./lib/shared-modules.nix {inherit inputs;});

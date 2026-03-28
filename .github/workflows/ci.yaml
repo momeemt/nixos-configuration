@@ -17,6 +17,7 @@ jobs:
         with:
           persist-credentials: false
       - uses: DeterminateSystems/determinate-nix-action@b3e3f405539b332fcb96794525f35fb10c230baa # v3.13.2
+      - uses: DeterminateSystems/magic-nix-cache-action@565684385bcd71bad329742eefe8d12f2e765b39 # v13
       - run: nix flake check --all-systems
   nix-build:
     if: github.event_name == 'pull_request'
@@ -27,11 +28,11 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - target: nixosConfigurations.emu.config.system.build.toplevel
+          - target: ciConfigurations.emu.config.system.build.toplevel
             os: ubuntu-24.04
-          - target: nixosConfigurations.shime.config.system.build.toplevel
+          - target: ciConfigurations.shime.config.system.build.toplevel
             os: ubuntu-24.04
-          - target: darwinConfigurations.uguisu.system
+          - target: ciConfigurations.uguisu.system
             os: macos-15
           - target: homeConfigurations.example.activationPackage
             os: ubuntu-24.04
@@ -47,42 +48,30 @@ jobs:
           remove-haskell: true
           remove-codeql: true
           remove-docker-images: true
+      - name: Fix /nix ownership
+        if: runner.os == 'Linux'
+        run: sudo chown root:root /nix
+      - name: Free disk space (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          sudo rm -rf /Applications/Xcode_14*.app
+          sudo rm -rf /Applications/Xcode_15*.app
+          sudo rm -rf ~/Library/Developer/CoreSimulator
+          sudo rm -rf /Library/Developer/CoreSimulator
+          sudo rm -rf ~/Library/Caches/Homebrew
+          df -h
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
           persist-credentials: false
       - uses: DeterminateSystems/determinate-nix-action@b3e3f405539b332fcb96794525f35fb10c230baa # v3.13.2
-      - name: Setup age key
-        run: |
-          sudo mkdir -p /var/lib/sops-nix
-          echo "$SOPS_AGE_KEY" | sudo tee /var/lib/sops-nix/key.txt > /dev/null
-          sudo chmod 600 /var/lib/sops-nix/key.txt
-          mkdir -p ~/.config/sops/age
-          echo "$SOPS_AGE_KEY" > ~/.config/sops/age/keys.txt
-          chmod 600 ~/.config/sops/age/keys.txt
-        env:
-          SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
+      - uses: DeterminateSystems/magic-nix-cache-action@565684385bcd71bad329742eefe8d12f2e765b39 # v13
       - run: nix build .#${{ matrix.target }} --no-link
-      - name: Cleanup secrets
-        if: always()
-        run: |
-          sudo rm -rf /var/lib/sops-nix
-          rm -rf ~/.config/sops/age
-          sudo rm -rf /run/secrets* /run/user/*/secrets* 2>/dev/null || true
   container-build:
     if: github.event_name == 'pull_request'
     permissions:
       contents: read
     runs-on: ubuntu-24.04
     steps:
-      - uses: easimon/maximize-build-space@fc881a613ad2a34aca9c9624518214ebc21dfc0c # v10
-        with:
-          root-reserve-mb: 4096
-          swap-size-mb: 1024
-          remove-dotnet: true
-          remove-android: true
-          remove-haskell: true
-          remove-codeql: true
-          remove-docker-images: true
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
           persist-credentials: false

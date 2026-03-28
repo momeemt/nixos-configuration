@@ -58,7 +58,13 @@ jobs:
         run: |
           set -euo pipefail
           git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
           git checkout -b "${BRANCH}"
+          COMMIT_COUNT=$(git rev-list --count origin/main..HEAD)
+          if [ "${COMMIT_COUNT}" -eq 0 ]; then
+            git commit --allow-empty -m "chore: release ${VERSION}"
+          fi
           git push origin "${BRANCH}"
           gh pr create \
             --base main \

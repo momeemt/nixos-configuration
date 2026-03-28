@@ -1,10 +1,17 @@
 {
   pkgs,
   lib,
+  ciMode ? false,
   ...
 }:
-with pkgs.brewCasks;
-  lib.optionals pkgs.stdenv.isDarwin [
+with pkgs.brewCasks; let
+  # Packages that have CI build issues (SSL errors, encoding issues, etc.)
+  ciProblematicPackages = [
+    keybase # SSL certificate error
+    zoom # Illegal byte sequence error
+  ];
+
+  allPackages = [
     angry-ip-scanner
     bitwarden
     brave-browser
@@ -58,4 +65,10 @@ with pkgs.brewCasks;
     unity-hub
     windows-app
     zoom
-  ]
+  ];
+in
+  lib.optionals pkgs.stdenv.isDarwin (
+    if ciMode
+    then lib.subtractLists ciProblematicPackages allPackages
+    else allPackages
+  )

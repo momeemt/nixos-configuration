@@ -29,8 +29,42 @@ resource "github_user_gpg_key" "gpg_momeemt_kitsutsuki" {
   armored_public_key = file("../assets/gpg/kitsutsuki/momeemt.asc")
 }
 
-resource "github_actions_secret" "sops_age_key" {
-  repository      = "config"
-  secret_name     = "SOPS_AGE_KEY"
-  plaintext_value = local.secrets.ci.sops_age_key
+data "github_repository" "config" {
+  full_name = "momeemt/config"
+}
+
+resource "github_branch_protection" "config_develop" {
+  repository_id = data.github_repository.config.node_id
+  pattern       = "develop"
+
+  required_pull_request_reviews {
+    required_approving_review_count = 0
+  }
+
+  allows_force_pushes = false
+  allows_deletions    = false
+}
+
+resource "github_branch_protection" "config_main" {
+  repository_id = data.github_repository.config.node_id
+  pattern       = "main"
+
+  required_pull_request_reviews {
+    required_approving_review_count = 0
+  }
+
+  required_status_checks {
+    strict = true
+    contexts = [
+      "flake-check",
+      "nix-build (ciConfigurations.emu.config.system.build.toplevel, ubuntu-24.04)",
+      "nix-build (ciConfigurations.shime.config.system.build.toplevel, ubuntu-24.04)",
+      "nix-build (ciConfigurations.uguisu.system, macos-15)",
+      "nix-build (homeConfigurations.example.activationPackage, ubuntu-24.04)",
+      "container-build",
+    ]
+  }
+
+  allows_force_pushes = false
+  allows_deletions    = false
 }

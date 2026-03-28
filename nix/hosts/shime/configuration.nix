@@ -12,6 +12,8 @@
     ./k8s
   ];
 
+  k8sWorkers.enable = true;
+
   nix = {
     settings = {
       experimental-features = [

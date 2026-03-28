@@ -17,6 +17,8 @@
     ./k8s
   ];
 
+  k8sVMs.enable = true;
+
   boot.loader = {
     systemd-boot.enable = true;
     efi.canTouchEfiVariables = true;
