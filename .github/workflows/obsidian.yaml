@@ -19,7 +19,7 @@ on:
 permissions:
   contents: read
   issues: write
-  pull-requests: read
+  pull-requests: write
 concurrency:
   group: obsidian-pages-${{ github.ref }}
   cancel-in-progress: true
