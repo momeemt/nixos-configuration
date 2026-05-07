@@ -1,7 +1,7 @@
 locals {
   obsidian_pages = {
     project_name      = "obsidian-momee-mt"
-    production_branch = "main"
+    production_branch = "develop"
     domain            = "obsidian.momee.mt"
   }
 }
