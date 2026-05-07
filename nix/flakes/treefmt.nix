@@ -53,6 +53,9 @@ _: {
               mdformat-gfm
               mdformat-gfm-alerts
             ];
+          excludes = [
+            "packages/obsidian/**"
+          ];
           settings = {
             end-of-line = "lf";
             number = true;
@@ -179,6 +182,9 @@ _: {
           enable = true;
           package = pkgs.autocorrect;
           threads = 0; # auto
+          excludes = [
+            "packages/obsidian/**"
+          ];
           settings = {
             context = {
               codeblock = "error";
