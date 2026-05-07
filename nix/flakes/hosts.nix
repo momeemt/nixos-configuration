@@ -79,7 +79,7 @@ in {
 
     homeConfigurations = {
       example = let
-        system = builtins.currentSystem;
+        system = "x86_64-linux";
       in
         withSystem system ({pkgs, ...}: let
           siteLib = import ../lib {
@@ -91,7 +91,14 @@ in {
             inherit pkgs;
             modules =
               [
-                (_: {nixpkgs.overlays = import ../overlays;})
+                (_: {
+                  nixpkgs.overlays = with inputs;
+                    [
+                      firefox-addons.overlays.default
+                      llm-agents.overlays.default
+                    ]
+                    ++ (import ../overlays);
+                })
                 ../home/example
               ]
               ++ (import ./lib/shared-modules.nix {inherit inputs;});
