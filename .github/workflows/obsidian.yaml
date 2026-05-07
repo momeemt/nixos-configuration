@@ -8,14 +8,25 @@ on:
       - ".github/workflows/obsidian.yaml"
       - "nix/flakes/devShells.nix"
       - "packages/obsidian/**"
+  pull_request:
+    branches:
+      - '**'
+    paths:
+      - ".github/workflows/obsidian.yaml"
+      - "nix/flakes/devShells.nix"
+      - "packages/obsidian/**"
   workflow_dispatch:
 permissions:
   contents: read
+  issues: write
+  pull-requests: read
 concurrency:
   group: obsidian-pages-${{ github.ref }}
   cancel-in-progress: true
 jobs:
   deploy:
+    if: >-
+      github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
@@ -52,6 +63,7 @@ jobs:
           npx quartz build --directory content --output public
           EOF
       - name: Deploy to Cloudflare Pages
+        id: deploy
         env:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -59,7 +71,66 @@ jobs:
           nix develop .#obsidian --command bash <<'EOF'
           set -euo pipefail
 
+          deploy_branch="${GITHUB_HEAD_REF:-${GITHUB_REF_NAME}}"
+          deploy_log="${RUNNER_TEMP}/wrangler-pages-deploy.log"
+
           npx --yes wrangler@4 pages deploy "${RUNNER_TEMP}/quartz/public" \
             --project-name obsidian-momee-mt \
-            --branch "${GITHUB_REF_NAME}"
+            --branch "${deploy_branch}" \
+            2>&1 | tee "${deploy_log}"
+
+          deployment_url="$(
+            grep -Eo 'https://[^[:space:]]+' "${deploy_log}" \
+              | grep -E 'pages\.dev|obsidian\.momee\.mt' \
+              | tail -n 1 \
+              || true
+          )"
+          if [ -z "${deployment_url}" ]; then
+            echo "Failed to extract Cloudflare Pages deployment URL." >&2
+            exit 1
+          fi
+
+          {
+            echo "deploy_branch=${deploy_branch}"
+            echo "deployment_url=${deployment_url}"
+          } >> "${GITHUB_OUTPUT}"
           EOF
+      - name: Comment preview URL
+        if: github.event_name == 'pull_request'
+        env:
+          DEPLOY_BRANCH: ${{ steps.deploy.outputs.deploy_branch }}
+          DEPLOYMENT_URL: ${{ steps.deploy.outputs.deployment_url }}
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |-
+          set -euo pipefail
+
+          marker="<!-- obsidian-pages-preview -->"
+          body="$(
+            cat <<EOF
+          ${marker}
+          Obsidian preview deployed: ${DEPLOYMENT_URL}
+
+          - Branch: \`${DEPLOY_BRANCH}\`
+          - Commit: \`${GITHUB_SHA}\`
+          EOF
+          )"
+
+          comment_id="$(
+            gh api "repos/${GITHUB_REPOSITORY}/issues/${PR_NUMBER}/comments" \
+              --paginate \
+              --jq '.[] | select(.user.login == "github-actions[bot]" and (.body | contains("<!-- obsidian-pages-preview -->"))) | .id' \
+              | tail -n 1
+          )"
+
+          if [ -n "${comment_id}" ]; then
+            gh api \
+              --method PATCH \
+              "repos/${GITHUB_REPOSITORY}/issues/comments/${comment_id}" \
+              -f "body=${body}" > /dev/null
+          else
+            gh api \
+              --method POST \
+              "repos/${GITHUB_REPOSITORY}/issues/${PR_NUMBER}/comments" \
+              -f "body=${body}" > /dev/null
+          fi
