@@ -81,6 +81,7 @@ jobs:
         with:
           root-reserve-mb: 4096
           swap-size-mb: 1024
+          build-mount-path: /var/lib/docker
           remove-dotnet: true
           remove-android: true
           remove-haskell: true
