@@ -1,0 +1,65 @@
+---
+name: "Deploy Obsidian"
+on:
+  push:
+    branches:
+      - '**'
+    paths:
+      - ".github/workflows/obsidian.yaml"
+      - "nix/flakes/devShells.nix"
+      - "packages/obsidian/**"
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: obsidian-pages-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  deploy:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: DeterminateSystems/determinate-nix-action@b3e3f405539b332fcb96794525f35fb10c230baa # v3.13.2
+      - name: Build Quartz
+        run: |
+          nix develop .#obsidian --command bash <<'EOF'
+          set -euo pipefail
+
+          quartz_dir="${RUNNER_TEMP}/quartz"
+          rm -rf "${quartz_dir}"
+          git clone --depth 1 --branch v4 https://github.com/jackyzha0/quartz.git "${quartz_dir}"
+
+          rm -rf "${quartz_dir}/content"
+          mkdir -p "${quartz_dir}/content"
+          rsync -a --delete \
+            --exclude ".obsidian/" \
+            --exclude ".quartz/" \
+            --exclude "node_modules/" \
+            --exclude "public/" \
+            --exclude "package-lock.json" \
+            --exclude "package.json" \
+            "packages/obsidian/" \
+            "${quartz_dir}/content/"
+
+          cp "packages/obsidian/.quartz/quartz.config.ts" "${quartz_dir}/quartz.config.ts"
+          cp "packages/obsidian/.quartz/quartz.layout.ts" "${quartz_dir}/quartz.layout.ts"
+
+          cd "${quartz_dir}"
+          npm ci
+          npx quartz build --directory content --output public
+          EOF
+      - name: Deploy to Cloudflare Pages
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |-
+          nix develop .#obsidian --command bash <<'EOF'
+          set -euo pipefail
+
+          npx --yes wrangler@4 pages deploy "${RUNNER_TEMP}/quartz/public" \
+            --project-name obsidian-momee-mt \
+            --branch "${GITHUB_REF_NAME}"
+          EOF
