@@ -29,6 +29,14 @@
         pkgs = pkgs-25_05;
         inherit inputsFrom;
       };
+      obsidian = pkgs.mkShell {
+        inherit inputsFrom;
+        buildInputs = with pkgs; [
+          git
+          nodejs_22
+          rsync
+        ];
+      };
       terraform = import ../../terraform/devShell.nix {inherit pkgs inputsFrom;};
       k8s = import ../../k8s/devShell.nix {inherit pkgs inputsFrom;};
     };
