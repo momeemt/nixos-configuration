@@ -21,6 +21,12 @@ _final: prev: {
           pbzx -n GoogleDrive_arm64.pkg/Payload | cpio -idm
         '';
       });
+      keybase = prev.brewCasks.keybase.overrideAttrs (oldAttrs: {
+        src = prev.fetchurl {
+          url = prev.lib.lists.head oldAttrs.src.urls;
+          hash = "sha256-OqjZtcCBHjBcF4ezKBaQQjt4e0huD5mOj1tMPtvo4N0=";
+        };
+      });
       microsoft-teams = prev.brewCasks.microsoft-teams.overrideAttrs (oldAttrs: {
         nativeBuildInputs = with prev; (oldAttrs.nativeBuildInputs or []) ++ [pbzx];
         unpackPhase = ''
@@ -38,7 +44,7 @@ _final: prev: {
       unity-hub = prev.brewCasks.unity-hub.overrideAttrs (oldAttrs: {
         src = prev.fetchurl {
           url = prev.lib.lists.head oldAttrs.src.urls;
-          hash = "sha256-sj1ZdeVk/p5ZQfR75HMDVYnmAPzcyYIAFaRYXQPZK2s=";
+          hash = "sha256-fVGOxJu7esppxWQ+N8vb2BNphPgn0sUf+oIDF7Gx/Wk=";
         };
       });
       windows-app = prev.brewCasks.windows-app.overrideAttrs (oldAttrs: {
