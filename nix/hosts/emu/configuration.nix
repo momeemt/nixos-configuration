@@ -18,7 +18,10 @@
   ];
 
   boot.loader = {
-    systemd-boot.enable = true;
+    systemd-boot = {
+      enable = true;
+      configurationLimit = 10;
+    };
     efi.canTouchEfiVariables = true;
   };
 
@@ -32,7 +35,7 @@
       br0.ipv4.addresses = [
         {
           address = siteLib.ip.emu;
-          prefixLength = 23;
+          prefixLength = 24;
         }
       ];
     };

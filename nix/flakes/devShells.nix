@@ -16,7 +16,7 @@
       default = pkgs.mkShell {
         inherit inputsFrom;
         buildInputs = with pkgs; [
-          config.files.writer.drv
+          # config.files.writer.drv
           sops
           inputs.nur-packages.legacyPackages.${system}.aicommit
           encrypt-secrets

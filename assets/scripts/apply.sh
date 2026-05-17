@@ -30,7 +30,8 @@ uguisu)
   fi
   ;;
 emu | shime)
-  sudo nixos-rebuild switch \
+  sudo env NIX_CONFIG='experimental-features = nix-command flakes pipe-operators' \
+    nixos-rebuild switch \
     --flake "$FLAKE_ROOT#$HOST_NAME" \
     "${NIX_FLAGS[@]}"
   ;;
