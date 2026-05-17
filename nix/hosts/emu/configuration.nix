@@ -55,6 +55,7 @@
       ];
       allowedUDPPorts = [
         53
+        443
       ];
     };
   };
@@ -74,6 +75,8 @@
     openssh.authorizedKeys.keys = siteLib.publicKeys;
   };
 
+  users.users.caddy.extraGroups = ["mastodon"];
+
   services = {
     caddy = {
       enable = true;
@@ -90,6 +93,43 @@
           }
         }
       '';
+
+      virtualHosts."mastodon.momee.mt".extraConfig = ''
+        handle_path /system/* {
+          root * /var/lib/mastodon/public-system
+          file_server
+        }
+
+        handle /api/v1/streaming/* {
+          reverse_proxy unix//run/mastodon-streaming/streaming-1.socket
+        }
+
+        route * {
+          file_server * {
+            root ${pkgs.mastodon}/public
+            pass_thru
+          }
+
+          reverse_proxy * unix//run/mastodon-web/web.socket
+        }
+
+        handle_errors {
+          root * ${pkgs.mastodon}/public
+          rewrite * /500.html
+          file_server
+        }
+
+        encode gzip
+
+        header /* {
+          Strict-Transport-Security "max-age=31536000;"
+        }
+
+        header /emoji/* Cache-Control "public, max-age=31536000, immutable"
+        header /packs/* Cache-Control "public, max-age=31536000, immutable"
+        header /system/accounts/avatars/* Cache-Control "public, max-age=31536000, immutable"
+        header /system/media_attachments/files/* Cache-Control "public, max-age=31536000, immutable"
+      '';
     };
 
     dnsmasq = {
@@ -98,8 +138,13 @@
         listen-address = ["127.0.0.1" "192.168.1.37"];
         bind-interfaces = true;
 
+        no-resolv = true;
+        local-ttl = 60;
+        cache-size = 10000;
+
         address = [
           "/photo.kitsutsuki.momee.mt/192.168.1.37"
+          "/mastodon.momee.mt/192.168.1.37"
         ];
 
         server = [
@@ -133,6 +178,30 @@
           };
           default = "http_status:404";
         };
+      };
+    };
+
+    mastodon = {
+      enable = true;
+      localDomain = "mastodon.momee.mt";
+      configureNginx = false;
+      streamingProcesses = 2;
+      webProcesses = 2;
+      webThreads = 5;
+
+      smtp = {
+        createLocally = false;
+        host = "smtp.resend.com";
+        port = 587;
+        authenticate = true;
+        user = "resend";
+        passwordFile = "${config.sops.secrets."resend/mastodon.momee.mt".path}";
+        fromAddress = "Mastodon <notifications@mastodon.momee.mt>";
+      };
+
+      extraConfig = {
+        SMTP_ENABLE_STARTTLS_AUTO = "true";
+        SMTP_AUTH_METHOD = "plain";
       };
     };
 

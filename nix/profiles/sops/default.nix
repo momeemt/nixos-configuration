@@ -12,6 +12,7 @@
         neededForUsers = true;
       };
       k8s-bootstrap-token = {};
+      "resend/mastodon.momee.mt" = {};
 
       "cloudflared/emu.json" = {
         format = "json";
