@@ -46,6 +46,17 @@
       address = siteLib.ip.defaultGateway;
       interface = "br0";
     };
+
+    firewall = {
+      allowedTCPPorts = [
+        53
+        80
+        443
+      ];
+      allowedUDPPorts = [
+        53
+      ];
+    };
   };
 
   nixpkgs.config.allowUnfree = true;
@@ -64,6 +75,40 @@
   };
 
   services = {
+    caddy = {
+      enable = true;
+      email = "me@momee.mt";
+
+      virtualHosts."photo.kitsutsuki.momee.mt".extraConfig = ''
+        redir / /photo/ 308
+
+        reverse_proxy https://192.168.1.33:5001 {
+          header_up Host {host}
+
+          transport http {
+            tls_insecure_skip_verify
+          }
+        }
+      '';
+    };
+
+    dnsmasq = {
+      enable = true;
+      settings = {
+        listen-address = ["127.0.0.1" "192.168.1.37"];
+        bind-interfaces = true;
+
+        address = [
+          "/photo.kitsutsuki.momee.mt/192.168.1.37"
+        ];
+
+        server = [
+          "1.1.1.1"
+          "8.8.8.8"
+        ];
+      };
+    };
+
     cloudflared = {
       enable = true;
       tunnels = {
