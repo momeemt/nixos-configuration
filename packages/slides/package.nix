@@ -9,6 +9,12 @@
       ./web/generate-index.py
     ];
   };
+
+  typst-packages = with pkgs.typstPackages; [
+    codelst
+    h-graph
+    finite
+  ];
 in
   stdenvNoCC.mkDerivation {
     pname = "slides";
@@ -16,10 +22,12 @@ in
 
     inherit src;
 
-    nativeBuildInputs = with pkgs; [
-      python3
-      typst
-    ];
+    nativeBuildInputs = with pkgs;
+      [
+        python3
+        typst
+      ]
+      ++ typst-packages;
 
     dontConfigure = true;
 
