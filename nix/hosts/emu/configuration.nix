@@ -130,6 +130,10 @@
         header /system/accounts/avatars/* Cache-Control "public, max-age=31536000, immutable"
         header /system/media_attachments/files/* Cache-Control "public, max-age=31536000, immutable"
       '';
+
+      virtualHosts."attic.momee.mt".extraConfig = ''
+        reverse_proxy 127.0.0.1:8080
+      '';
     };
 
     dnsmasq = {
@@ -145,6 +149,7 @@
         address = [
           "/photo.kitsutsuki.momee.mt/192.168.1.37"
           "/mastodon.momee.mt/192.168.1.37"
+          "/attic.momee.mt/192.168.1.37"
         ];
 
         server = [
@@ -206,6 +211,28 @@
     };
 
     udev.packages = [pkgs.usb-blaster-udev-rules];
+
+    atticd = {
+      enable = true;
+      environmentFile = config.sops.secrets."atticd/emu.env".path;
+
+      settings = {
+        listen = "127.0.0.1:8080";
+        api-endpoint = "https://attic.momee.mt/";
+        jwt = {};
+        database.url = "sqlite:///var/lib/atticd/server.db";
+        storage = {
+          type = "local";
+          path = "/var/lib/atticd/storage";
+        };
+        chunking = {
+          nar-size-threshold = 64 * 1024;
+          min-size = 16 * 1024;
+          avg-size = 64 * 1024;
+          max-size = 256 * 1024;
+        };
+      };
+    };
   };
 
   # https://github.com/NixOS/nixpkgs/issues/100390

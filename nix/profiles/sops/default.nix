@@ -17,6 +17,9 @@
         group = config.services.mastodon.group;
         mode = "0400";
       };
+      "atticd/emu.env" = {
+        mode = "0400";
+      };
 
       "cloudflared/emu.json" = {
         format = "json";

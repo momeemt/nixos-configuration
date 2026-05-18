@@ -88,5 +88,6 @@
         treefmt-nix.follows = "treefmt-nix";
       };
     };
+    attic.url = "github:zhaofengli/attic";
   };
 }

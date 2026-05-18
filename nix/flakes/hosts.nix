@@ -29,6 +29,7 @@ in {
               NixVirt.nixosModules.default
               vscode-server.nixosModules.default
               comin.nixosModules.comin
+              attic.nixosModules.atticd
             ];
             overlays = [vscodeOverlay];
           });
