@@ -1,56 +1,98 @@
 #!/usr/bin/env python3
 """Generate index.html and individual slide pages with OGP from meta.yaml files."""
 
-import os
-import sys
+import argparse
 from pathlib import Path
+
+
+DEFAULT_SITE_URL = "https://slides.momee.mt"
+
 
 # PyYAML may not be available, use simple parser
 def parse_yaml(path: Path) -> dict:
     """Simple YAML parser for key: value format."""
     data = {}
-    with open(path, 'r', encoding='utf-8') as f:
+    with open(path, "r", encoding="utf-8") as f:
         for line in f:
             line = line.strip()
-            if not line or line.startswith('#'):
+            if not line or line.startswith("#"):
                 continue
-            if ':' in line:
-                key, value = line.split(':', 1)
+            if ":" in line:
+                key, value = line.split(":", 1)
                 value = value.strip().strip('"').strip("'")
                 data[key.strip()] = value
     return data
 
 
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="Generate slide index pages from PDFs and meta.yaml files.",
+    )
+    parser.add_argument(
+        "legacy_dist_dir",
+        nargs="?",
+        type=Path,
+        help="Legacy positional dist directory. Prefer --dist-dir.",
+    )
+    parser.add_argument(
+        "--dist-dir",
+        type=Path,
+        help="Directory containing generated PDFs and receiving HTML output.",
+    )
+    parser.add_argument(
+        "--public-dir",
+        type=Path,
+        default=Path("public"),
+        help="Directory containing slide source directories and meta.yaml files.",
+    )
+    parser.add_argument(
+        "--site-url",
+        default=DEFAULT_SITE_URL,
+        help="Canonical site URL used for OGP metadata.",
+    )
+
+    args = parser.parse_args()
+    if args.dist_dir is None:
+        args.dist_dir = args.legacy_dist_dir or Path(".")
+
+    args.site_url = args.site_url.rstrip("/")
+
+    return args
+
+
 def main():
-    dist_dir = Path(sys.argv[1]) if len(sys.argv) > 1 else Path('.')
-    public_dir = Path('public')
-    site_url = "https://slides.momee.mt"
+    args = parse_args()
+    dist_dir = args.dist_dir
+    public_dir = args.public_dir
+    site_url = args.site_url
 
     # Collect slides with metadata
     slides = []
-    for pdf in dist_dir.glob('*.pdf'):
+    for pdf in dist_dir.glob("*.pdf"):
         slug = pdf.stem
-        meta_path = public_dir / slug / 'meta.yaml'
+        meta_path = public_dir / slug / "meta.yaml"
 
         if meta_path.exists():
             meta = parse_yaml(meta_path)
-            title = meta.get('title', slug)
-            date = meta.get('date', '1970-01-01')
+            title = meta.get("title", slug)
+            date = meta.get("date", "1970-01-01")
         else:
             title = slug
-            date = '1970-01-01'
+            date = "1970-01-01"
 
-        slides.append({
-            'slug': slug,
-            'title': title,
-            'date': date,
-        })
+        slides.append(
+            {
+                "slug": slug,
+                "title": title,
+                "date": date,
+            }
+        )
 
     # Sort by date descending (newest first)
-    slides.sort(key=lambda x: x['date'], reverse=True)
+    slides.sort(key=lambda x: x["date"], reverse=True)
 
     # Generate index.html
-    first_thumb = slides[0]['slug'] if slides else None
+    first_thumb = slides[0]["slug"] if slides else None
 
     index_html = f'''<!DOCTYPE html>
 <html lang="ja" prefix="og: https://ogp.me/ns#">
@@ -141,34 +183,34 @@ def main():
 
     for slide in slides:
         index_html += f'''    <div class="slide-card">
-      <a href="/s/{slide['slug']}/">
-        <img class="slide-thumbnail" src="/thumbnails/{slide['slug']}.png" alt="{slide['title']}" loading="lazy">
+      <a href="/s/{slide["slug"]}/">
+        <img class="slide-thumbnail" src="/thumbnails/{slide["slug"]}.png" alt="{slide["title"]}" loading="lazy">
       </a>
       <div class="slide-info">
-        <div class="slide-title">{slide['title']}</div>
-        <div class="slide-date">{slide['date']}</div>
+        <div class="slide-title">{slide["title"]}</div>
+        <div class="slide-date">{slide["date"]}</div>
         <div class="slide-actions">
-          <a class="btn btn-view" href="/s/{slide['slug']}/">View</a>
-          <a class="btn btn-download" href="/{slide['slug']}.pdf" download>Download</a>
+          <a class="btn btn-view" href="/s/{slide["slug"]}/">View</a>
+          <a class="btn btn-download" href="/{slide["slug"]}.pdf" download>Download</a>
         </div>
       </div>
     </div>
 '''
 
-    index_html += '''  </div>
+    index_html += """  </div>
 </body>
 </html>
-'''
+"""
 
-    with open(dist_dir / 'index.html', 'w', encoding='utf-8') as f:
+    with open(dist_dir / "index.html", "w", encoding="utf-8") as f:
         f.write(index_html)
 
     # Generate individual slide pages
     for slide in slides:
-        slug = slide['slug']
-        title = slide['title']
+        slug = slide["slug"]
+        title = slide["title"]
 
-        slide_dir = dist_dir / 's' / slug
+        slide_dir = dist_dir / "s" / slug
         slide_dir.mkdir(parents=True, exist_ok=True)
 
         slide_html = f'''<!DOCTYPE html>
@@ -410,11 +452,11 @@ def main():
 </html>
 '''
 
-        with open(slide_dir / 'index.html', 'w', encoding='utf-8') as f:
+        with open(slide_dir / "index.html", "w", encoding="utf-8") as f:
             f.write(slide_html)
 
     print(f"Generated index.html and {len(slides)} slide pages")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

@@ -11,6 +11,10 @@
       just-flake.outputs.devShell
       pre-commit.devShell
     ];
+    importPackage = path:
+      import path {
+        inherit pkgs inputsFrom;
+      };
   in {
     devShells = {
       default = pkgs.mkShell {
@@ -29,16 +33,12 @@
         pkgs = pkgs-25_05;
         inherit inputsFrom;
       };
-      obsidian = pkgs.mkShell {
-        inherit inputsFrom;
-        buildInputs = with pkgs; [
-          git
-          nodejs_22
-          rsync
-        ];
-      };
-      terraform = import ../../terraform/devShell.nix {inherit pkgs inputsFrom;};
-      k8s = import ../../k8s/devShell.nix {inherit pkgs inputsFrom;};
+      terraform = importPackage ../../terraform/devShell.nix;
+      k8s = importPackage ../../k8s/devShell.nix;
+
+      # packages/**
+      obsidian = importPackage ../../packages/obsidian/devShell.nix;
+      slides = importPackage ../../packages/slides/devShell.nix;
     };
   };
 }
