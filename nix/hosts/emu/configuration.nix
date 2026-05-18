@@ -214,17 +214,13 @@
 
     atticd = {
       enable = true;
-      environmentFile = config.sops.secrets."atticd/emu.env".path;
+      environmentFile = config.sops.secrets."atticd/emu/env".path;
 
       settings = {
         listen = "127.0.0.1:8080";
         api-endpoint = "https://attic.momee.mt/";
         jwt = {};
-        database.url = "sqlite:///var/lib/atticd/server.db";
-        storage = {
-          type = "local";
-          path = "/var/lib/atticd/storage";
-        };
+
         chunking = {
           nar-size-threshold = 64 * 1024;
           min-size = 16 * 1024;

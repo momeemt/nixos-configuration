@@ -17,7 +17,7 @@
         group = config.services.mastodon.group;
         mode = "0400";
       };
-      "atticd/emu.env" = {
+      "atticd/emu/env" = {
         mode = "0400";
       };
 
