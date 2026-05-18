@@ -15,6 +15,11 @@
     h-graph
     finite
   ];
+  typstPackagePath = lib.makeSearchPath "lib/typst-packages" (lib.closePropagation typst-packages);
+  typstFontPaths = lib.makeSearchPath "share/fonts" [
+    pkgs.noto-fonts
+    pkgs.noto-fonts-cjk-sans
+  ];
 in
   stdenvNoCC.mkDerivation {
     pname = "slides";
@@ -34,7 +39,12 @@ in
     buildPhase = ''
       runHook preBuild
 
+      export TYPST_FONT_PATHS="${typstFontPaths}"
+      export TYPST_PACKAGE_PATH="${typstPackagePath}"
+      export TYPST_PACKAGE_CACHE_PATH="$TMPDIR/typst-package-cache"
+
       mkdir -p dist/thumbnails
+      mkdir -p "$TYPST_PACKAGE_CACHE_PATH"
 
       shopt -s nullglob
       for dir in public/*/; do
