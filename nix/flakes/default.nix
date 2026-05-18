@@ -5,6 +5,7 @@ _: {
     # ./files.nix
     ./hosts.nix
     ./just.nix
+    ./packages.nix
     ./pre-commit.nix
     ./systems.nix
     ./templates.nix

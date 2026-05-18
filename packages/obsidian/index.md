@@ -1,7 +1,7 @@
 ---
-title: Obsidian
+title: obsidian.momee.mt
 ---
 
-# Obsidian
+# obsidian.momee.mt
 
 Personal notes published with Quartz.
