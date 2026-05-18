@@ -5,7 +5,7 @@
         treefmt-nix.flakeModule
         git-hooks-nix.flakeModule
         just-flake.flakeModule
-        files.flakeModules.default
+        # files.flakeModules.default
         ./nix/flakes
       ];
     };
