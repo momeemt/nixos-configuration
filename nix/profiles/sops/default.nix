@@ -1,4 +1,4 @@
-{
+{config, ...}: {
   sops = {
     age = {
       generateKey = true;
@@ -12,7 +12,11 @@
         neededForUsers = true;
       };
       k8s-bootstrap-token = {};
-      "resend/mastodon.momee.mt" = {};
+      "resend/mastodon.momee.mt" = {
+        owner = config.services.mastodon.user;
+        group = config.services.mastodon.group;
+        mode = "0400";
+      };
 
       "cloudflared/emu.json" = {
         format = "json";
