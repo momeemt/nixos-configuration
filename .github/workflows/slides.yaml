@@ -36,6 +36,12 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
       - uses: DeterminateSystems/determinate-nix-action@b3e3f405539b332fcb96794525f35fb10c230baa # v3.13.2
+      - name: Setup Attic cache
+        uses: ryanccn/attic-action@7d13811f17fa0347038b70300b111359b2af6c74 # v0.5.0
+        with:
+          endpoint: ${{ secrets.ATTIC_ENDPOINT }}
+          cache: ${{ secrets.ATTIC_CACHE }}
+          token: ${{ secrets.ATTIC_TOKEN }}
       - name: Build slides
         run: nix build .#slides
       - name: Deploy to Cloudflare Pages
