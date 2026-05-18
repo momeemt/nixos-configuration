@@ -4,6 +4,8 @@
 }: let
   typst-packages = with pkgs.typstPackages; [
     codelst
+    h-graph
+    finite
   ];
 in
   pkgs.mkShell {

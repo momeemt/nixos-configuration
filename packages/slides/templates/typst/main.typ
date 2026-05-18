@@ -6,12 +6,17 @@
   nix: (
     main: rgb("#4b6cb1"),
     sub: rgb("#7db1dd"),
+  ),
+  sakura: (
+    main: rgb("#cf646b"),
+    sub: rgb("#f1969c"),
   )
 )
 
 #let icons = (
   momeemt: "assets/momeemt.png",
   ehomaki: "assets/ehomaki.jpeg",
+  sakura: "assets/sakura.jpg",
 )
 
 #let make(
@@ -32,7 +37,7 @@
     colors: colors,
     icon: icon
   )
-  
+
   let styling(it) = {
     set page(
       paper: "presentation-16-9",
@@ -109,16 +114,20 @@
 
   let slide(page-number: true, body) = {
     pagebreak(weak: true)
-    let width = 6mm
-    drawBorder(width)
+    set page(
+      foreground: [
+        #drawBorder(6mm)
+
+        #if page-number == true {
+          place(right + bottom, dx: -15mm, dy: -15mm)[
+            #text(size: 12pt, fill: master.colors.main)[
+              #context counter(page).display() / #context counter(page).final().first()
+            ]
+          ]
+        }
+      ],
+    )
     body
-    if page-number == true {
-      place(right + bottom, dx: -15mm, dy: -15mm)[
-        #text(size: 12pt, fill: master.colors.main)[
-          #context counter(page).display() / #context counter(page).final().first()
-        ]
-      ]
-    }
   }
 
   let description-slide(
