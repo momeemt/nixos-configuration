@@ -27,7 +27,7 @@ for dir in "$PRIVATE_DIR"/*; do
       base="$(basename "$rel")"
 
       case "$base" in
-        .sops.yaml|.gitignore|*.enc.*|*.enc|*.pdf|*.PDF) continue ;;
+      .sops.yaml | .gitignore | *.enc.* | *.enc | *.pdf | *.PDF) continue ;;
       esac
 
       if printf '%s' "$base" | grep -q '\.'; then
