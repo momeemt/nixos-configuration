@@ -38,15 +38,23 @@ jobs:
           - target: nixosConfigurations.emu.config.system.build.toplevel
             os: ubuntu-24.04
             attic_push_jobs: 1
+            attic_push_chunk_target_bytes: 2147483648
+            attic_push_max_path_nar_bytes: 8589934592
           - target: nixosConfigurations.shime.config.system.build.toplevel
             os: ubuntu-24.04
             attic_push_jobs: 1
+            attic_push_chunk_target_bytes: 2147483648
+            attic_push_max_path_nar_bytes: 8589934592
           - target: darwinConfigurations.uguisu.system
             os: macos-15
             attic_push_jobs: 1
+            attic_push_chunk_target_bytes: 2147483648
+            attic_push_max_path_nar_bytes: 8589934592
           - target: homeConfigurations.example.activationPackage
             os: ubuntu-24.04
             attic_push_jobs: 1
+            attic_push_chunk_target_bytes: 2147483648
+            attic_push_max_path_nar_bytes: 8589934592
     steps:
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
@@ -61,6 +69,18 @@ jobs:
           cache: ${{ secrets.ATTIC_CACHE }}
           token: ${{ secrets.ATTIC_TOKEN }}
           skip-push: true
+      - name: Free macOS disk space
+        if: runner.os == 'macOS'
+        run: |
+          set -euxo pipefail
+          df -h
+          sudo rm -rf /Library/Developer/CoreSimulator/Profiles/Runtimes/*.simruntime
+          sudo rm -rf "$HOME/Library/Developer/CoreSimulator"
+          sudo rm -rf "$HOME/hostedtoolcache"
+          sudo rm -rf /Users/runner/hostedtoolcache
+          sudo rm -rf /usr/local/lib/android
+          brew cleanup --prune=all || true
+          df -h
       - name: Setup age key
         run: |
           sudo mkdir -p /var/lib/sops-nix
@@ -90,6 +110,8 @@ jobs:
         env:
           ATTIC_CACHE: ${{ secrets.ATTIC_CACHE }}
           ATTIC_PUSH_JOBS: ${{ matrix.attic_push_jobs }}
+          ATTIC_PUSH_CHUNK_TARGET_BYTES: ${{ matrix.attic_push_chunk_target_bytes }}
+          ATTIC_PUSH_MAX_PATH_NAR_BYTES: ${{ matrix.attic_push_max_path_nar_bytes }}
           MATRIX_TARGET: ${{ matrix.target }}
         run: |
           bash assets/scripts/ci-attic-push-diagnostics.sh "$ATTIC_CACHE" "$RUNNER_TEMP/nix-build-out-paths"
