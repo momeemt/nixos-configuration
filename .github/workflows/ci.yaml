@@ -56,6 +56,7 @@ jobs:
           endpoint: ${{ secrets.ATTIC_ENDPOINT }}
           cache: ${{ secrets.ATTIC_CACHE }}
           token: ${{ secrets.ATTIC_TOKEN }}
+          skip-push: true
       - name: Setup age key
         run: |
           sudo mkdir -p /var/lib/sops-nix
@@ -66,7 +67,23 @@ jobs:
           chmod 600 ~/.config/sops/age/keys.txt
         env:
           SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
-      - run: nix build .#${{ matrix.target }} --no-link
+      - name: Build target
+        run: |
+          set -o pipefail
+          nix build .#${{ matrix.target }} --no-link --print-build-logs --print-out-paths \
+            | tee "$RUNNER_TEMP/nix-build-out-paths"
+      - name: Push build outputs to Attic
+        if: >-
+          success() && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
+        continue-on-error: true
+        timeout-minutes: 10
+        env:
+          ATTIC_CACHE: ${{ secrets.ATTIC_CACHE }}
+        run: |
+          set -o pipefail
+          while IFS= read -r out; do
+            nix path-info --recursive "$out"
+          done < "$RUNNER_TEMP/nix-build-out-paths" | attic push --stdin "$ATTIC_CACHE"
       - name: Cleanup secrets
         if: always()
         run: |
