@@ -28,6 +28,7 @@ jobs:
       - run: nix flake check --all-systems
   nix-build:
     if: github.event_name == 'pull_request'
+    name: nix-build (${{ matrix.target }}, ${{ matrix.os }})
     permissions:
       contents: read
     runs-on: ${{ matrix.os }}
@@ -74,7 +75,13 @@ jobs:
         run: |
           set -euxo pipefail
           df -h
+          sudo du -sh /Applications/Xcode*.app /Library/Developer/CoreSimulator /Users/runner/hostedtoolcache /usr/local/lib/android 2>/dev/null || true
+          if [[ -d /Library/Developer/CommandLineTools ]]; then
+            sudo xcode-select -s /Library/Developer/CommandLineTools || true
+          fi
+          sudo rm -rf /Applications/Xcode*.app
           sudo rm -rf /Library/Developer/CoreSimulator/Profiles/Runtimes/*.simruntime
+          sudo rm -rf /Library/Developer/CoreSimulator
           sudo rm -rf "$HOME/Library/Developer/CoreSimulator"
           sudo rm -rf "$HOME/hostedtoolcache"
           sudo rm -rf /Users/runner/hostedtoolcache
