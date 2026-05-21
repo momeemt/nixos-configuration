@@ -37,12 +37,16 @@ jobs:
         include:
           - target: nixosConfigurations.emu.config.system.build.toplevel
             os: ubuntu-24.04
+            attic_push_jobs: 1
           - target: nixosConfigurations.shime.config.system.build.toplevel
             os: ubuntu-24.04
+            attic_push_jobs: 1
           - target: darwinConfigurations.uguisu.system
             os: macos-15
+            attic_push_jobs: 1
           - target: homeConfigurations.example.activationPackage
             os: ubuntu-24.04
+            attic_push_jobs: 1
     steps:
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
@@ -72,24 +76,23 @@ jobs:
           set -o pipefail
           nix build .#${{ matrix.target }} --no-link --print-build-logs --print-out-paths \
             | tee "$RUNNER_TEMP/nix-build-out-paths"
-      - name: Push build outputs to Attic
-        if: >-
-          success() && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
-        continue-on-error: true
-        timeout-minutes: 10
-        env:
-          ATTIC_CACHE: ${{ secrets.ATTIC_CACHE }}
-        run: |
-          set -o pipefail
-          while IFS= read -r out; do
-            nix path-info --recursive "$out"
-          done < "$RUNNER_TEMP/nix-build-out-paths" | attic push --stdin "$ATTIC_CACHE"
       - name: Cleanup secrets
         if: always()
         run: |
           sudo rm -rf /var/lib/sops-nix
           rm -rf ~/.config/sops/age
           sudo rm -rf /run/secrets* /run/user/*/secrets* 2>/dev/null || true
+      - name: Push build outputs to Attic
+        if: >-
+          success() && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
+        continue-on-error: true
+        timeout-minutes: 60
+        env:
+          ATTIC_CACHE: ${{ secrets.ATTIC_CACHE }}
+          ATTIC_PUSH_JOBS: ${{ matrix.attic_push_jobs }}
+          MATRIX_TARGET: ${{ matrix.target }}
+        run: |
+          bash assets/scripts/ci-attic-push-diagnostics.sh "$ATTIC_CACHE" "$RUNNER_TEMP/nix-build-out-paths"
   container-build:
     if: github.event_name == 'pull_request'
     permissions:
