@@ -7,6 +7,7 @@ import (
 	"regexp"
 
 	"github.com/momeemt/monorepo/packages/attic-pack/internal/chunk"
+	"github.com/momeemt/monorepo/packages/attic-pack/internal/pathinfo"
 	"github.com/momeemt/monorepo/packages/attic-pack/internal/plan"
 )
 
@@ -27,6 +28,8 @@ func run(args []string) error {
 		return runChunk(args[1:])
 	case "plan":
 		return runPlan(args[1:])
+	case "path-sizes":
+		return runPathSizes(args[1:])
 	default:
 		return usageError(fmt.Sprintf("unknown command %q", args[0]))
 	}
@@ -78,6 +81,57 @@ func runChunk(args []string) error {
 	for _, file := range files {
 		fmt.Printf("chunk_file=%s\n", file)
 	}
+
+	return nil
+}
+
+func runPathSizes(args []string) error {
+	flags := flag.NewFlagSet("path-sizes", flag.ContinueOnError)
+	flags.SetOutput(os.Stderr)
+
+	var pathInfoJSONPaths stringList
+	flags.Var(&pathInfoJSONPaths, "path-info-json", "input JSON file from nix path-info --recursive --json; may be repeated")
+	pathSizesPath := flags.String("path-sizes", "", "output TSV file containing NAR size and store path")
+
+	if err := flags.Parse(args); err != nil {
+		return err
+	}
+	if flags.NArg() != 0 {
+		return usageError(fmt.Sprintf("unexpected argument %q", flags.Arg(0)))
+	}
+	if len(pathInfoJSONPaths) == 0 {
+		return usageError("missing --path-info-json")
+	}
+	if *pathSizesPath == "" {
+		return usageError("missing --path-sizes")
+	}
+
+	var entries []plan.Entry
+	for _, jsonPath := range pathInfoJSONPaths {
+		input, err := os.Open(jsonPath)
+		if err != nil {
+			return fmt.Errorf("open --path-info-json %q: %w", jsonPath, err)
+		}
+
+		jsonEntries, err := pathinfo.Read(input)
+		closeErr := input.Close()
+		if err != nil {
+			return fmt.Errorf("read --path-info-json %q: %w", jsonPath, err)
+		}
+		if closeErr != nil {
+			return fmt.Errorf("close --path-info-json %q: %w", jsonPath, closeErr)
+		}
+
+		entries = append(entries, jsonEntries...)
+	}
+
+	entries = pathinfo.Normalize(entries)
+	if err := writePathSizesFile(*pathSizesPath, entries); err != nil {
+		return fmt.Errorf("write --path-sizes: %w", err)
+	}
+
+	fmt.Printf("path_info_json_count=%d\n", len(pathInfoJSONPaths))
+	fmt.Printf("path_size_count=%d\n", len(entries))
 
 	return nil
 }
@@ -184,5 +238,16 @@ func writeSkippedPathSizesFile(path string, entries []plan.SkippedEntry) error {
 }
 
 func usageError(message string) error {
-	return fmt.Errorf("%s\nusage:\n  attic-pack plan --path-sizes <file> --upload-path-sizes <file> --skipped-path-sizes <file> [--upload-paths <file>] [--max-path-nar-bytes <bytes>] [--exclude-store-regex <regex>]\n  attic-pack chunk --upload-path-sizes <file> --chunk-dir <dir> [--chunk-target-bytes <bytes>]", message)
+	return fmt.Errorf("%s\nusage:\n  attic-pack path-sizes --path-info-json <file> [--path-info-json <file> ...] --path-sizes <file>\n  attic-pack plan --path-sizes <file> --upload-path-sizes <file> --skipped-path-sizes <file> [--upload-paths <file>] [--max-path-nar-bytes <bytes>] [--exclude-store-regex <regex>]\n  attic-pack chunk --upload-path-sizes <file> --chunk-dir <dir> [--chunk-target-bytes <bytes>]", message)
+}
+
+type stringList []string
+
+func (values *stringList) Set(value string) error {
+	*values = append(*values, value)
+	return nil
+}
+
+func (values *stringList) String() string {
+	return fmt.Sprint([]string(*values))
 }
