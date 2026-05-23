@@ -53,6 +53,16 @@ func WritePathSizes(w io.Writer, entries []Entry) error {
 	return buffered.Flush()
 }
 
+func WritePaths(w io.Writer, entries []Entry) error {
+	buffered := bufio.NewWriter(w)
+	for _, entry := range entries {
+		if _, err := fmt.Fprintln(buffered, entry.Path); err != nil {
+			return err
+		}
+	}
+	return buffered.Flush()
+}
+
 func WriteSkippedPathSizes(w io.Writer, entries []SkippedEntry) error {
 	buffered := bufio.NewWriter(w)
 	for _, entry := range entries {

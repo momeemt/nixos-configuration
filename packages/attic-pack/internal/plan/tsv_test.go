@@ -41,6 +41,21 @@ func TestWritePathSizes(t *testing.T) {
 	}
 }
 
+func TestWritePaths(t *testing.T) {
+	var out strings.Builder
+	err := WritePaths(&out, []Entry{
+		{Size: 10, Path: "/nix/store/aaa"},
+		{Size: 20, Path: "/nix/store/bbb"},
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if got, want := out.String(), "/nix/store/aaa\n/nix/store/bbb\n"; got != want {
+		t.Fatalf("out = %q, want %q", got, want)
+	}
+}
+
 func TestWriteSkippedPathSizes(t *testing.T) {
 	var out strings.Builder
 	err := WriteSkippedPathSizes(&out, []SkippedEntry{

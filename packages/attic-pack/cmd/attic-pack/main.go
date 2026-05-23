@@ -88,6 +88,7 @@ func runPlan(args []string) error {
 
 	pathSizesPath := flags.String("path-sizes", "", "input TSV file containing NAR size and store path")
 	uploadPathSizesPath := flags.String("upload-path-sizes", "", "output TSV file for selected paths")
+	uploadPathsPath := flags.String("upload-paths", "", "optional output file for selected store paths")
 	skippedPathSizesPath := flags.String("skipped-path-sizes", "", "output TSV file for skipped paths")
 	maxPathNARBytes := flags.Uint64("max-path-nar-bytes", 0, "skip paths with NAR size above this value; 0 disables the limit")
 	excludeStoreRegex := flags.String("exclude-store-regex", "", "skip store paths matching this regular expression")
@@ -136,6 +137,11 @@ func runPlan(args []string) error {
 	if err := writePathSizesFile(*uploadPathSizesPath, result.Upload); err != nil {
 		return fmt.Errorf("write --upload-path-sizes: %w", err)
 	}
+	if *uploadPathsPath != "" {
+		if err := writePathsFile(*uploadPathsPath, result.Upload); err != nil {
+			return fmt.Errorf("write --upload-paths: %w", err)
+		}
+	}
 	if err := writeSkippedPathSizesFile(*skippedPathSizesPath, result.Skipped); err != nil {
 		return fmt.Errorf("write --skipped-path-sizes: %w", err)
 	}
@@ -157,6 +163,16 @@ func writePathSizesFile(path string, entries []plan.Entry) error {
 	return plan.WritePathSizes(file, entries)
 }
 
+func writePathsFile(path string, entries []plan.Entry) error {
+	file, err := os.Create(path)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	return plan.WritePaths(file, entries)
+}
+
 func writeSkippedPathSizesFile(path string, entries []plan.SkippedEntry) error {
 	file, err := os.Create(path)
 	if err != nil {
@@ -168,5 +184,5 @@ func writeSkippedPathSizesFile(path string, entries []plan.SkippedEntry) error {
 }
 
 func usageError(message string) error {
-	return fmt.Errorf("%s\nusage:\n  attic-pack plan --path-sizes <file> --upload-path-sizes <file> --skipped-path-sizes <file> [--max-path-nar-bytes <bytes>] [--exclude-store-regex <regex>]\n  attic-pack chunk --upload-path-sizes <file> --chunk-dir <dir> [--chunk-target-bytes <bytes>]", message)
+	return fmt.Errorf("%s\nusage:\n  attic-pack plan --path-sizes <file> --upload-path-sizes <file> --skipped-path-sizes <file> [--upload-paths <file>] [--max-path-nar-bytes <bytes>] [--exclude-store-regex <regex>]\n  attic-pack chunk --upload-path-sizes <file> --chunk-dir <dir> [--chunk-target-bytes <bytes>]", message)
 }
