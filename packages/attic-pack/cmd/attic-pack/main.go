@@ -6,6 +6,7 @@ import (
 	"os"
 	"regexp"
 
+	"github.com/momeemt/monorepo/packages/attic-pack/internal/chunk"
 	"github.com/momeemt/monorepo/packages/attic-pack/internal/plan"
 )
 
@@ -22,11 +23,63 @@ func run(args []string) error {
 	}
 
 	switch args[0] {
+	case "chunk":
+		return runChunk(args[1:])
 	case "plan":
 		return runPlan(args[1:])
 	default:
 		return usageError(fmt.Sprintf("unknown command %q", args[0]))
 	}
+}
+
+func runChunk(args []string) error {
+	flags := flag.NewFlagSet("chunk", flag.ContinueOnError)
+	flags.SetOutput(os.Stderr)
+
+	uploadPathSizesPath := flags.String("upload-path-sizes", "", "input TSV file containing selected NAR size and store path")
+	chunkDir := flags.String("chunk-dir", "", "output directory for chunk files")
+	chunkTargetBytes := flags.Uint64("chunk-target-bytes", 0, "target total NAR size per chunk; 0 disables splitting")
+
+	if err := flags.Parse(args); err != nil {
+		return err
+	}
+	if flags.NArg() != 0 {
+		return usageError(fmt.Sprintf("unexpected argument %q", flags.Arg(0)))
+	}
+	if *uploadPathSizesPath == "" {
+		return usageError("missing --upload-path-sizes")
+	}
+	if *chunkDir == "" {
+		return usageError("missing --chunk-dir")
+	}
+
+	input, err := os.Open(*uploadPathSizesPath)
+	if err != nil {
+		return fmt.Errorf("open --upload-path-sizes: %w", err)
+	}
+	defer input.Close()
+
+	entries, err := plan.ReadPathSizes(input)
+	if err != nil {
+		return fmt.Errorf("read --upload-path-sizes: %w", err)
+	}
+
+	chunks := chunk.Build(entries, chunk.Options{
+		TargetBytes: *chunkTargetBytes,
+	})
+
+	files, err := chunk.WriteFiles(*chunkDir, chunks)
+	if err != nil {
+		return fmt.Errorf("write --chunk-dir: %w", err)
+	}
+
+	fmt.Printf("input_path_count=%d\n", len(entries))
+	fmt.Printf("chunk_count=%d\n", len(chunks))
+	for _, file := range files {
+		fmt.Printf("chunk_file=%s\n", file)
+	}
+
+	return nil
 }
 
 func runPlan(args []string) error {
@@ -115,5 +168,5 @@ func writeSkippedPathSizesFile(path string, entries []plan.SkippedEntry) error {
 }
 
 func usageError(message string) error {
-	return fmt.Errorf("%s\nusage: attic-pack plan --path-sizes <file> --upload-path-sizes <file> --skipped-path-sizes <file> [--max-path-nar-bytes <bytes>] [--exclude-store-regex <regex>]", message)
+	return fmt.Errorf("%s\nusage:\n  attic-pack plan --path-sizes <file> --upload-path-sizes <file> --skipped-path-sizes <file> [--max-path-nar-bytes <bytes>] [--exclude-store-regex <regex>]\n  attic-pack chunk --upload-path-sizes <file> --chunk-dir <dir> [--chunk-target-bytes <bytes>]", message)
 }
