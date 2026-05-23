@@ -7,6 +7,8 @@ import (
 	"regexp"
 
 	"github.com/momeemt/monorepo/packages/attic-pack/internal/chunk"
+	"github.com/momeemt/monorepo/packages/attic-pack/internal/nixpathinfo"
+	"github.com/momeemt/monorepo/packages/attic-pack/internal/outpaths"
 	"github.com/momeemt/monorepo/packages/attic-pack/internal/pathinfo"
 	"github.com/momeemt/monorepo/packages/attic-pack/internal/plan"
 )
@@ -26,6 +28,8 @@ func run(args []string) error {
 	switch args[0] {
 	case "chunk":
 		return runChunk(args[1:])
+	case "collect-json":
+		return runCollectJSON(args[1:])
 	case "plan":
 		return runPlan(args[1:])
 	case "path-sizes":
@@ -80,6 +84,55 @@ func runChunk(args []string) error {
 	fmt.Printf("chunk_count=%d\n", len(chunks))
 	for _, file := range files {
 		fmt.Printf("chunk_file=%s\n", file)
+	}
+
+	return nil
+}
+
+func runCollectJSON(args []string) error {
+	flags := flag.NewFlagSet("collect-json", flag.ContinueOnError)
+	flags.SetOutput(os.Stderr)
+
+	outPathsPath := flags.String("out-paths", "", "input file containing nix build output paths")
+	jsonDir := flags.String("json-dir", "", "output directory for path-info JSON files")
+	nixBin := flags.String("nix-bin", "nix", "nix executable path")
+
+	if err := flags.Parse(args); err != nil {
+		return err
+	}
+	if flags.NArg() != 0 {
+		return usageError(fmt.Sprintf("unexpected argument %q", flags.Arg(0)))
+	}
+	if *outPathsPath == "" {
+		return usageError("missing --out-paths")
+	}
+	if *jsonDir == "" {
+		return usageError("missing --json-dir")
+	}
+
+	input, err := os.Open(*outPathsPath)
+	if err != nil {
+		return fmt.Errorf("open --out-paths: %w", err)
+	}
+	defer input.Close()
+
+	paths, err := outpaths.Read(input)
+	if err != nil {
+		return fmt.Errorf("read --out-paths: %w", err)
+	}
+	if len(paths) == 0 {
+		return fmt.Errorf("read --out-paths: no output paths found")
+	}
+
+	files, err := nixpathinfo.CollectJSON(paths, *jsonDir, nixpathinfo.CommandRunner(*nixBin))
+	if err != nil {
+		return fmt.Errorf("collect path-info JSON: %w", err)
+	}
+
+	fmt.Printf("out_path_count=%d\n", len(paths))
+	fmt.Printf("path_info_json_count=%d\n", len(files))
+	for _, file := range files {
+		fmt.Printf("path_info_json=%s\n", file)
 	}
 
 	return nil
@@ -238,7 +291,7 @@ func writeSkippedPathSizesFile(path string, entries []plan.SkippedEntry) error {
 }
 
 func usageError(message string) error {
-	return fmt.Errorf("%s\nusage:\n  attic-pack path-sizes --path-info-json <file> [--path-info-json <file> ...] --path-sizes <file>\n  attic-pack plan --path-sizes <file> --upload-path-sizes <file> --skipped-path-sizes <file> [--upload-paths <file>] [--max-path-nar-bytes <bytes>] [--exclude-store-regex <regex>]\n  attic-pack chunk --upload-path-sizes <file> --chunk-dir <dir> [--chunk-target-bytes <bytes>]", message)
+	return fmt.Errorf("%s\nusage:\n  attic-pack collect-json --out-paths <file> --json-dir <dir> [--nix-bin <path>]\n  attic-pack path-sizes --path-info-json <file> [--path-info-json <file> ...] --path-sizes <file>\n  attic-pack plan --path-sizes <file> --upload-path-sizes <file> --skipped-path-sizes <file> [--upload-paths <file>] [--max-path-nar-bytes <bytes>] [--exclude-store-regex <regex>]\n  attic-pack chunk --upload-path-sizes <file> --chunk-dir <dir> [--chunk-target-bytes <bytes>]", message)
 }
 
 type stringList []string
