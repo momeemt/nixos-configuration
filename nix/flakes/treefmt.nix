@@ -1,11 +1,21 @@
 _: {
-  perSystem = {pkgs, ...}: {
+  perSystem = {
+    pkgs,
+    lib,
+    ...
+  }: {
     treefmt = {
       package = pkgs.treefmt;
       enableDefaultExcludes = true;
       flakeCheck = true;
       flakeFormatter = true;
       projectRootFile = "flake.nix";
+      settings.formatter.dockerfmt.options = lib.mkForce [
+        "-w"
+        "-n"
+        "-i"
+        "4"
+      ];
 
       programs = {
         # GitHub Actions

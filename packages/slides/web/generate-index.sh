@@ -6,7 +6,7 @@ DIST_DIR="${1:-.}"
 SITE_URL="https://slides.momee.mt"
 
 # Generate index.html
-cat > "$DIST_DIR/index.html" << 'HEADER'
+cat >"$DIST_DIR/index.html" <<'HEADER'
 <!DOCTYPE html>
 <html lang="ja" prefix="og: https://ogp.me/ns#">
 <head>
@@ -22,13 +22,17 @@ cat > "$DIST_DIR/index.html" << 'HEADER'
 HEADER
 
 # Add first thumbnail as default OG image
-first_thumb=$(ls "$DIST_DIR"/thumbnails/*.png 2>/dev/null | head -1)
+first_thumb=$(
+  find "$DIST_DIR/thumbnails" -maxdepth 1 -type f -name '*.png' -print 2>/dev/null |
+    sort |
+    head -n 1 || true
+)
 if [ -n "$first_thumb" ]; then
   first_name=$(basename "$first_thumb" .png)
-  echo "  <meta property=\"og:image\" content=\"${SITE_URL}/thumbnails/${first_name}.png\">" >> "$DIST_DIR/index.html"
+  echo "  <meta property=\"og:image\" content=\"${SITE_URL}/thumbnails/${first_name}.png\">" >>"$DIST_DIR/index.html"
 fi
 
-cat >> "$DIST_DIR/index.html" << HEADER2
+cat >>"$DIST_DIR/index.html" <<HEADER2
   <meta property="og:url" content="${SITE_URL}/">
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
@@ -105,7 +109,7 @@ for pdf in "$DIST_DIR"/*.pdf; do
   name=$(basename "$pdf" .pdf)
 
   # Add card to index
-  cat >> "$DIST_DIR/index.html" << CARD
+  cat >>"$DIST_DIR/index.html" <<CARD
     <div class="slide-card">
       <a href="/s/${name}/">
         <img class="slide-thumbnail" src="/thumbnails/${name}.png" alt="${name}" loading="lazy">
@@ -122,7 +126,7 @@ CARD
 
   # Generate individual slide page with OGP
   mkdir -p "$DIST_DIR/s/${name}"
-  cat > "$DIST_DIR/s/${name}/index.html" << SLIDE_PAGE
+  cat >"$DIST_DIR/s/${name}/index.html" <<SLIDE_PAGE
 <!DOCTYPE html>
 <html lang="ja" prefix="og: https://ogp.me/ns#">
 <head>
@@ -363,7 +367,7 @@ CARD
 SLIDE_PAGE
 done
 
-cat >> "$DIST_DIR/index.html" << 'FOOTER'
+cat >>"$DIST_DIR/index.html" <<'FOOTER'
   </div>
 </body>
 </html>

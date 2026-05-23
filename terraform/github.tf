@@ -46,3 +46,21 @@ resource "github_actions_secret" "cloudflare_api_token" {
   secret_name     = "CLOUDFLARE_API_TOKEN"
   plaintext_value = local.cloudflare.api_token
 }
+
+resource "github_actions_secret" "attic_endpoint" {
+  repository      = "monorepo"
+  secret_name     = "ATTIC_ENDPOINT"
+  plaintext_value = local.github.attic_endpoint
+}
+
+resource "github_actions_secret" "attic_cache" {
+  repository      = "monorepo"
+  secret_name     = "ATTIC_CACHE"
+  plaintext_value = local.github.attic_cache
+}
+
+resource "github_actions_secret" "attic_token" {
+  repository      = "monorepo"
+  secret_name     = "ATTIC_TOKEN"
+  plaintext_value = local.github.attic_token
+}

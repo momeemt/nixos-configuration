@@ -5,13 +5,13 @@ _final: prev: {
       google-chrome = prev.brewCasks.google-chrome.overrideAttrs (oldAttrs: {
         src = prev.fetchurl {
           url = prev.lib.lists.head oldAttrs.src.urls;
-          hash = "sha256-Kxt8MrW5ANGAID0L9B/dTA56iE1E+AFp3ym1wqKrqvE=";
+          hash = "sha256-6StRgunAGKxEj8FXwpKeYOmK1QfIjdvrWY0VS9kVaqo=";
         };
       });
       google-drive = prev.brewCasks.google-drive.overrideAttrs (oldAttrs: {
         src = prev.fetchurl {
           url = prev.lib.lists.head oldAttrs.src.urls;
-          hash = "sha256-fhEqR2cBPuTdbFxdeiIt96yJkVxpxLsuWpHCP9leF84=";
+          hash = "sha256-KEmYZq3cMlx8/hrgXqtR1EPU8SJ2oxxxPNyOad5lgks=";
         };
         nativeBuildInputs = with prev; (oldAttrs.nativeBuildInputs or []) ++ [pbzx];
         unpackPhase = ''
@@ -38,7 +38,7 @@ _final: prev: {
       spotify = prev.brewCasks.spotify.overrideAttrs (oldAttrs: {
         src = prev.fetchurl {
           url = prev.lib.lists.head oldAttrs.src.urls;
-          hash = "sha256-cslyAkpAXsVvIfx7tsDpDxnSjidH2uHCeFBq3pXFaMo=";
+          hash = "sha256-m7Wbcl1ewIa92n/eCTgF62EN63KJyWPRW2ZF71/8btk=";
         };
       });
       unity-hub = prev.brewCasks.unity-hub.overrideAttrs (oldAttrs: {
