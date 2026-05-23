@@ -97,8 +97,6 @@ jobs:
       - name: Push build outputs to Attic
         if: >-
           success() && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
-        continue-on-error: true
-        timeout-minutes: 60
         env:
           ATTIC_CACHE: ${{ secrets.ATTIC_CACHE }}
           ATTIC_PUSH_JOBS: ${{ matrix.attic_push_jobs }}
@@ -106,7 +104,7 @@ jobs:
           ATTIC_PUSH_MAX_PATH_NAR_BYTES: ${{ matrix.attic_push_max_path_nar_bytes }}
           MATRIX_TARGET: ${{ matrix.target }}
         run: |
-          bash assets/scripts/ci-attic-push-diagnostics.sh "$ATTIC_CACHE" "$RUNNER_TEMP/nix-build-out-paths"
+          nix run .#attic-pack -- push "$ATTIC_CACHE" "$RUNNER_TEMP/nix-build-out-paths"
   container-build:
     if: github.event_name == 'pull_request'
     permissions:
