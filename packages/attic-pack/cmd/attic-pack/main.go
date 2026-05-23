@@ -15,6 +15,7 @@ import (
 	"github.com/momeemt/monorepo/packages/attic-pack/internal/outpaths"
 	"github.com/momeemt/monorepo/packages/attic-pack/internal/pathinfo"
 	"github.com/momeemt/monorepo/packages/attic-pack/internal/plan"
+	"github.com/momeemt/monorepo/packages/attic-pack/internal/report"
 )
 
 func main() {
@@ -252,15 +253,32 @@ func runPush(args []string) error {
 		return fmt.Errorf("write chunks: %w", err)
 	}
 
-	fmt.Printf("cache=%s\n", cacheName)
-	fmt.Printf("dry_run=%t\n", *dryRun)
-	fmt.Printf("diag_dir=%s\n", *diagDir)
-	fmt.Printf("out_path_count=%d\n", len(paths))
-	fmt.Printf("path_info_json_count=%d\n", len(pathInfoJSONPaths))
-	fmt.Printf("closure_path_count=%d\n", len(closureEntries))
-	fmt.Printf("upload_path_count=%d\n", len(result.Upload))
-	fmt.Printf("skipped_path_count=%d\n", len(result.Skipped))
-	fmt.Printf("chunk_count=%d\n", len(chunks))
+	summary := report.Summary{
+		CacheName:         cacheName,
+		Target:            envOrDefault("MATRIX_TARGET", "unknown"),
+		DryRun:            *dryRun,
+		DiagDir:           *diagDir,
+		Jobs:              *jobs,
+		ChunkTargetBytes:  *chunkTargetBytes,
+		MaxPathNARBytes:   *maxPathNARBytes,
+		OutPathCount:      len(paths),
+		PathInfoJSONCount: len(pathInfoJSONPaths),
+		ClosurePathCount:  len(closureEntries),
+		UploadPathCount:   len(result.Upload),
+		SkippedPathCount:  len(result.Skipped),
+		ChunkCount:        len(chunks),
+	}
+	if err := report.WriteText(os.Stdout, summary); err != nil {
+		return fmt.Errorf("write summary: %w", err)
+	}
+	if err := report.WriteSkippedText(os.Stdout, result.Skipped, 20); err != nil {
+		return fmt.Errorf("write skipped paths summary: %w", err)
+	}
+	if stepSummaryPath := os.Getenv("GITHUB_STEP_SUMMARY"); stepSummaryPath != "" {
+		if err := writeGitHubStepSummary(stepSummaryPath, summary); err != nil {
+			return fmt.Errorf("write GitHub step summary: %w", err)
+		}
+	}
 
 	if *dryRun {
 		return nil
@@ -270,7 +288,19 @@ func runPush(args []string) error {
 		return nil
 	}
 
-	return atticpush.PushChunks(chunkFiles, atticpush.CommandRunner(*atticBin, cacheName, *jobs))
+	runner := atticpush.CommandRunner(*atticBin, cacheName, *jobs)
+	for index, chunkFile := range chunkFiles {
+		metadata := chunks[index]
+		fmt.Printf("attic_push_chunk_index=%d paths=%d estimated_nar_bytes=%d\n", metadata.Index, len(metadata.Paths), metadata.Bytes)
+		err := runner(chunkFile)
+		if err != nil {
+			fmt.Printf("attic_push_chunk_exit_status=1 index=%d\n", metadata.Index)
+			return fmt.Errorf("push chunk %d: %w", metadata.Index, err)
+		}
+		fmt.Printf("attic_push_chunk_exit_status=0 index=%d\n", metadata.Index)
+	}
+
+	return nil
 }
 
 func runPathSizes(args []string) error {
@@ -477,6 +507,13 @@ func defaultDiagDir() string {
 	return filepath.Join(os.TempDir(), "attic-diagnostics")
 }
 
+func envOrDefault(name string, fallback string) string {
+	if value := os.Getenv(name); value != "" {
+		return value
+	}
+	return fallback
+}
+
 func envUint64(name string, fallback uint64) (uint64, error) {
 	value := os.Getenv(name)
 	if value == "" {
@@ -489,6 +526,16 @@ func envUint64(name string, fallback uint64) (uint64, error) {
 	}
 
 	return parsed, nil
+}
+
+func writeGitHubStepSummary(path string, summary report.Summary) error {
+	file, err := os.OpenFile(path, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0o644)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	return report.WriteGitHubStepSummary(file, summary)
 }
 
 func splitPushArgs(args []string) ([]string, []string, error) {
