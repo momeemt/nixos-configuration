@@ -1,64 +1,50 @@
-# Repository Guidelines
+# momeemt/monorepo
 
-## Project Structure & Module Organization
+`momeemt/monorepo`は、公開可能なソースコード、システム構成、インフラ構成、開発環境設定を 1 つにまとめたモノレポである。
+このリポジトリは、独立したリポジトリの集合ではない。Nix によるシステム構成、Terraform/Kubernetes
+によるインフラ構成、`packages/`配下のアプリケーション実装は相互に依存する。例えば、VM 定義はその上で動く Kubernetes
+クラスタに影響し、アプリケーションは実装だけでなく、ビルド、デプロイ、フォーマッタ、リンタ、開発環境の設定とも密接に関わる。
+変更時には、編集対象のディレクトリだけで判断しないこと。必要に応じて隣接する構成も確認する。
 
-System definitions live in `nix/hosts/<host>` with matching `nix/home/<host>`
-manifests and shared modules in `nix/modules`. Reusable tooling is packaged in
-`nix/packages`, infrastructure in `terraform/` and `k8s/`, scripts in
-`assets/scripts`, and the docs site in `docs/`. Keep sensitive data in
-`secrets/` only in encrypted form.
+- アプリケーション変更では、パッケージ定義、開発シェル設定、CI、デプロイ定義も確認する
+- Kubernetes マニフェストの変更では、関連する NixOS ホストの設定、VM 定義も確認する
+- NixOS モジュールの変更では、Terraform やデプロイ済みサービスへの影響も確認する
 
-## Build, Test, and Development Commands
+このモノレポの目的の 1
+つは、人間とコーディングエージェントが暗黙的な依存関係をコードリーディングによって発見しやすくすることである。外部の文書化されていない状態に依存するような変更は避ける。
 
-Use `nix develop` (or `direnv allow` after `just env`) to enter the pinned
-toolchain. Primary commands:
+## 目標
 
-- `nix fmt` – quick formatting check through treefmt.
-- `nix run .#treefmt` – apply alejandra, shfmt, yamlfmt, ruff, etc.
-- `nix flake check` – evaluate all hosts and run repo checks.
-- `just apply` – build and switch the current host configuration.
-- `terraform plan -chdir=terraform` – review infra changes.
-- `npm run start --prefix docs` / `npm run build --prefix docs` – preview and
-  ship docs.
+計算機を入れ替えたり、突然初期化したとしても設定を適用すると以前と全く同様の環境を復元できるような設定を構築することが目標である。そのような環境を
+disposable であるという。
+静的に定まるソフトウェアの設定は比較的に管理しやすいが、ファイルシステムやプロセスの管理、インフラ環境などの動的な状態を完全に再現することは難しい。動的な状態を
+NAS やオブジェクトストレージ等で管理したり、バックアップを取ったりすることで、即座に環境を捨てて作り直せる状態にできることが理想形である。
 
-## Coding Style & Naming Conventions
+## 設計指針
 
-Nix code uses two-space indentation, lowerCamelCase attributes, and kebab-case
-directories (e.g., `nix/modules/hosts/services/yabai`). Shell scripts should be
-POSIX/Bash, executable, and start with `set -euo pipefail`. Documentation pages
-belong in `docs/docs/<slug>.md(x)`. Always run `nix run .#treefmt` before
-opening a PR; it bundles alejandra, deadnix, statix, shfmt, stylua, terraform
-fmt, mdformat, and actionlint.
+以下のような設計を意識して設定や実装の追加・変更を行う。
 
-## Testing Guidelines
+- 手続き的なシステムよりも宣言的なシステムを選ぶ
+  - 記述言語がチューリング完全のプログラミング言語であれば、設定の意味を静的に把握してすべてをカバーできるような宣言に落とし込むことは非常に難しく、Nix
+    や Terraform のような宣言的なシステムを扱っていても手続き的な操作を記述することは避けられない
+  - しかし、抽象化の試行錯誤が積み重なることで宣言として扱える範囲が増え、より良い抽象や設計を発見できる可能性が高まるため、できるだけ宣言的なシステムに落とし込めるように努力する
+- プログラマの責任を委譲できるシステムを選ぶ
+  - 書いたのが自分でも時間が経てば他人が書いたコードのように意図を読み取るのが難しくなる。LLM にコードを書かせる機会が多い現代ではなおさらである
+  - 質の良い手順書を維持しなければ環境を再現できなくなる可能性がある状態は望ましくない。できるだけプログラマの責任を減らしてツールが責任を持ち、記憶や手順書に頼る必要を減らす努力をする
+- スクリプトは埋め込まず、ファイルに書き出して読み出す形で実装を行う
+  - Nix や GitHub Actions Workflow 定義ファイルには sh や Python
+    などのスクリプトを直接埋め込めるが、静的検査やテストとの相性が悪い
+- Web サイトをホストしたい場合には基本的に Cloudflare Pages を利用する
+  - GitHub Pages はリポジトリに対して 1 つの Web サイトしか公開できないため
+- テストは `nix flake check` から実行できるように設計する
+- アプリケーション開発に利用する開発環境は `packages/**/devShell.nix` に定義する
+  - `just env` を実行すると `.envrc` が生成されるので、`direnv allow` を実行すると devShell に入ることができる
 
-`nix flake check` is the baseline; when touching a machine, also run
-`nix build .#darwinConfigurations.<host>.system` or
-`nixos-rebuild dry-activate --flake .#<host>` to catch evaluation errors. Docs
-changes must pass `npm run build --prefix docs`, and Terraform edits require a
-clean `terraform plan`. Keep auxiliary tests next to the component they validate
-(e.g., `nix/flakes/tmux-nix/tests`) and follow that placement for new fixtures.
+## 禁止事項
 
-## Commit & Pull Request Guidelines
-
-Use `<type>: <imperative>` commit subjects (`add:`, `fix:`, `chore:`, `docs:`)
-consistent with existing history and keep change sets tight. Each PR should
-summarize the intent, list the commands you executed (`nix fmt`,
-`nix flake check`, host builds, Terraform plan, docs build), and link related
-issues. Include screenshots or snippets when altering docs/assets and flag
-host-specific or secret-related impacts explicitly.
-
-## Security & Secrets
-
-All secrets are handled by SOPS. Re-encrypt updated files with
-`nix run .#encrypt-secrets`, keep key definitions in `nix/lib/publicKeys.nix`,
-and update `nix/lib/hm-users.nix` plus `nix run .#updatekeys-secrets` whenever
-access changes. Never commit plaintext credentials; instead, reference the
-encrypted artifacts from Nix modules, Terraform, or docs.
-
-## Agent-Specific Instructions
-
-Before any task, run `echo $LANG` to confirm the runtime locale and mirror that
-language in conversation (e.g., use Japanese when it prints `ja_JP.UTF-8`).
-Unless the user requests otherwise, keep source code, docs, and comments in
-English.
+- 手順をテキストのみに書き、Nix や Terraform、Kubernetes の定義に反映しない変更を避ける
+- CI や Nix の検査を通さず、外部サービス上の手作業を前提にした構成を追加しない
+- シェルスクリプトで 100 行以上の複雑なスクリプトを記述することを避ける
+  - 機能が多岐に渡る場合には一度設計から見直し、本当にその機能が必要かどうかについて検討し、いたずらにコード行を増やさず堅牢なソフトウェアのみを追加する
+- すぐにコードを書いて解決しようとしない
+  - コードを書く以外に本当にその問題を解決する方法がないかどうかを検討する
