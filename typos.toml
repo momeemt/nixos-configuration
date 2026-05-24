@@ -6,8 +6,8 @@
     "**/*.pem",
     "assets/gpg/**",
     "flake.lock",
-    "packages/obsidian/.obsidian/**",
-    "packages/slides/**",
+    "packages/o/obsidian/.obsidian/**",
+    "packages/s/slides/**",
     "secrets/**",
   ]
 

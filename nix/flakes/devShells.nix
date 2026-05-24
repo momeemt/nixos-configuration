@@ -37,9 +37,9 @@
       k8s = importPackage ../../k8s/devShell.nix;
 
       # packages/**
-      attic-pack = importPackage ../../packages/attic-pack/devShell.nix;
-      obsidian = importPackage ../../packages/obsidian/devShell.nix;
-      slides = importPackage ../../packages/slides/devShell.nix;
+      attic-pack = importPackage ../../packages/a/attic-pack/devShell.nix;
+      obsidian = importPackage ../../packages/o/obsidian/devShell.nix;
+      slides = importPackage ../../packages/s/slides/devShell.nix;
     };
   };
 }
