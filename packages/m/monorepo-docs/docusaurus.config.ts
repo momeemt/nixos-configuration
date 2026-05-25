@@ -13,7 +13,7 @@ const config: Config = {
   },
 
   // Set the production url of your site here
-  url: 'https://config.momee.mt',
+  url: 'https://monorepo.momee.mt',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/',
@@ -21,7 +21,7 @@ const config: Config = {
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'momeemt', // Usually your GitHub org/user name.
-  projectName: 'config', // Usually your repo name.
+  projectName: 'monorepo', // Usually your repo name.
 
   onBrokenLinks: 'throw',
 
