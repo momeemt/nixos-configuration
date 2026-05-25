@@ -38,7 +38,7 @@ _final: prev: {
       spotify = prev.brewCasks.spotify.overrideAttrs (oldAttrs: {
         src = prev.fetchurl {
           url = prev.lib.lists.head oldAttrs.src.urls;
-          hash = "sha256-m7Wbcl1ewIa92n/eCTgF62EN63KJyWPRW2ZF71/8btk=";
+          hash = "sha256-rQuvF7LWHBR3q8GJQWO671n1NRDKinQps+zYfXPktrU=";
         };
       });
       unity-hub = prev.brewCasks.unity-hub.overrideAttrs (oldAttrs: {

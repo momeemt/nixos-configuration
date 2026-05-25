@@ -64,7 +64,7 @@ _: {
               mdformat-gfm-alerts
             ];
           excludes = [
-            "packages/obsidian/**"
+            "packages/o/obsidian/**"
           ];
           settings = {
             end-of-line = "lf";
@@ -193,7 +193,7 @@ _: {
           package = pkgs.autocorrect;
           threads = 0; # auto
           excludes = [
-            "packages/obsidian/**"
+            "packages/o/obsidian/**"
           ];
           settings = {
             context = {

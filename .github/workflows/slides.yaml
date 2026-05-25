@@ -8,7 +8,7 @@ on:
       - ".github/workflows/slides.yaml"
       - "nix/flakes/default.nix"
       - "nix/flakes/packages.nix"
-      - "packages/slides/**"
+      - "packages/s/slides/**"
   pull_request:
     branches:
       - '**'
@@ -16,7 +16,7 @@ on:
       - ".github/workflows/slides.yaml"
       - "nix/flakes/default.nix"
       - "nix/flakes/packages.nix"
-      - "packages/slides/**"
+      - "packages/s/slides/**"
   workflow_dispatch:
 permissions:
   contents: read
