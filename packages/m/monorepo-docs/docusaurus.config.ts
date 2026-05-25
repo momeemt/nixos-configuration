@@ -3,7 +3,7 @@ import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
-  title: 'config.momee.mt',
+  title: 'monorepo.momee.mt',
   tagline: 'Build once, bring everything up.',
   // favicon: 'img/favicon.ico',
 
@@ -58,7 +58,7 @@ const config: Config = {
       respectPrefersColorScheme: true,
     },
     navbar: {
-      title: 'config.momee.mt',
+      title: 'monorepo.momee.mt',
       // logo: {
       //   alt: 'My Site Logo',
       //   src: 'img/logo.svg',
@@ -71,7 +71,7 @@ const config: Config = {
           label: 'Documentation',
         },
         {
-          href: 'https://github.com/momeemt/config',
+          href: 'https://github.com/momeemt/monorepo',
           label: 'GitHub',
           position: 'right',
         },
