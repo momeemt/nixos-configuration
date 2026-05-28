@@ -1,9 +1,22 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
-
+import mdx from '@astrojs/mdx';
 import react from '@astrojs/react';
+import rehypeKatex from 'rehype-katex';
+import remarkGfm from 'remark-gfm';
+import remarkInlineFootnotes from './src/lib/remark-inline-footnotes.mjs';
+import remarkMath from 'remark-math';
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [react()]
+  site: 'https://blog.momee.mt',
+  integrations: [mdx(), react()],
+  markdown: {
+    syntaxHighlight: 'shiki',
+    shikiConfig: {
+      theme: 'github-light'
+    },
+    remarkPlugins: [remarkMath, remarkGfm, remarkInlineFootnotes],
+    rehypePlugins: [rehypeKatex]
+  }
 });
