@@ -1,0 +1,59 @@
+---
+name: "Deploy Blog"
+on:
+  push:
+    branches:
+      - '**'
+    paths:
+      - ".github/workflows/blog.yaml"
+      - "nix/flakes/default.nix"
+      - "nix/flakes/packages.nix"
+      - "packages/b/blog/**"
+  pull_request:
+    branches:
+      - '**'
+    paths:
+      - ".github/workflows/blog.yaml"
+      - "nix/flakes/default.nix"
+      - "nix/flakes/packages.nix"
+      - "packages/b/blog/**"
+  workflow_dispatch:
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+concurrency:
+  group: blog-pages-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  deploy:
+    if: >-
+      github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: DeterminateSystems/determinate-nix-action@b3e3f405539b332fcb96794525f35fb10c230baa # v3.13.2
+      - name: Build Blog
+        run: nix build .#blog
+      - name: Deploy to Cloudflare Pages
+        id: deploy
+        uses: ./.github/actions/deploy-cloudflare-pages
+        with:
+          directory: result
+          project-name: blog-momee-mt-2026
+          domain: blog.momee.mt
+          cloudflare-account-id: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          cloudflare-api-token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      - name: Comment preview URL
+        if: github.event_name == 'pull_request'
+        uses: ./.github/actions/comment-preview-url
+        with:
+          preview-name: "Blog"
+          deployment-url: ${{ steps.deploy.outputs.deployment_url }}
+          deploy-branch: ${{ steps.deploy.outputs.deploy_branch }}
+          github-token: ${{ github.token }}
+          pr-number: ${{ github.event.pull_request.number }}
+          commit-sha: ${{ github.sha }}
