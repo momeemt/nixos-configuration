@@ -1,4 +1,7 @@
-{pkgs}: let
+{
+  pkgs,
+  site ? "https://blog.momee.mt",
+}: let
   inherit (pkgs) lib;
 
   src = lib.fileset.toSource {
@@ -21,6 +24,8 @@ in
 
     npmDepsHash = "sha256-x2b09dT6AOy0R0+MXu/k9aGzHxQaXpX15WSra1RP5jw=";
     nodejs = pkgs.nodejs_24;
+
+    BLOG_SITE = lib.removeSuffix "/" site;
 
     npmBuildScript = "build";
 

@@ -7,9 +7,11 @@ import remarkGfm from 'remark-gfm';
 import remarkInlineFootnotes from './src/lib/remark-inline-footnotes.mjs';
 import remarkMath from 'remark-math';
 
+const site = process.env.BLOG_SITE ?? 'https://blog.momee.mt';
+
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://blog.momee.mt',
+  site,
   integrations: [mdx(), react()],
   markdown: {
     syntaxHighlight: 'shiki',

@@ -4,7 +4,7 @@ import { findAuthor } from '../lib/authors';
 
 const siteName = 'blog.momee.mt';
 const siteDescription = 'momeemt のブログ';
-const fallbackSite = 'https://blog.momee.mt';
+const fallbackSite = process.env.BLOG_SITE ?? 'https://blog.momee.mt';
 
 function escapeXml(value: string) {
   return value
