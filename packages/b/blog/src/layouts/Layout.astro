@@ -775,6 +775,31 @@ const rssUrl = new URL('/rss.xml', Astro.site ?? Astro.url).href;
         background: #f7f7f7 !important;
       }
 
+      .astro-code[data-language="automaton"] {
+        background: transparent !important;
+      }
+
+      .graphvizDiagram {
+        margin: 1.5rem 0;
+        padding: 1rem;
+        overflow-x: auto;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background: #f7f7f7;
+      }
+
+      .graphvizDiagramAutomaton {
+        background: transparent;
+        border: 0;
+      }
+
+      .graphvizDiagramSvg {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        margin: 0 auto;
+      }
+
       .katex-display {
         overflow-x: auto;
         overflow-y: hidden;

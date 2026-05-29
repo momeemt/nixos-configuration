@@ -22,7 +22,7 @@ in
 
     inherit src;
 
-    npmDepsHash = "sha256-RZqRYoe00PzTno7+i3aqyBc6nBwY0RDxd0D+gjr71OU=";
+    npmDepsHash = "sha256-TiEV7y7uCGnUqO6q/2hCgDvgzurmRzPk9OLaaFm0X2I=";
     nodejs = pkgs.nodejs_24;
 
     BLOG_SITE = lib.removeSuffix "/" site;

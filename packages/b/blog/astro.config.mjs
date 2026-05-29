@@ -4,6 +4,7 @@ import mdx from '@astrojs/mdx';
 import react from '@astrojs/react';
 import rehypeKatex from 'rehype-katex';
 import remarkGfm from 'remark-gfm';
+import remarkGraphviz from './src/lib/remark-graphviz.mjs';
 import remarkInlineFootnotes from './src/lib/remark-inline-footnotes.mjs';
 import remarkMath from 'remark-math';
 
@@ -18,7 +19,7 @@ export default defineConfig({
     shikiConfig: {
       theme: 'github-light'
     },
-    remarkPlugins: [remarkMath, remarkGfm, remarkInlineFootnotes],
+    remarkPlugins: [remarkMath, remarkGfm, remarkInlineFootnotes, remarkGraphviz],
     rehypePlugins: [rehypeKatex]
   }
 });
