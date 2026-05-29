@@ -1,7 +1,7 @@
 import type { Author } from '../lib/authors';
 
 type PostSummary = {
-  category: 'Life' | 'Tech';
+  category: 'Life' | 'Tech' | 'CS';
   href: string;
   title: string;
   description?: string;
