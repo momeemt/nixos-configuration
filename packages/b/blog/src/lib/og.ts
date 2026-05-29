@@ -1,4 +1,6 @@
 import path from 'node:path';
+import { mkdirSync } from 'node:fs';
+import { createRequire } from 'node:module';
 import sharp from 'sharp';
 
 type OgImageOptions = {
@@ -10,12 +12,29 @@ type OgImageOptions = {
 const width = 1200;
 const height = 630;
 const textX = 92;
-const titleY = 166;
+const titleTop = 124;
 const titleSize = 54;
 const titleLineHeight = 66;
 const descriptionSize = 26;
 const descriptionLineHeight = 38;
-const fontFamily = 'Noto Sans JP, Hiragino Sans, Yu Gothic, Arial, sans-serif';
+const require = createRequire(import.meta.url);
+const notoSansJpRoot = path.dirname(require.resolve('@fontsource/noto-sans-jp/package.json'));
+const fontConfigFile = path.join(process.cwd(), 'src/lib/fontconfig.conf');
+const fontCacheDir = '/tmp/blog-og-fontconfig';
+
+function fontPath(weight: 400 | 500) {
+  return path.join(
+    notoSansJpRoot,
+    'files',
+    `noto-sans-jp-japanese-${weight}-normal.woff2`
+  );
+}
+
+function ensureFontConfig() {
+  process.env.FONTCONFIG_FILE ??= fontConfigFile;
+  process.env.XDG_CACHE_HOME ??= '/tmp';
+  mkdirSync(fontCacheDir, { recursive: true });
+}
 
 function publicPath(src: string) {
   return path.join(process.cwd(), 'public', src.replace(/^\//, ''));
@@ -28,6 +47,10 @@ function escapeXml(value: string) {
     .replaceAll('>', '&gt;')
     .replaceAll('"', '&quot;')
     .replaceAll("'", '&apos;');
+}
+
+function pangoSpan(value: string, color: string) {
+  return `<span foreground="${color}">${escapeXml(value)}</span>`;
 }
 
 function score(value: string) {
@@ -76,10 +99,10 @@ function wrap(value: string, maxScore: number, maxLines: number) {
   return [...lines.slice(0, maxLines - 1), trimTo(lines[maxLines - 1], maxScore)];
 }
 
-function textLines({
+function textLayers({
   lines,
   x,
-  y,
+  top,
   size,
   lineHeight,
   color,
@@ -87,18 +110,25 @@ function textLines({
 }: {
   lines: string[];
   x: number;
-  y: number;
+  top: number;
   size: number;
   lineHeight: number;
   color: string;
-  weight?: number;
+  weight?: 400 | 500;
 }) {
-  return lines
-    .map(
-      (line, index) =>
-        `<text x="${x}" y="${y + index * lineHeight}" fill="${color}" font-family="${fontFamily}" font-size="${size}" font-weight="${weight}">${escapeXml(line)}</text>`
-    )
-    .join('');
+  return lines.map((line, index) => ({
+    input: {
+      text: {
+        text: pangoSpan(line, color),
+        font: `Noto Sans JP ${size}`,
+        fontfile: fontPath(weight),
+        dpi: 72,
+        rgba: true
+      }
+    },
+    left: x,
+    top: top + index * lineHeight
+  }));
 }
 
 export async function generateOgImage({
@@ -106,9 +136,10 @@ export async function generateOgImage({
   description,
   thumbnail
 }: OgImageOptions) {
+  ensureFontConfig();
   const titleLines = wrap(title, 10, 4);
   const descriptionLines = description ? wrap(description, 20, 2) : [];
-  const descriptionY = titleY + titleLines.length * titleLineHeight + 30;
+  const descriptionTop = titleTop + titleLines.length * titleLineHeight + 20;
   const thumbnailImage = await sharp(publicPath(thumbnail))
     .resize(420, 420, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
     .png()
@@ -118,13 +149,30 @@ export async function generateOgImage({
       <rect width="${width}" height="${height}" fill="#eee"/>
       <rect x="40" y="40" width="1120" height="550" rx="34" fill="#fff"/>
       <rect x="694" y="90" width="420" height="420" rx="24" fill="#f7f7f7"/>
-      ${textLines({ lines: titleLines, x: textX, y: titleY, size: titleSize, lineHeight: titleLineHeight, color: '#222', weight: 500 })}
-      ${textLines({ lines: descriptionLines, x: textX + 2, y: descriptionY, size: descriptionSize, lineHeight: descriptionLineHeight, color: '#777' })}
     </svg>
   `);
 
   return sharp(svg)
-    .composite([{ input: thumbnailImage, left: 694, top: 90 }])
+    .composite([
+      ...textLayers({
+        lines: titleLines,
+        x: textX,
+        top: titleTop,
+        size: titleSize,
+        lineHeight: titleLineHeight,
+        color: '#222',
+        weight: 500
+      }),
+      ...textLayers({
+        lines: descriptionLines,
+        x: textX + 2,
+        top: descriptionTop,
+        size: descriptionSize,
+        lineHeight: descriptionLineHeight,
+        color: '#777'
+      }),
+      { input: thumbnailImage, left: 694, top: 90 }
+    ])
     .png()
     .toBuffer();
 }
