@@ -17,7 +17,7 @@ type PostListProps = {
 type PostHeaderProps = Omit<PostSummary, 'category' | 'href' | 'thumbnail'>;
 
 const siteName = 'blog.momee.mt';
-const sourceUrl = 'https://github.com/momeemt/monorepo/tree/main/packages/b/blog';
+const sourceUrl = 'https://github.com/momeemt/monorepo/tree/develop/packages/b/blog';
 const rssUrl = '/rss.xml';
 const comments = [
   '計算機と羊文学が好きで、マヨネーズが苦手です',

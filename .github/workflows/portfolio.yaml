@@ -1,35 +1,44 @@
 ---
-name: "Deploy Slides"
+name: "Deploy Portfolio"
 on:
   push:
     branches:
       - '**'
     paths:
-      - ".github/workflows/slides.yaml"
+      - ".github/workflows/portfolio.yaml"
+      - "flake.lock"
+      - "flake.nix"
       - "nix/flakes/default.nix"
+      - "nix/flakes/devShells.nix"
       - "nix/flakes/packages.nix"
-      - "packages/s/slides/**"
+      - "packages/p/portfolio/**"
   pull_request:
     branches:
       - '**'
     paths:
-      - ".github/workflows/slides.yaml"
+      - ".github/workflows/portfolio.yaml"
+      - "flake.lock"
+      - "flake.nix"
       - "nix/flakes/default.nix"
+      - "nix/flakes/devShells.nix"
       - "nix/flakes/packages.nix"
-      - "packages/s/slides/**"
+      - "packages/p/portfolio/**"
   workflow_dispatch:
 permissions:
   contents: read
   issues: write
   pull-requests: write
 concurrency:
-  group: slides-pages-${{ github.ref }}
+  group: portfolio-pages-${{ github.ref }}
   cancel-in-progress: true
+env:
+  PORTFOLIO_DOMAIN: momee.mt
+  PORTFOLIO_PAGES_PROJECT_NAME: momee-mt
 jobs:
   deploy:
     if: >-
       github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
-    runs-on: macos-15
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
@@ -44,22 +53,22 @@ jobs:
           endpoint: ${{ secrets.ATTIC_ENDPOINT }}
           cache: ${{ secrets.ATTIC_CACHE }}
           token: ${{ secrets.ATTIC_TOKEN }}
-      - name: Build slides
-        run: nix build .#slides
+      - name: Build Portfolio
+        run: nix build .#portfolio
       - name: Deploy to Cloudflare Pages
         id: deploy
         uses: ./.github/actions/deploy-cloudflare-pages
         with:
           directory: result
-          project-name: slides-momee-mt
-          domain: slides.momee.mt
+          project-name: ${{ env.PORTFOLIO_PAGES_PROJECT_NAME }}
+          domain: ${{ env.PORTFOLIO_DOMAIN }}
           cloudflare-account-id: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           cloudflare-api-token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       - name: Comment preview URL
         if: github.event_name == 'pull_request'
         uses: ./.github/actions/comment-preview-url
         with:
-          preview-name: "Slides"
+          preview-name: "Portfolio"
           deployment-url: ${{ steps.deploy.outputs.deployment_url }}
           deploy-branch: ${{ steps.deploy.outputs.deploy_branch }}
           github-token: ${{ github.token }}

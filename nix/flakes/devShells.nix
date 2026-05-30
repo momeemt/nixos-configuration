@@ -41,6 +41,9 @@
       blog = importPackage ../../packages/b/blog/devShell.nix;
       monorepo-docs = importPackage ../../packages/m/monorepo-docs/devShell.nix;
       obsidian = importPackage ../../packages/o/obsidian/devShell.nix;
+      portfolio = import ../../packages/p/portfolio/devShell.nix {
+        inherit pkgs inputsFrom;
+      };
       slides = importPackage ../../packages/s/slides/devShell.nix;
     };
   };

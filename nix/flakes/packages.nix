@@ -10,6 +10,9 @@ _: {
       obsidian = import ../../packages/o/obsidian/package.nix {
         inherit pkgs;
       };
+      portfolio = import ../../packages/p/portfolio/package.nix {
+        inherit pkgs;
+      };
       slides = import ../../packages/s/slides/package.nix {
         inherit pkgs;
       };
