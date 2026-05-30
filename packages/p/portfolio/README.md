@@ -1,9 +1,11 @@
 # [momee.mt](https://momee.mt)
-[![Build](https://github.com/momeemt/momee.mt/actions/workflows/build.yml/badge.svg)](https://github.com/momeemt/momee.mt/actions/workflows/build.yml)
+
+[![Build](https://github.com/momeemt/monorepo/actions/workflows/portfolio.yaml/badge.svg)](https://github.com/momeemt/monorepo/actions/workflows/portfolio.yaml)
 
 🎃 my website 🎃
 
-## Development 
+## Development
+
 Developing this project requires the following to be installed.
 
 - Nix (enables Flakes)
@@ -15,5 +17,5 @@ Or,
 - tailwindcss
 
 ## LICENSE
-MIT OR Apache-2.0
 
+MIT OR Apache-2.0

@@ -15,6 +15,7 @@ in {
   karabiner-elements_14-13-0 = importPackage "karabiner-elements_14-13-0";
   ncp = importPackage "ncp";
   obsidian = importPackage "obsidian";
+  portfolio = importPackage "portfolio";
   quitapp = importPackage "quitapp";
   slides = importPackage "slides";
   switch-config-branch = importPackage "switch-config-branch";
