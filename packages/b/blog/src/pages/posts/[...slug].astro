@@ -2,6 +2,13 @@
 import { getCollection, render } from 'astro:content';
 import { ArticleTags, PostHeader, SiteFooter } from '../../components/Blog';
 import {
+  EmbedFrame,
+  SpotifyAlbum,
+  SpotifyEmbed,
+  SpotifyPlaylist,
+  SpotifyTrack
+} from '../../components/Embeds';
+import {
   Corollary,
   Definition,
   Lemma,
@@ -45,7 +52,21 @@ const ogImage = `/og/${post.id}.png`;
     />
     <article class="articleContent">
       <ArticleTags tags={post.data.tags ?? []} />
-      <Content components={{ Corollary, Definition, Lemma, Proof, Proposition, Theorem }} />
+      <Content
+        components={{
+          Corollary,
+          Definition,
+          EmbedFrame,
+          Lemma,
+          Proof,
+          Proposition,
+          SpotifyAlbum,
+          SpotifyEmbed,
+          SpotifyPlaylist,
+          SpotifyTrack,
+          Theorem
+        }}
+      />
     </article>
     <SiteFooter article />
   </div>

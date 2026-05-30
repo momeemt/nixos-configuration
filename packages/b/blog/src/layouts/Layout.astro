@@ -858,6 +858,25 @@ const rssUrl = new URL('/rss.xml', Astro.site ?? Astro.url).href;
         margin-bottom: 0;
       }
 
+      .embedFrame,
+      .articleContent > iframe[src*="open.spotify.com/embed"] {
+        display: block;
+        width: 100%;
+        margin: 1.5rem 0;
+        overflow: hidden;
+        border: 0;
+        border-radius: 12px;
+        background: #f7f7f7;
+      }
+
+      .embedFrame iframe,
+      .articleContent > iframe[src*="open.spotify.com/embed"] {
+        display: block;
+        width: 100%;
+        border: 0;
+        border-radius: 12px;
+      }
+
       .katex-display {
         overflow-x: auto;
         overflow-y: hidden;
