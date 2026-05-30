@@ -14,5 +14,11 @@ export type Author = {
 const authorList = authors as Author[];
 
 export function findAuthor(id: string) {
-  return authorList.find((author) => author.id === id) ?? authorList[0];
+  const author = authorList.find((item) => item.id === id);
+
+  if (author) {
+    return author;
+  }
+
+  throw new Error(`Unknown author id: ${id}`);
 }

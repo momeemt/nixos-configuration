@@ -22,7 +22,7 @@ export const GET: APIRoute = async ({ props }) => {
 
   return new Response(image, {
     headers: {
-      'Cache-Control': 'public, max-age=31536000, immutable',
+      'Cache-Control': 'public, max-age=3600, stale-while-revalidate=86400',
       'Content-Type': 'image/png'
     }
   });

@@ -21,6 +21,7 @@ const descriptionSize = 26;
 const descriptionLineHeight = 38;
 const require = createRequire(import.meta.url);
 const notoSansJpRoot = path.dirname(require.resolve('@fontsource/noto-sans-jp/package.json'));
+const publicRoot = path.resolve(process.cwd(), 'public');
 
 function fontPath(weight: FontWeight) {
   return path.join(
@@ -31,7 +32,14 @@ function fontPath(weight: FontWeight) {
 }
 
 function publicPath(src: string) {
-  return path.join(process.cwd(), 'public', src.replace(/^\//, ''));
+  const relative = src.replace(/^\//, '');
+  const resolved = path.resolve(publicRoot, relative);
+
+  if (resolved !== publicRoot && !resolved.startsWith(`${publicRoot}${path.sep}`)) {
+    throw new Error(`Invalid thumbnail path: ${src}`);
+  }
+
+  return resolved;
 }
 
 function score(value: string) {
