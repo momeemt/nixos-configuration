@@ -197,6 +197,7 @@ const rssUrl = new URL('/rss.xml', Astro.site ?? Astro.url).href;
       }
 
       .articleContent {
+        counter-reset: theorem;
         margin-top: 40px;
         padding: 2em 4em;
         border-radius: 16px;
@@ -798,6 +799,63 @@ const rssUrl = new URL('/rss.xml', Astro.site ?? Astro.url).href;
         max-width: 100%;
         height: auto;
         margin: 0 auto;
+      }
+
+      .theoremBox {
+        margin: 1.5rem 0;
+        padding: 1rem 1.2rem;
+        border: 1px solid #d9e1e5;
+        border-left: 4px solid #43b9d8;
+        border-radius: 8px;
+        background: #fbfdfe;
+      }
+
+      .theoremBox-proof {
+        border-color: #ddd;
+        border-left-color: #777;
+        background: #fff;
+      }
+
+      .theoremBox-statement {
+        counter-increment: theorem;
+      }
+
+      .theoremBoxHeader {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 0.35rem;
+        margin: 0 0 0.65rem;
+        color: #222;
+        font-size: 15px;
+        font-weight: 500;
+        line-height: 1.4;
+      }
+
+      .theoremBoxType {
+        letter-spacing: 0;
+      }
+
+      .theoremBox-statement .theoremBoxType::after {
+        content: " " counter(theorem);
+      }
+
+      .theoremBoxTitle::before {
+        color: #777;
+        content: "(";
+      }
+
+      .theoremBoxTitle::after {
+        color: #777;
+        content: ")";
+      }
+
+      .theoremBoxBody > :first-child {
+        margin-top: 0;
+      }
+
+      .theoremBoxBody > :last-child {
+        margin-bottom: 0;
       }
 
       .katex-display {

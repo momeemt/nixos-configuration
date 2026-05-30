@@ -1,6 +1,14 @@
 ---
 import { getCollection, render } from 'astro:content';
 import { ArticleTags, PostHeader, SiteFooter } from '../../components/Blog';
+import {
+  Corollary,
+  Definition,
+  Lemma,
+  Proof,
+  Proposition,
+  Theorem
+} from '../../components/TheoremBox';
 import Layout from '../../layouts/Layout.astro';
 import { findAuthor } from '../../lib/authors';
 
@@ -37,7 +45,7 @@ const ogImage = `/og/${post.id}.png`;
     />
     <article class="articleContent">
       <ArticleTags tags={post.data.tags ?? []} />
-      <Content />
+      <Content components={{ Corollary, Definition, Lemma, Proof, Proposition, Theorem }} />
     </article>
     <SiteFooter article />
   </div>
