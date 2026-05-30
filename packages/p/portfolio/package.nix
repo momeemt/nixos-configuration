@@ -24,7 +24,7 @@
 
     outputHashAlgo = "sha256";
     outputHashMode = "recursive";
-    outputHash = "sha256-ntvZ6mrN6DcZzFkwCYaXhAMafbuHPTyqJ6l2NDZ+l38=";
+    outputHash = "sha256-x6cKTw0D/9kSMq8wzRoRZ22ImOcBBVONlSVoZS1iCYY=";
 
     dontConfigure = true;
     dontFixup = true;
@@ -36,6 +36,7 @@
       export SSL_CERT_FILE="${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt"
       export GIT_SSL_CAINFO="$SSL_CERT_FILE"
 
+      dhall resolve --file packages.dhall > packages.dhall.resolved
       spago install
       find .spago -name .git -type d -prune -exec rm -rf {} +
 
@@ -47,6 +48,7 @@
 
       mkdir -p "$out"
       cp -R .spago "$out"/.spago
+      cp packages.dhall.resolved "$out"/packages.dhall
 
       runHook postInstall
     '';
@@ -90,6 +92,7 @@ in
       export GIT_SSL_CAINFO="$SSL_CERT_FILE"
 
       cp -R ${spagoDeps}/.spago .spago
+      cp ${spagoDeps}/packages.dhall packages.dhall
       chmod -R u+rwX .spago
 
       spago bundle-app --no-install -y -t ./public/index.js
