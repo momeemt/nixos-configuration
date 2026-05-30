@@ -6,6 +6,7 @@ import ExternalLink (external_link)
 import Jelly.Component (Component, text)
 import Jelly.Element as JE
 import Jelly.Prop ((:=))
+import Language (Language, s, tx)
 
 work_experience_li :: forall m. String -> Component m -> Component m
 work_experience_li name comp = do
@@ -16,34 +17,34 @@ work_experience_li name comp = do
       JE.ul ["class" := "list-disc ml-4"] do
         comp
 
-work_experience :: forall m. Component m
-work_experience = do
+work_experience :: forall m. Language -> Component m
+work_experience language = do
   JE.h2 ["class" := "text-2xl mt-4"] do
-    text "就労経験"
+    tx language "Work Experience" "就労経験"
   JE.ul ["class" := "list-disc ml-4 mt-2"] do
-    work_experience_li "LINEヤフー株式会社 インターンシップ (2024/09)" do
+    work_experience_li (s language "GA technologies Co., Ltd. Internship (2026/04 - present)" "株式会社GA technologies インターンシップ (2026/04 - 現在)") do
+      JE.li' do
+        tx language "Platform engineer" "プラットフォームエンジニア"
+    work_experience_li (s language "Sony Interactive Entertainment Inc. Internship (2026/02)" "株式会社ソニー・インタラクティブエンタテインメント インターンシップ (2026/02)") do
+      JE.li' do
+        tx language "Build-system engineer" "ビルドシステムエンジニア"
+    work_experience_li (s language "LY Corporation Internship (2024/09)" "LINEヤフー株式会社 インターンシップ (2024/09)") do
       JE.li'  do
-        text "インフラエンジニア"
+        tx language "Infrastructure engineer" "インフラエンジニア"
       JE.li' do
         external_link "https://www.lycorp.co.jp/ja/recruit/landingpage/INFRA-02-02/" do
-          text "内製分散データベースシステム FractalDB の開発業務"
-    work_experience_li "サイボウズ・ラボ株式会社 (2024/06 - 現在)" do
+          tx language "Developed FractalDB, an in-house distributed database system" "内製分散データベースシステム FractalDB の開発業務"
+    work_experience_li (s language "pixiv Inc. Internship (2022/09)" "ピクシブ株式会社 インターンシップ (2022/09)") do
       JE.li' do
-        text "サイボウズ・ラボユース 14期 言語処理系開発ゼミ"
+        tx language "Image-delivery engineer" "画像配信エンジニア"
       JE.li' do
-        external_link "https://labs.cybozu.co.jp/youth/requirements.html" do
-          text "WebAssemblyで拡張可能なマークアップ言語 Brackの開発"
-    work_experience_li "ピクシブ株式会社 インターンシップ (2022/09)" do
+        tx language "Worked on speeding up GIF image delivery in ImageFlux" "ImageFluxにおけるGIF画像の配信を高速化する業務に従事"
       JE.li' do
-        text "画像配信エンジニア"
-      JE.li' do
-        text "ImageFluxにおけるGIF画像の配信を高速化する業務に従事"
-      JE.li' do
-        text "参加記: "
+        tx language "Internship report: " "参加記: "
         external_link "https://zenn.dev/momeemt/articles/pixiv-summer-boot-camp-2022" do
-          text "ピクシブのインターンに参加してアニメーションのエンコードをGIFから12倍高速にした"
-    work_experience_li "インヴァスト株式会社 インターンシップ (2022/01 - 08)" do
+          tx language "Made animation encoding 12x faster than GIFs during a pixiv internship" "ピクシブのインターンに参加してアニメーションのエンコードをGIFから12倍高速にした"
+    work_experience_li (s language "Invast Inc. Internship (2022/01 - 08)" "インヴァスト株式会社 インターンシップ (2022/01 - 08)") do
       JE.li' do
-        text "フロントエンドエンジニア"
+        tx language "Frontend engineer" "フロントエンドエンジニア"
       JE.li' do
-        text "内製アプリケーションのフロントエンド開発に従事"
+        tx language "Worked on frontend development for an in-house application" "内製アプリケーションのフロントエンド開発に従事"
