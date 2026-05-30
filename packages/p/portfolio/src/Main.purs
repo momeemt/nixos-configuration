@@ -35,6 +35,7 @@ component language = do
   JE.div ["class" := "text-slate-50 px-8 py-8"] do
     header language
     mainComponent language
+    webringLinks
 
 header :: forall m. Language -> Component m
 header language = do
@@ -52,6 +53,15 @@ external_media name href src is_white = do
       JE.img ["src" := src, "class" := "h-12 object-contain w-12" <> if is_white then " bg-slate-50 rounded-lg p-1" else ""]
       JE.div ["style" := "margin-top: 8px;"] do
         text name
+
+webringLinks :: forall m. Component m
+webringLinks = do
+  JE.footer ["class" := "mt-10 flex justify-center text-sm text-slate-400"] do
+    JE.nav ["class" := "flex gap-4", "aria-label" := "gskring"] do
+      JE.a ["href" := "https://gskr.ing/u/momeemt/pred", "aria-label" := "Previous site in webring", "class" := "hover:text-slate-50"] do
+        text "< Pred"
+      JE.a ["href" := "https://gskr.ing/u/momeemt/succ", "aria-label" := "Next site in webring", "class" := "hover:text-slate-50"] do
+        text "Succ >"
 
 mainComponent :: forall m. Language -> Component m
 mainComponent language = do
