@@ -20,14 +20,8 @@ echo "[apply.sh] NIX_FLAGS: ${NIX_FLAGS[*]}"
 
 case $HOST_NAME in
 uguisu)
-  sudo rm -rf "$HOME/Applications/Home Manager Apps/"
-  if command -v darwin-rebuild >/dev/null 2>&1; then
-    sudo darwin-rebuild switch --flake "$FLAKE_ROOT#$HOST_NAME"
-  else
-    sudo nix run "nix-darwin/master#darwin-rebuild" -- \
-      switch --flake "$FLAKE_ROOT#$HOST_NAME" \
-      "${NIX_FLAGS[@]}"
-  fi
+  sudo nix run "nix-darwin/master#darwin-rebuild" -- \
+    switch --flake "$FLAKE_ROOT#$HOST_NAME"
   ;;
 emu | shime)
   sudo env NIX_CONFIG='experimental-features = nix-command flakes pipe-operators' \
