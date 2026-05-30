@@ -22,16 +22,6 @@ resource "cloudflare_dns_record" "root_dns_record" {
   comment = "https://github.com/momeemt/momee.mt"
 }
 
-resource "cloudflare_dns_record" "blog_dns_record" {
-  zone_id = local.cloudflare.zone_id
-  name    = "blog"
-  type    = "CNAME"
-  content = "blog-momee-mt.pages.dev"
-  ttl     = 1
-  proxied = true
-  comment = "https://github.com/momeemt/blog.momee.mt"
-}
-
 resource "cloudflare_dns_record" "wascaml_dns_record" {
   zone_id = local.cloudflare.zone_id
   name    = "wascaml"

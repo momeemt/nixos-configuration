@@ -38,6 +38,7 @@
 
       # packages/**
       attic-pack = importPackage ../../packages/a/attic-pack/devShell.nix;
+      blog = importPackage ../../packages/b/blog/devShell.nix;
       monorepo-docs = importPackage ../../packages/m/monorepo-docs/devShell.nix;
       obsidian = importPackage ../../packages/o/obsidian/devShell.nix;
       slides = importPackage ../../packages/s/slides/devShell.nix;

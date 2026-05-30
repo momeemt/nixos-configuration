@@ -8,6 +8,7 @@ _final: prev: let
 in {
   activitywatch-mcp-server = importPackage "activitywatch-mcp-server";
   attic-pack = importPackage "attic-pack";
+  blog = importPackage "blog";
   bluesky-mcp = importPackage "bluesky-mcp";
   destroy-all-vm = importPackage "destroy-all-vm";
   encrypt-secrets = importPackage "encrypt-secrets";
