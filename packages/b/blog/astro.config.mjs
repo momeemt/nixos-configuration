@@ -7,6 +7,7 @@ import remarkGfm from 'remark-gfm';
 import remarkGraphviz from './src/lib/remark-graphviz.mjs';
 import remarkInlineFootnotes from './src/lib/remark-inline-footnotes.mjs';
 import remarkMath from 'remark-math';
+import remarkTweetEmbeds from './src/lib/remark-tweet-embeds.mjs';
 
 const site = process.env.BLOG_SITE ?? 'https://blog.momee.mt';
 
@@ -19,7 +20,13 @@ export default defineConfig({
     shikiConfig: {
       theme: 'github-light'
     },
-    remarkPlugins: [remarkMath, remarkGfm, remarkInlineFootnotes, remarkGraphviz],
+    remarkPlugins: [
+      remarkMath,
+      remarkGfm,
+      remarkTweetEmbeds,
+      remarkInlineFootnotes,
+      remarkGraphviz
+    ],
     rehypePlugins: [rehypeKatex]
   }
 });
