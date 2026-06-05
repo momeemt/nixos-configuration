@@ -268,7 +268,7 @@ const rssUrl = new URL('/rss.xml', Astro.site ?? Astro.url).href;
 
       .footnotes p {
         font-size: 14px;
-        line-height: 1.0;
+        line-height: 1.4;
       }
 
       .footnotes a {
@@ -877,6 +877,17 @@ const rssUrl = new URL('/rss.xml', Astro.site ?? Astro.url).href;
         border-radius: 12px;
       }
 
+      .twitterEmbed {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        margin: 1.5rem 0;
+      }
+
+      .twitterEmbed .twitter-tweet {
+        margin: 0 auto !important;
+      }
+
       .katex-display {
         overflow-x: auto;
         overflow-y: hidden;
@@ -976,6 +987,15 @@ const rssUrl = new URL('/rss.xml', Astro.site ?? Astro.url).href;
             image.addEventListener('load', reveal, { once: true });
           }
         });
+
+        if (document.querySelector('.twitter-tweet') && !document.querySelector('script[data-twitter-widgets]')) {
+          const script = document.createElement('script');
+          script.async = true;
+          script.charset = 'utf-8';
+          script.dataset.twitterWidgets = 'true';
+          script.src = 'https://platform.x.com/widgets.js';
+          document.head.append(script);
+        }
       </script>
     </main>
   </body>
