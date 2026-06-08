@@ -15,6 +15,7 @@ export async function getStaticPaths() {
 export const GET: APIRoute = async ({ props }) => {
   const { post } = props;
   const image = await generateOgImage({
+    category: post.data.category,
     title: post.data.title,
     description: post.data.description,
     thumbnail: thumbnailPath(post.data.thumbnail, post.id)
