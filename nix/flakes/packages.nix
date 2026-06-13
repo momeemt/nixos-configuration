@@ -16,6 +16,9 @@ _: {
       slides = import ../../packages/s/slides/package.nix {
         inherit pkgs;
       };
+      toggl-openclaw = import ../../packages/t/toggl-openclaw/package.nix {
+        inherit pkgs;
+      };
     };
   };
 }

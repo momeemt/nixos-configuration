@@ -19,6 +19,7 @@ in {
   quitapp = importPackage "quitapp";
   slides = importPackage "slides";
   switch-config-branch = importPackage "switch-config-branch";
+  toggl-openclaw = importPackage "toggl-openclaw";
   updatekeys-secrets = importPackage "updatekeys-secrets";
   xdg-compliance-checker = importPackage "xdg-compliance-checker";
 
