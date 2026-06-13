@@ -42,6 +42,28 @@
           mode = "0400";
         };
       }
+      // lib.optionalAttrs ((config.networking.hostName or null) == "emu") {
+        "openclaw/discord-bot-token" = {
+          owner = "openclaw";
+          group = "openclaw";
+          mode = "0400";
+        };
+        "openclaw/gateway-token" = {
+          owner = "openclaw";
+          group = "openclaw";
+          mode = "0400";
+        };
+        "openclaw/google-oauth-client.json" = {
+          owner = "openclaw";
+          group = "openclaw";
+          mode = "0400";
+        };
+        "openclaw/gog-keyring-password" = {
+          owner = "openclaw";
+          group = "openclaw";
+          mode = "0400";
+        };
+      }
       // lib.optionalAttrs (options ? services && options.services ? mastodon) {
         "resend/mastodon.momee.mt" = {
           owner = config.services.mastodon.user;
