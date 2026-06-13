@@ -63,6 +63,11 @@
           group = "openclaw";
           mode = "0400";
         };
+        "openclaw/toggl-api-token" = {
+          owner = "openclaw";
+          group = "openclaw";
+          mode = "0400";
+        };
       }
       // lib.optionalAttrs (options ? services && options.services ? mastodon) {
         "resend/mastodon.momee.mt" = {

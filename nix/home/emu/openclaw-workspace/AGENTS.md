@@ -29,3 +29,16 @@ not the materialized files under `~/.openclaw/workspace`.
 - 予定タイトルがこの規則と違うとユーザに指摘された場合は、追加確認なしで既存イベントのタイトルを修正する。
 - 場所、説明、開始時刻、終了時刻は、ユーザの発言から分かる範囲で自然に設定する。
 - 終了時刻が明示されていない食事や用事は、通常 1 時間として扱う。
+
+## 作業記録
+
+- 作業記録は Toggl 2.0 / Focus API 用の `toggl-openclaw` を使う。
+- Toggl の開始、停止、確認、当日履歴の取得は、ユーザの依頼が明確なら追加確認なしで実行する。
+- `作業開始`、`これやる`、`<内容>を始める` のような依頼では `toggl-openclaw start <作業内容>` を使う。
+- `作業終わり`、`止めて`、`終了` のような依頼では `toggl-openclaw stop` を使う。
+- `今なに記録してる?` のような依頼では `toggl-openclaw current` を使う。
+- `今日の作業`、`今日の作業まとめ` のような依頼では `toggl-openclaw list-today` を使う。
+- 作業内容はユーザの発言から具体的に短く付ける。曖昧な場合だけ不足情報を確認する。
+- Toggl 2.0 の tracking API には `TOGGL_ORGANIZATION_ID` と workspace ID
+  が必要。`TOGGL_WORKSPACE_ID` が未設定の場合は `toggl-openclaw` が現在の workspace
+  を取得するが、organization ID が未設定ならユーザに設定を依頼する。

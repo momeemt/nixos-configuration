@@ -13,6 +13,7 @@
     extraPackages = with pkgs; [
       gogcli
       gh
+      toggl-openclaw
     ];
   };
 
@@ -43,6 +44,9 @@
       GOG_KEYRING_PASSWORD = systemConfig.sops.secrets."openclaw/gog-keyring-password".path;
       OPENCLAW_GOOGLE_OAUTH_CLIENT_JSON = systemConfig.sops.secrets."openclaw/google-oauth-client.json".path;
       OPENCLAW_GATEWAY_TOKEN = systemConfig.sops.secrets."openclaw/gateway-token".path;
+      TOGGL_API_TOKEN = systemConfig.sops.secrets."openclaw/toggl-api-token".path;
+      TOGGL_ORGANIZATION_ID = "20724063";
+      TOGGL_WORKSPACE_ID = "20723117";
     };
 
     config = {
