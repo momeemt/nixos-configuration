@@ -1,7 +1,6 @@
 ---
 title: obsidian.momee.mt
 ---
-
 # obsidian.momee.mt
 
-Personal notes published with Quartz.
+[momeemt](https://github.com/momeemt)のノート
