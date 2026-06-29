@@ -14,8 +14,8 @@ tags:
 		- [ ] 演習, 問題, 解答
 	- [ ] 1. [[regular-language|正規言語]]
 		- [x] 1.1 [[finite-automaton|有限オートマトン]]
-		- [ ] 1.2 [[nondeterministic|非決定性]]
-		- [ ] 1.3 [[regular-expression|正規表現]]
+		- [x] 1.2 [[nondeterministic|非決定性]]
+		- [x] 1.3 [[regular-expression|正規表現]]
 		- [ ] 1.4 [[非正規言語]]
 		- [ ] 演習, 問題, 解答
 	- [ ] 2. [[文脈自由言語]]

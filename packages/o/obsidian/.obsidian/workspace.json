@@ -4,24 +4,39 @@
     "type": "split",
     "children": [
       {
-        "id": "71612c4643302c3a",
+        "id": "817037948a9501fd",
         "type": "tabs",
         "children": [
           {
-            "id": "2c11f14b6ac1a6a1",
+            "id": "33b2a70e7b8fc999",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "nfa-dfa-equivalence.md",
+                "file": "sipser-1.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "nfa-dfa-equivalence"
+              "title": "sipser-1"
+            }
+          },
+          {
+            "id": "4ab531cdc1084052",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "regular-language-closed-under-union.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "regular-language-closed-under-union"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -193,23 +208,26 @@
       "random-note:ランダムノートを開く": false
     }
   },
-  "active": "2c11f14b6ac1a6a1",
+  "active": "4ab531cdc1084052",
   "lastOpenFiles": [
-    "nfa-recognizable-iff-regular.md",
-    "nfa-dfa-equivalence.md",
-    "finite-automaton.md",
+    "regular-expression.md",
+    "regular-language-closed-under-star.md",
+    "generalized-nondeterministic-finite-automaton.md",
     "sipser-1.md",
-    "unary-alphabet.md",
+    "pumping-lemma.md",
+    "nfa-recognizable-iff-regular.md",
+    "finite-automaton.md",
     "nondeterministic-finite-automaton.md",
-    "regular-language-closed-under-union.md",
-    "symbol.md",
     "regular-language-closed-under-concatenation.md",
+    "regular-language-closed-under-union.md",
+    "nfa-dfa-equivalence.md",
+    "unary-alphabet.md",
+    "symbol.md",
     "equivalent.md",
     "nondeterministic.md",
     "deterministic.md",
     "string.md",
     "regular-language.md",
-    "regular-expression.md",
     "recognizes-language.md",
     "alphabet.md",
     "accept.md",
@@ -218,9 +236,6 @@
     "substring.md",
     "concatenation.md",
     "prefix.md",
-    "language.md",
-    "proper-prefix.md",
-    "prefix-free.md",
     "devShell.nix",
     "package.nix",
     "templates",
