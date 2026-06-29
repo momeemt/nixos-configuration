@@ -49,6 +49,17 @@ in
 
       const root = "content"
 
+      const slug = (value) =>
+        clean(value)
+          .replace(/\.md$/i, "")
+          .replace(/\\/g, "/")
+          .split("/")
+          .map((segment) => segment.trim().replace(/\s+/g, "-"))
+          .join("/")
+
+      const isSameSlug = (left, right) =>
+        left.toLowerCase() === right.toLowerCase()
+
       const walk = (dir) => {
         const entries = fs.readdirSync(dir, {withFileTypes: true})
         return entries.flatMap((entry) => {
@@ -98,6 +109,52 @@ in
         return null
       }
 
+      const withoutSelfAliases = (frontmatter, canonicalSlug) => {
+        const lines = frontmatter.split(/\r?\n/)
+        const next = []
+
+        for (let index = 0; index < lines.length; index += 1) {
+          const scalar = lines[index].match(/^aliases:\s*(.+?)\s*$/)
+          if (scalar) {
+            if (scalar[1] === "[]" || !isSameSlug(slug(scalar[1]), canonicalSlug)) {
+              next.push(lines[index])
+            }
+            continue
+          }
+
+          if (!/^aliases:\s*$/.test(lines[index])) {
+            next.push(lines[index])
+            continue
+          }
+
+          const headerIndex = next.length
+          let keptItems = 0
+          next.push(lines[index])
+
+          index += 1
+          for (; index < lines.length; index += 1) {
+            if (/^\S/.test(lines[index])) {
+              index -= 1
+              break
+            }
+
+            const item = lines[index].match(/^(\s*-\s+)(.+?)(\s*)$/)
+            if (!item || !isSameSlug(slug(item[2]), canonicalSlug)) {
+              next.push(lines[index])
+              if (item) {
+                keptItems += 1
+              }
+            }
+          }
+
+          if (keptItems === 0) {
+            next.splice(headerIndex, 1)
+          }
+        }
+
+        return next.join("\n")
+      }
+
       for (const file of walk(root)) {
         if (!file.endsWith(".md")) {
           continue
@@ -114,18 +171,14 @@ in
         }
 
         const frontmatter = text.slice(4, end)
-        if (/^title:\s*/m.test(frontmatter)) {
-          continue
-        }
-
-        const title = firstAlias(frontmatter)
-        if (!title) {
-          continue
-        }
+        const canonicalSlug = slug(path.relative(root, file))
+        const nextFrontmatter = withoutSelfAliases(frontmatter, canonicalSlug)
+        const title =
+          /^title:\s*/m.test(nextFrontmatter) ? null : firstAlias(frontmatter)
 
         fs.writeFileSync(
           file,
-          `---\ntitle: ''${JSON.stringify(title)}\n''${text.slice(4)}`,
+          `---\n''${title ? `title: ''${JSON.stringify(title)}\n` : ""}''${nextFrontmatter}''${text.slice(end)}`,
         )
       }
       EOF
