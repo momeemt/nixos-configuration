@@ -23,7 +23,8 @@ in {
             inherit system siteLib;
             hostPath = ../hosts/emu;
             users = {
-              momeemt = ../home/emu;
+              momeemt = ../home/emu/momeemt.nix;
+              openclaw = ../home/emu/openclaw.nix;
             };
             extraModules = with inputs; [
               NixVirt.nixosModules.default

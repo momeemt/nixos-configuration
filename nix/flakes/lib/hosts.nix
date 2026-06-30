@@ -4,6 +4,7 @@
     [
       firefox-addons.overlays.default
       llm-agents.overlays.default
+      nix-openclaw.overlays.default
     ]
     ++ (import ../../overlays);
 in {

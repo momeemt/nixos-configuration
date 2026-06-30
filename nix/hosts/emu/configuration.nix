@@ -75,6 +75,18 @@
     openssh.authorizedKeys.keys = siteLib.publicKeys;
   };
 
+  users.manageLingering = true;
+
+  users.groups.openclaw = {};
+
+  users.users.openclaw = {
+    isNormalUser = true;
+    group = "openclaw";
+    shell = pkgs.zsh;
+    linger = true;
+    openssh.authorizedKeys.keys = siteLib.publicKeys;
+  };
+
   users.users.caddy.extraGroups = ["mastodon"];
 
   services = {
