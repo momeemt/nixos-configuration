@@ -18,19 +18,19 @@ provider "registry.terraform.io/carlpett/sops" {
 }
 
 provider "registry.terraform.io/cloudflare/cloudflare" {
-  version     = "5.16.0"
-  constraints = "5.16.0"
+  version     = "5.23.0"
+  constraints = "5.23.0"
   hashes = [
-    "h1:c7Ys/nrTbSbjzSoICdSU0lJCBLV12Gn9De7BhfUaL2o=",
-    "h1:iyIjUQIxl6vMTH4zuhMhmmE6RjRNVbBTA/m2LbmF+1U=",
-    "zh:0e21bfc6d4698b7e7d7b39b1635c5e1dac49b9e39e205b38d9d879e31aa63002",
-    "zh:269c80bdf54e34a80e01e742ab2705c56c360cece256348301a69b316e735dca",
-    "zh:32420d3ebf3a18f5d4d259390e4c98f0b31e4d6f703572a0dafaf1af8361bd14",
-    "zh:45c73f16b19161ed2ae2ec6c50041045df23b0a124701973ed7f0297c16bacbe",
-    "zh:5ca4e4dafb12d78afa0ca9150236b0a2e64a3d65045f7347efc9253edef5276d",
-    "zh:636d1456d8d604bace12ebcf4d3b188a971bb98b1891368ae87c86ac6d561c26",
-    "zh:d26e340801292ad44a4fe493a2b254147c48e01303e81630678edf9ef8c06bbb",
-    "zh:ed564f43bd296bf0d8f13aee4bdd5c0e0c3376683911f2b64e1e42891232334f",
+    "h1:C6JU7d5XoRQnksREiFD3hTgGRQ18ciV7ynKvpvGIteA=",
+    "h1:Sixlatj4vbZGhJ9r7I5c0l4gWp5Bej0aNR3akDt7wig=",
+    "zh:3492a18e8753c2734bb253b70b46c8ec66151198b5221dc7772dab76778a2c06",
+    "zh:698ca2b12417c7477744e5410796f4fa0311f7882e1a6c790581795182b3905c",
+    "zh:b21e7da03e7529469f042eb5b11d08b084d255ab794bfeec80f6d8a9e8a91df6",
+    "zh:bbd837ccb1e08335aa7473e6c806da4c2ff04c93bfb63f6606bd09efceb82cff",
+    "zh:bdcaa21fe92031f5f043a6774821247a26047db92e5a2abfc4bfbd9262358e0c",
+    "zh:cb2c86565c94822733760015f892c71d3ed886d7db4549c561d62ec7bc20a175",
+    "zh:ccc101c27eec4ffdcbf43eaedc85a5ba5850c29d38dca7b1d7e20d668edb7a96",
+    "zh:e029d245d2470b350e12b4747a9a6c6d637010628bfe4f46644ff79f676f56e5",
     "zh:f809ab383cca0a5f83072981c64208cbd7fa67e986a86ee02dd2c82333221e32",
   ]
 }
